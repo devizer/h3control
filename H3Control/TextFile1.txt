@@ -1,0 +1,32 @@
+﻿  host.AppMode: development
+  host.AppName: H3Info.Startup, H3Info, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  host.OnAppDisposing: System.Threading.CancellationToken
+  host.TraceOutput: Microsoft.Owin.Hosting.Tracing.DualWriter
+  Microsoft.Owin.Host.HttpListener.OwinHttpListener: Microsoft.Owin.Host.HttpListener.OwinHttpListener
+  owin.CallCancelled: System.Threading.CancellationToken
+  owin.RequestBody: Microsoft.Owin.Host.HttpListener.RequestProcessing.HttpListenerStreamWrapper
+  owin.RequestHeaders: Microsoft.Owin.Host.HttpListener.RequestProcessing.RequestHeadersDictionary
+  owin.RequestId: 00000000-0000-0000-7700-0080000000ed
+  owin.RequestMethod: GET
+  owin.RequestPath: /api/json/device/me
+  owin.RequestPathBase:
+  owin.RequestProtocol: HTTP/1.1
+  owin.RequestQueryString: 1446836192505
+  owin.RequestScheme: http
+  owin.ResponseBody: Microsoft.Owin.Host.HttpListener.RequestProcessing.HttpListenerStreamWrapper
+  owin.ResponseHeaders: Microsoft.Owin.Host.HttpListener.RequestProcessing.ResponseHeadersDictionary
+  owin.ResponseStatusCode: 200
+  owin.Version: 1.0
+  server.Capabilities: System.Collections.Generic.Dictionary`2[System.String,System.Object]
+  server.IsLocal: True
+  server.LocalIpAddress: ::1
+  server.LocalPort: 5000
+  server.OnSendingHeaders: System.Action`2[System.Action`1[System.Object],System.Object]
+  server.RemoteIpAddress: ::1
+  server.RemotePort: 59132
+  server.User:
+  ssl.ClientCertificateErrors:
+  System.Net.HttpListener: System.Net.HttpListener
+  System.Net.HttpListenerContext: System.Net.HttpListenerContext
+  Capabilities::
+  |   sendfile.Version: 1.0

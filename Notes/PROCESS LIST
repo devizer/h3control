@@ -1,0 +1,47 @@
+ps ax -o pid,pcpu,rss,size,args k-pcpu | head -5
+
+   PID %CPU   RSS  SIZE COMMAND
+  1222 63.0 207124 223076 cinnamon --replace
+  3500  7.5 34264 25288 /usr/bin/python3 /usr/bin/dnf makecache timer
+   701  2.9 80300 42796 /usr/libexec/Xorg -background none :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt1 -novtswitch
+   583  1.0 11104  1824 /usr/bin/vmtoolsd
+  2994  0.7 102476 129396 mono /root/bin/h3control/bin/H3Control.exe
+  1267  0.6 27548  3104 /usr/bin/vmtoolsd -n vmusr
+  3267  0.4     0     0 [kworker/0:0]
+  3501  0.3  6236 56828 /usr/libexec/fprintd
+  1410  0.2 40492 40968 cinnamon-screensaver
+  3438  0.1     0     0 [kworker/0:2]
+     1  0.0  9040 19668 /usr/lib/systemd/systemd --switched-root --system --deserialize 24
+     2  0.0     0     0 [kthreadd]
+     3  0.0     0     0 [ksoftirqd/0]
+     5  0.0     0     0 [kworker/0:0H]
+     7  0.0     0     0 [rcu_sched]
+     8  0.0     0     0 [rcu_bh]
+     9  0.0     0     0 [rcuos/0]
+    10  0.0     0     0 [rcuob/0]
+    11  0.0     0     0 [migration/0]
+    12  0.0     0     0 [watchdog/0]
+    13  0.0     0     0 [cpuhp/0]
+    14  0.0     0     0 [kdevtmpfs]
+    15  0.0     0     0 [netns]
+    16  0.0     0     0 [oom_reaper]
+    17  0.0     0     0 [writeback]
+    18  0.0     0     0 [kcompactd0]
+    19  0.0     0     0 [ksmd]
+    20  0.0     0     0 [khugepaged]
+    21  0.0     0     0 [crypto]
+    22  0.0     0     0 [kintegrityd]
+    23  0.0     0     0 [bioset]
+    24  0.0     0     0 [kblockd]
+    25  0.0     0     0 [ata_sff]
+    26  0.0     0     0 [md]
+    27  0.0     0     0 [devfreq_wq]
+    28  0.0     0     0 [watchdogd]
+    31  0.0     0     0 [kswapd0]
+    32  0.0     0     0 [vmstat]
+    74  0.0     0     0 [kthrotld]
+    75  0.0     0     0 [acpi_thermal_pm]
+    76  0.0     0     0 [scsi_eh_0]
+    77  0.0     0     0 [scsi_tmf_0]
+    78  0.0     0     0 [scsi_eh_1]
+    79  0.0     0     0 [scsi_tmf_1]

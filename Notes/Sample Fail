@@ -1,0 +1,26 @@
+/api/json/device/my
+Unhandled Exception:
+System.IO.IOException: Write failure ---> System.Net.Sockets.SocketException: The socket has been shut down
+  at System.Net.Sockets.Socket.Send (System.Byte[] buf, Int32 offset, Int32 size, SocketFlags flags) [0x00000] in <filename unknown>:0
+  at System.Net.Sockets.NetworkStream.Write (System.Byte[] buffer, Int32 offset, Int32 size) [0x00000] in <filename unknown>:0
+  --- End of inner exception stack trace ---
+  at System.Net.Sockets.NetworkStream.Write (System.Byte[] buffer, Int32 offset, Int32 size) [0x00000] in <filename unknown>:0
+  at System.Net.ResponseStream.InternalWrite (System.Byte[] buffer, Int32 offset, Int32 count) [0x00000] in <filename unknown>:0
+  at System.Net.ResponseStream.Close () [0x00000] in <filename unknown>:0
+  at System.Net.HttpConnection.Close (Boolean force_close) [0x00000] in <filename unknown>:0
+  at System.Net.HttpListenerResponse.Close (Boolean force) [0x00000] in <filename unknown>:0
+  at System.Net.HttpListenerResponse.Abort () [0x00000] in <filename unknown>:0
+  at Microsoft.Owin.Host.HttpListener.RequestProcessing.OwinHttpListenerResponse.End () [0x00000] in <filename unknown>:0
+  at Microsoft.Owin.Host.HttpListener.RequestProcessing.OwinHttpListenerContext.End () [0x00000] in <filename unknown>:0
+  at Microsoft.Owin.Host.HttpListener.RequestProcessing.OwinHttpListenerContext.End (System.Exception ex) [0x00000] in <filename unknown>:0
+  at Microsoft.Owin.Host.HttpListener.OwinHttpListener+<ProcessRequestAsync>d__5.MoveNext () [0x00000] in <filename unknown>:0
+--- End of stack trace from previous location where exception was thrown ---
+  at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw () [0x00000] in <filename unknown>:0
+  at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess (System.Threading.Tasks.Task task) [0x00000] in <filename unknown>:0
+  at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification (System.Threading.Tasks.Task task) [0x00000] in <filename unknown>:0
+  at System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd (System.Threading.Tasks.Task task) [0x00000] in <filename unknown>:0
+  at System.Runtime.CompilerServices.TaskAwaiter.GetResult () [0x00000] in <filename unknown>:0
+  at Microsoft.Owin.Host.HttpListener.OwinHttpListener+<ProcessRequestsAsync>d__0.MoveNext () [0x00000] in <filename unknown>:0
+--- End of stack trace from previous location where exception was thrown ---
+  at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw () [0x00000] in <filename unknown>:0
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore.<ThrowAsync>m__1 (System.Object state) [0x00000] in <filename unknown>:0

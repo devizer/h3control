@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Nancy.RouteHelpers</name>
+    </assembly>
+    <members>
+        <member name="M:Nancy.RouteHelpers.Route.AnyIntAtLeastOnce(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a route that expects at least one integer, for example, /products/123
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <param name="lengthStart">The minimum number of integers in the route</param>
+            <param name="lengthEnd">The maximum number of integers in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.AnyIntAtLeastOnce(System.String)">
+            <summary>
+            Creates a route that expects at least one integer, for example, /products/123
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.AnyIntOptional(System.String)">
+            <summary>
+            Creates a route that will accept an int but the URL doesn't always have to contain one, for example, /products OR /products/123. NOTE: Do not use a / in your route before using this method as one is included
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.And">
+            <summary>
+            Seperates route segments by adding a '/' to the route
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.Root">
+            <summary>
+            Starts route segments by adding a '/' to the route
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.AnyStringOptional(System.String)">
+            <summary>
+            Creates a route that will accept a string but the URL doesn't always have to contain one, for example, /products OR /products/mac. NOTE: Do not use a / in your route before using this method as one is included
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.AnyStringAtLeastOnce(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a route that expects at least one string, for example, /mac
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <param name="lengthStart">The minimum number of characters in the route</param>
+            <param name="lengthEnd">The minimum number of characters in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.AnyStringAtLeastOnce(System.String)">
+            <summary>
+            Creates a route that expects at least one string, for example, /mac
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.Route.Exact(System.String,System.String)">
+            <summary>
+            Creates a route that expects a certain pattern
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <param name="Exact">The exact pattern in the route</param>
+            <returns>bob</returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.AnyIntAtLeastOnce(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a route that expects at least one integer, for example, /products/123
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <param name="lengthStart">The minimum number of integers in the route</param>
+            <param name="lengthEnd">The maximum number of integers in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.AnyIntAtLeastOnce(System.String)">
+            <summary>
+            Creates a route that expects at least one integer, for example, /products/123
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.AnyIntOptional(System.String)">
+            <summary>
+            Creates a route that will accept an int but the URL doesn't always have to contain one, for example, /products OR /products/123. NOTE: Do not use a / in your route before using this method as one is included
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.And">
+            <summary>
+            Seperates route segments by adding a '/' to the route
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.Root">
+            <summary>
+            Starts route segments by adding a '/' to the route
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.AnyStringOptional(System.String)">
+            <summary>
+            Creates a route that will accept a string but the URL doesn't always have to contain one, for example, /products OR /products/mac. NOTE: Do not use a / in your route before using this method as one is included
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.AnyStringAtLeastOnce(System.String,System.Int32,System.Int32)">
+            <summary>
+            Creates a route that expects at least one string, for example, /mac
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <param name="lengthStart">The minimum number of characters in the route</param>
+            <param name="lengthEnd">The minimum number of characters in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.AnyStringAtLeastOnce(System.String)">
+            <summary>
+            Creates a route that expects at least one string, for example, /mac
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <returns></returns>
+        </member>
+        <member name="M:Nancy.RouteHelpers.RouteParameters.Exact(System.String,System.String)">
+            <summary>
+            Creates a route that expects a certain pattern
+            </summary>
+            <param name="NamedGroup">The name of the parameter in the route</param>
+            <param name="Exact">The exact pattern in the route</param>
+            <returns>bob</returns>
+        </member>
+    </members>
+</doc>

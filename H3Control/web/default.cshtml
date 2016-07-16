@@ -1,0 +1,622 @@
+﻿@using H3Control
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+@{
+    Layout = null;
+}
+
+    <!DOCTYPE HTML>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="h3control" style="padding-left: 0">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Orange PI</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href='@Html.HRef(this)["favicon.ico"]' >
+        <link rel="apple-touch-icon" sizes="57x57" href='@Html.HRef(this)["h3-57x57.png"]' />
+        <link rel="apple-touch-icon" sizes="72x72" href='@Html.HRef(this)["h3-72x72.png"]' />
+        <link rel="apple-touch-icon" sizes="114x114" href='@Html.HRef(this)["h3-144x144.png"]' />
+        <link rel="apple-touch-icon" sizes="144x144" href='@Html.HRef(this)["h3-144x144.png"]' />
+
+        <meta name="msapplication-TileColor" content="#1262AA">
+        <meta name="msapplication-TileImage" content='@Html.HRef(this)["h3-144x144.png"]'>
+
+        @Html.Script(this)["Scripts/jquery-1.12.4.min.js"]
+        @Html.Script(this)["Scripts/angular.1.2.29.min.js"]
+        
+
+        <!-- through  out bootstrapper? -->
+        @Html.Css(this)["Content/bootstrap.min.css"]
+        @Html.Css(this)["Content/bootstrap-theme.min.css"]
+        @Html.Script(this)["Scripts/bootstrap.min.js"] 
+        
+
+        <!-- Offline Fonts -->
+        <!--<link rel="stylesheet" href="Content/kanit/fonts.css" type="text/css" />-->
+        <!-- GAUGE -->
+        @Html.Css(this)["jqwidgets/styles/jqx.base.css"]
+        @Html.Css(this)["jqwidgets/styles/jqx.light.css"]
+        @Html.Css(this)["jqwidgets/styles/jqx.darkblue.css"]
+        @Html.Css(this)["jqwidgets/styles/jqx.fresh.css"]
+
+        @Html.Script(this)["jqwidgets/jqxcore.js"]
+        @Html.Script(this)["jqwidgets/jqxdraw.js"]
+        @Html.Script(this)["jqwidgets/jqxgauge.js"]
+        @Html.Script(this)["jqwidgets/jqxexpander.js"]
+        @Html.Script(this)["jqwidgets/jqxmenu.js"]
+        @Html.Script(this)["jqwidgets/jqxnotification.js"]
+        @Html.Script(this)["jqwidgets/jqxbuttons.js"]
+        @Html.Script(this)["jqwidgets/jqxchart.js"]
+        @Html.Script(this)["jqwidgets/jqxdata.js"]
+        @Html.Script(this)["jqwidgets/jqxrating.js"]
+        @Html.Script(this)["Scripts/jquery.popupoverlay.js"]
+    <!--@Html.Script(this)["Scripts/angular.js"]
+        @Html.Script(this)["jqwidgets/jqxangular.js"] 
+    -->
+
+        @Html.Css(this)["H3Content/h3.css"]
+        @Html.Script(this)["Scripts/BrowserDetect.js"]
+        @Html.Script(this)["H3Content/h3_cpuMenu.js"]
+        @Html.Script(this)["H3Content/h3_cpuFreq.js"]
+        @Html.Script(this)["H3Content/h3_cpuUsage.js"]
+        @Html.Script(this)["H3Content/h3_refreshRate.js"]
+        @Html.Script(this)["H3Content/h3_nextIter.js"]
+
+        <script type="text/javascript">
+
+            // DEFAULT Update Speed, should be from of a .UpdateSpeedButton button
+            var UpdateSpeed = 2000; // milliseconds
+
+            // CACHE of frequently accessed widgets
+
+            var gauge_DdrFreq;          // #ddrContainer
+            var label_DdrFreq;          // #ddrValue
+            var gauge_Temperature;      // #gauge
+            var label_Temperature;      // #tempValue
+            var buttonList_UpdateSpeed; // .UpdateSpeedButton
+            var label_DdrRange;         // #ddrLimits
+            var label_Error;            // #error
+
+            function updateGauges(values) {
+                $('#cpuContainer').jqxGauge('value', values.CpuCur);
+                $('#ddrContainer').jqxGauge('value', values.DdrCur);
+                $('#gauge').jqxLinearGauge('value', values.Tempr);
+            }
+
+
+            $(document).ready(function () {
+
+                $("#BrowserInfo").text(BrowserDetect.browser + ' v:' + BrowserDetect.version);
+
+                cpuMenu_OnReady();
+                cpuFreq_OnReady();
+                cpuUsage_OnReady();
+                refreshRate_OnReady();
+
+                gauge_DdrFreq = $("#ddrContainer");
+                label_DdrRange = $("#ddrLimits");
+                label_DdrFreq = $("#ddrValue");
+
+                gauge_Temperature = $("#gauge");
+                buttonList_UpdateSpeed = $(".UpdateSpeedButton");
+                label_Error = $("#error");
+                label_Temperature = $("#tempValue");
+
+                // DDR
+                gauge_DdrFreq.jqxGauge({
+                    ranges: [
+                        { startValue: 400, endValue: 500, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
+                        { startValue: 500, endValue: 600, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
+                        { startValue: 600, endValue: 700, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 }
+                    ],
+                    ticksMinor: { interval: 10, size: '5%' },
+                    ticksMajor: { interval: 50, size: '9%' },
+                    width: 324,
+                    height: 324,
+                    min: 400,
+                    max: 700,
+                    value: 380,
+                    colorScheme: 'scheme05',
+                    animationDuration: 700,
+                    labels: {
+                        distance: '38%',
+                        position: 'none',
+                        interval: 50,
+                        offset: [0, -10],
+                        visible: true,
+                        formatValue: function (value) { return value + ""; }
+                    }
+                });
+                gauge_DdrFreq.on('valueChanging', function (e) {
+                    label_DdrFreq.html("DDR: <b>" + Math.round(e.args.value) + '</b> MHz');
+                });
+                gauge_DdrFreq.jqxGauge('value', 400);
+
+                // TEMPERETURE
+                var majorTicks = { size: '10%', interval: 10 },
+                    minorTicks = { size: '5%', interval: 5, style: { 'stroke-width': 1, stroke: '#aaaaaa' } },
+                    labels = {
+                        interval: 20 /* ° */
+                    };
+
+                gauge_Temperature.jqxLinearGauge({
+                    labels: labels,
+                    ticksMajor: majorTicks,
+                    ticksMinor: minorTicks,
+                    min: 0,
+                    max: 120,
+                    value: 20,
+                    pointer: { size: '10%' },
+                    colorScheme: 'scheme05',
+                    width: 992,
+                    height: 100,
+                    orientation: 'horizontal',
+                    rangeSize: '2%',
+                    ranges: [
+                        { startValue: 0, endValue: 70, style: { fill: '#FFF157', stroke: '#FFF157' } },
+                        { startValue: 70, endValue: 90, style: { fill: '#FFA200', stroke: '#FFA200' } },
+                        { startValue: 90, endValue: 120, style: { fill: '#FF4800', stroke: '#FF4800' } }
+                    ]
+                });
+                gauge_Temperature.jqxLinearGauge('value', 40);
+                gauge_Temperature.on('valueChanging', function (e) {
+                    label_Temperature.html("TEMPERATURE: <b>" + Math.round(e.args.value) + "</b>°");
+                });
+
+
+                $("#newVersionNotification").jqxNotification({
+                    width: "370px",
+                    position: "top-center",
+                    opacity: 0.7,
+                    autoOpen: true,
+                    autoClose: false,
+                    template: "mail"
+                });
+
+                var memUsageSource = [
+                    { Kind: 'Cache', Mem: 587 },
+                    { Kind: 'Used', Mem: 175 },
+                    { Kind: 'Free', Mem: 238 },
+                ];
+
+                var swapUsageSource = [
+                    { Kind: '', Mem: 0 },
+                    { Kind: 'Used', Mem: 175 },
+                    { Kind: 'Free', Mem: 825 },
+                ];
+
+                var settings = {
+                    title: "",
+                    description: "",
+                    enableAnimations: false,
+                    showLegend: false,
+                    showBorderLine: false,
+                    legendPosition: { left: 520, top: 140, width: 100, height: 100 },
+                    padding: { left: 5, top: 5, right: 5, bottom: 5 },
+                    titlePadding: { left: 0, top: 20, right: 0, bottom: 10 },
+                    source: memUsageSource,
+                    colorScheme: 'scheme01',
+                    seriesGroups:
+                    [
+                        {
+                            type: 'donut',
+                            showLabels: false,
+                            series: [
+                                {
+                                    dataField: 'Mem',
+                                    displayText: 'Kind',
+                                    labelRadius: 35,
+                                    initialAngle: 0,
+                                    radius: 60,
+                                    innerRadius: 30,
+                                    centerOffset: 0,
+                                    formatSettings: { sufix: '', decimalPlaces: 0 }
+                                }
+                            ]
+                        }
+                    ]
+                };
+                // setup the chart
+                $('#memChart, #swapChart').jqxChart(settings);
+                $('#swapChart').jqxChart("source", swapUsageSource);
+
+                BindEmptyMemoryUsage();
+
+                // INIT RATE ME
+                $("#rating").jqxRating({
+                    width: 85,
+                    height: 17,
+                    itemWidth: 17,
+                    itemHeight: 17,
+                    theme: 'classic'
+                });
+                $("#rating").on('change', function (event) {
+                    var v = parseInt(event.value);
+                    if (v > 0) {
+                        // alert(v);
+                        // console.log("rate V=" + v);
+                        var answers = ["What the hell?", "Take another short", "Really?", "You are not bad today", "You are genius"];
+                        $("#feedback_reply").html(answers[v - 1]);
+                        $("#feedback_close_text").text(v == 5 ? "OK" : "Try again");
+
+                        $('#feedback_popup').popup({
+                            transition: 'all 0.3s',
+                            pagecontainer: "#PageContainer"
+                        });
+                        $('#feedback_popup').popup("show");
+                        if (v != 5) $("#rating").jqxRating("setValue", 0);
+                    }
+                });
+                $("#rating_panel").hide();
+                $("#feedback_close").on('click', function (event) {
+                    $('#feedback_popup').popup("hide");
+                });
+
+                $(".Restricted").hide();
+
+                window.setTimeout(nextNeverendingUpdate, 200);
+            });
+
+
+            function BindEmptyMemoryUsage() {
+                var usage3 = [
+                    { Label: "TOTAL MEMORY", Value: null },
+                    { Label: "FREE MEMORY", Value: null },
+                    { Label: "BUFFERS &amp; CACHE", Value: null },
+                    { Label: "AVAILABLE MEM", Value: null },
+                    { Label: 'SWAP TOTAL', Value: null },
+                    { Label: 'SWAP USED', Value: null }
+                ];
+
+                BindMemoryUsage(usage3);
+            }
+
+            function BindMemoryUsage(mem) {
+                var html = '';
+                var template = '<div class="InfoBlock-Div">'
+                    + '<div class="InfoBlock-Label truncate">${LABEL}</div>'
+                    + '<div class="InfoBlock-Value truncate">${VALUE}</div>'
+                    + '</div>';
+
+                var memUsage = $("#memUsage");
+                if (false && (mem == null || typeof mem === 'undefined'))
+                    memUsage.hide();
+                else {
+                    memUsage.show();
+                    for (var i = 0; i < mem.length; i++) {
+                        var item = mem[i];
+                        var str = "&nbsp;";
+                        if (item.Value !== null) {
+                            var mb = Math.round(item.Value / 1024);
+                            str = '<span class="InfoBlock-Mb">&mdash;</span>';
+                            if (mb != 0)
+                                str = '<span class="InfoBlock-Mb MyNumber">' + mb + '</span>&nbsp;<small>Mb</small>';
+
+                        }
+
+                        var htmlItem = template.replace("${LABEL}", item.Label).replace("${VALUE}", str);
+                        html = html + htmlItem;
+                    }
+                    memUsage.html(html);
+                }
+
+            }
+
+            function BindHasAccess(hasAccess) {
+                if (hasAccess === null)
+                    return;
+
+                if (hasAccess)
+                    $(".Restricted").hide();
+                else
+                    $(".Restricted").show();
+
+                var isIE8 = (BrowserDetect.browser === "Explorer" && BrowserDetect.version <= 8.9);
+                if (isIE8) {
+                    $(".Restricted").hide();
+                    $("#cpuMaxMenu").jqxMenu('disabled', !hasAccess);
+                    $("#cpuMinMenu").jqxMenu('disabled', !hasAccess);
+                }
+
+                $("#ddrMenu").jqxMenu('disabled', !hasAccess);
+            }
+
+        </script>
+
+        <script type="text/javascript">
+
+            /*
+                var demoApp = angular.module("demoApp", ["jqwidgets"]);
+                demoApp.controller("demoController", function($scope) {
+                });
+            */
+
+        </script>
+
+
+    </head>
+    <body>
+
+
+        <div class="container theme-showcase" role="main" style='position: relative; text-align: center'>
+            <br />
+
+            <div class="Restricted Restricted-1" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
+            <div class="Restricted Restricted-2" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
+
+
+            <!-- Main jumbotron for a primary marketing message or call to action
+        <div class="jumbotron">
+            <h1>Orange Pi plus h3control</h1>
+            <p>Here is a single weekend prototype of the web access to tempereture &amp; frequency of an OP+</p>
+            <p>
+                <button type="button" class="btn btn-lg btn-default">Orange Pi 1 (192.168.0.11)</button>
+                <button type="button" class="btn btn-lg btn-primary">Orange Pi 2 (192.168.0.15)</button>
+                <button type="button" class="btn btn-lg btn-default">Orange Pi 3 (192.168.0.99)</button>
+                <button type="button" class="btn btn-lg btn-default">Orange Pi 4 (192.168.0.144)</button>
+            </p>
+        </div>
+        -->
+
+            <div id="newVersionNotification" style='position: absolute; left: 440px; top: 480px; visibility: hidden'>
+                <b>New version X.Y.ZZZ is available!</b>
+            </div>
+
+            <table border="0" cellspacing="0" cellpadding="0" id="PageContainer">
+                <tr>
+                    <td colspan="4" style="padding-bottom: 9px">
+                        <div style="position: relative;">
+                            <div id="gauge" style="margin-left: 0px; float: left;"></div>
+                            <div id="tempValu_" style="position: absolute; top: 60px; left: 376px; width: 240px;">&nbsp;</div>
+                            <div id="tempValue" style="position: absolute; top: 60px; left: 376px; width: 240px;">TEMPERATURE: ..... ° </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <!--CPU MIN MENU-->
+                                <td>
+                                    <div id='cpuMinExpander' class="cpuExpanderHeader">
+                                        <div style='text-align: center'>
+                                            CPU<sub> MIN</sub> (Mhz)
+                                        </div>
+                                        <div style='background-color: #F0F0F0; overflow: hidden'>
+                                            <div id='jqxWidget'>
+                                                <div id='cpuMinMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!--CPU MAX MENU-->
+                                <td style='padding-left: 10px'>
+                                    <div id='cpuMaxExpander' class="cpuExpanderHeader">
+                                        <div style='text-align: center'>
+                                            CPU<sub> MAX</sub> (Mhz)
+                                        </div>
+                                        <div style='background-color: #F0F0F0; overflow: hidden'>
+                                            <div id='jqxWidget'>
+                                                <div id='cpuMaxMenu' style="visibility: hidden; background-color: #F0F0F0; text-align: center" class="cpuMenu">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+
+                    <!--CPU GAUGE-->
+                    <td style="padding-left: 10px; vertical-align: top">
+                        <div>
+                            <div id="demoWidget" style="position: relative;">
+                                <div style="float: left;" id="cpuContainer"></div>
+                                <div id="cpuValue" style="position: absolute; top: 232px; left: 87px; font-family: Sans-Serif; text-align: center; font-size: 17px; width: 150px;"></div>
+                                <div id="cpuLimits" style="position: absolute; top: 257px; left: 82px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 160px; border-top: 1px dotted gray; color: gray"></div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!--DDR GAUGE-->
+                    <td style='padding-left: 10px; vertical-align: top'>
+                        <div>
+                            <div id="demoWidget" style="position: relative;">
+                                <div style="float: left;" id="ddrContainer"></div>
+                                <div id="ddrValue" style="position: absolute; top: 232px; left: 87px; font-family: Sans-Serif; text-align: center; font-size: 17px; width: 150px;"></div>
+                                <div id="ddrLimits" style="position: absolute; top: 257px; left: 82px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 160px; border-top: 1px dotted gray; color: gray"></div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <!--- DDR CONTROL -->
+                        <div style="position: relative;" @*style="position: absolute; left: 1030px; top: 136px"*@>
+                            <div id='ddrExpander' class="cpuExpanderHeader">
+                                <div style='text-align: center'>DDR (Mhz)</div>
+                                <div style='background-color: #F0F0F0; overflow: hidden'>
+                                    <div id='jqxWidget'>
+                                        <div id='ddrMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px; vertical-align: top">
+                        <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none">
+                            <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
+                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
+                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
+                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
+                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
+                        </div>
+                    </td>
+                    <td colspan="3" style='padding-top: 10px; text-align: center;'>
+                        <div id="memUsagePlaceholder">
+                            <div id="memUsage"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div ng-controller="processesCtrl" id="processesCtrl" ng-show="Visible">
+                            <table class="PList">
+                                <tr>
+                                    <th class="pid">pid</th>
+                                    <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')" style="display: none">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
+                                    <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
+                                    <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
+                                    <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
+                                    <th class="process">top memory usage</th>
+                                </tr>
+                                <tr ng-repeat="pr in Processes">
+                                    <td class="pid" ng-bind="pr.Pid"></td>
+                                    <td class="cpu" style="display: none">{{ pr.CpuUsage }}</td>
+                                    <td class="rss" ><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
+                                    <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
+                                    <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
+                                    <td class="process">{{ pr.Args }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <div id="error" style='color: #E8E8E8; float: left'></div>
+                        <div id="BrowserInfo" style='color: #E8E8E8; float: right'></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div id="cpuUsageContainer" class="CpuUsageDivSize" style="border: 1px solid #DDDDDD; left: 230px; position: absolute; top: 461px; z-index: 999">
+                <div id="cpuUsageSample"></div>
+            </div>
+
+            <div id="rating_panel" style="position: absolute; top: 130px; left: 457px; z-index: 999">
+                <div id="rating"></div>
+                <div id="rating_footer">VER <span id="version">X.YY.ZZZ</span></div>
+            </div>
+
+
+        </div>
+
+
+    <script>
+
+        var appH3 = angular.module('h3control', []);
+        appH3.filter('unsafe', function ($sce) { return $sce.trustAsHtml; });
+
+        appH3.controller('processesCtrl', function ($scope, $http) {
+            /* orderColumn values are from enum PsSortOrder */
+            $scope.order = "Rss";
+            $scope.topN = 5;
+
+            $scope.getHeaderClass = function (column) {
+                return column === $scope.order ? "sorted" : "sortable";
+            }
+
+            $scope.getSelectedSortMark = function (column) {
+                return column === $scope.order ? "&#9679;" : "";
+            }
+
+            var fixProcesses = function(procList, maxCount) {
+                // return procList;
+                // if (procList.length > 0) console.log("First process is " + procList[0].Args);
+                while (procList.length < maxCount)
+                    procList.push({ Pid: null, CpuUsage: null, Rss: null, Size: null, Swapped: null, Args: null });
+
+                // console.log("fixProcesses DONE. length is " + procList.length);
+
+                return procList;
+            }
+
+            $scope.changeOrder = function (newOrder) {
+                $scope.order = newOrder;
+                $http.get("api/json/processes/by-" + $scope.order + "/top-" + $scope.topN)
+                    .then(function(response) {
+                        var processes = response.data.Processes === null ? [] : response.data.Processes;
+                        $scope.Processes = fixProcesses(processes, $scope.topN);
+                    });
+            }
+
+
+
+
+
+
+
+            var isNumeric = function(n) {
+                if ((typeof n) === "undefined" || n === null) return false;
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+            
+            $scope.formatKb = function(num) {
+                return isNumeric(num) ? (Math.round(num / 1000 * 10) / 10).toString() : "&nbsp;";
+            }
+
+            $scope.formatSwapped = function(num) {
+                if (!isNumeric(num)) return "&nbsp;";
+                if (num < 0) return "<span color='gray'></span>";
+                var ret = (Math.round(num / 1000 * 10) / 10).toString();
+                return ret === "0" ? "&mdash;" : ret;
+            }
+
+
+            $scope.Visible = false; // ALWAYS
+            $scope.refresh = function () {
+                $http.get("api/json/processes/by-" + $scope.order + "/top-" + $scope.topN)
+                    .then(function(response) {
+                        var processes = response.data.Processes === null ? [] : response.data.Processes;
+                        $scope.Processes = fixProcesses(processes, $scope.topN);
+                        $scope.Visible = true || (processes.length > 0);
+                        window.setTimeout($scope.refresh, 3000);
+                    }, function(response) {
+                        $scope.Visible = true;
+                        $scope.Processes = fixProcesses([], $scope.topN);
+                        window.setTimeout($scope.refresh, 3000);
+                    });
+
+
+
+
+            };
+
+            // refreshProcesses();
+            $scope.refresh();
+        });
+    </script>
+
+
+
+
+    <div style="display: none">
+        <div id='memChart' style="margin-left: 48px; width: 140px; height: 140px; float: left">
+        </div>
+        <div id='swapChart' style="margin-left: 556px; width: 140px; height: 140px; float: left">
+        </div>
+    </div>
+
+
+
+    <div id="feedback_popup" style="display: none" class="well">
+        <div id="feedback_content">
+            <div id="feedback_reply" style="float: left">
+                What the hell
+            </div>
+            <button id="feedback_close" class="btn btn-default" style="float: right; height: 40px"><span id="feedback_close_text">Close</span></button>
+        </div>
+    </div>
+
+
+    </body>
+</html>
