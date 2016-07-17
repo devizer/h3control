@@ -58,19 +58,23 @@ namespace H3Control.Tests
             Trace.WriteLine("PID: " + H3Pid);
 
             int counter = 0;
-            PollWithTimeout.Run(20000, () =>
+            var waitForLaunch = 20000;
+            var swLaunch = Stopwatch.StartNew();
+            bool isOk = PollWithTimeout.Run(waitForLaunch, () =>
             {
-                var url = "http://localhost:" + port + "/favicon.ico";
+                var url = "http://localhost:" + port + "/Ver";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);
                 return FastCheck(url);
             }, pollInterval: 111);
+
+            NiceTrace.Message("Launch result (during {0}): {1}", swLaunch.Elapsed, isOk ? "SUCCESS" : "FAIL");
         }
 
         static bool FastCheck(string url)
         {
             try
             {
-                new WebClient().DownloadData(url);
+                var ver = new WebClient().DownloadString(url);
                 return true;
             }
             catch (Exception ex)

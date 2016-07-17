@@ -30,13 +30,24 @@
         }
 
         [Test]
-        public void T01_Get_Favicon_Returns()
+        public void T01_Get_Favicon_Doesnt_Fail()
         {
             var url = BaseUrl + "/favicon.ico";
             using (WebClient client = new WebClient())
             {
                 var data = client.DownloadData(url);
                 Trace.WriteLine(url + ": length is " + data.Length);
+            }
+        }
+
+        [Test]
+        public void T01_Get_Ver_Via_Http_Doesnt_Fail()
+        {
+            var url = BaseUrl + "/Ver";
+            using (WebClient client = new WebClient())
+            {
+                var ver = client.DownloadString(url);
+                Trace.WriteLine("Version (via http) is " + ver);
             }
         }
 
