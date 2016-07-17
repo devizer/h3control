@@ -8,3 +8,5 @@ script:
   - cat /etc/*release
   - mono --version
   - java -version
+  - du -h -d 4
+  - xbuild devizer/H3Control.sln 
