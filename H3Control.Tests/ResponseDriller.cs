@@ -74,17 +74,17 @@ namespace H3Control.Tests
             var elapsed2 = sw.ElapsedMilliseconds;
 
             var keys = result.Headers.Select(x => x.Key).OrderBy(x => x).ToList();
-            var maxKeyLength = keys.Max(x => x.Length) + 1;
+            var maxKeyLength = Math.Max(20, keys.Max(x => x.Length) + 1);
             int numHeaders = result.Headers.SelectMany(x => x.Value).Count();
             StringBuilder b = new StringBuilder();
             b.AppendFormat(@"{0} response details:
-  status recieved in: {1} msec
-        (int) status: {2} 
-       (enum) status: {3}
-     (phrase) status: {4}
- content recieved in: {5} msec
-      content length: {6}
-             HEADERS: {7} rows",
+  status recieved in| {1} msec
+        (int) status| {2} 
+       (enum) status| {3}
+     (phrase) status| {4}
+ content recieved in| {5} msec
+      content length| {6}
+             HEADERS| {7} rows",
                 descr, elaplsed.ToString("n0"), 
                 result.StatusCode, (int) result.StatusCode, result.ReasonPhrase,
                 elapsed2.ToString("n0"), Bytes.Length.ToString("n0"),

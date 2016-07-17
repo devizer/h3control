@@ -99,7 +99,7 @@
             var url = BaseUrl + "/api/json/device/me";
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
-            Assert.AreEqual(HttpStatusCode.BadRequest, driller.Result.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
         }
 
 
