@@ -83,10 +83,20 @@
         }
 
         [Test]
-        public void T04_Select_Processes_by_Nianyty_Fails_and_Return_400()
+        public void T05_Select_Processes_by_Nianyty_Fails_and_Return_400()
         {
             // yes, there is no such column is Nianyty in processes response
             var url = BaseUrl + "/api/json/processes/by-Nianyty/top-3";
+            ResponseDriller driller = ResponseDriller.CreateGetJson(url);
+            driller.Dump();
+            Assert.AreEqual(HttpStatusCode.BadRequest, driller.Result.StatusCode);
+        }
+
+        [Test]
+        public void T06_GetDevice_Doest_Fail_And_Return_200()
+        {
+            // yes, there is no such column is Nianyty in processes response
+            var url = BaseUrl + "/api/json/device/me";
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
             Assert.AreEqual(HttpStatusCode.BadRequest, driller.Result.StatusCode);
