@@ -74,7 +74,7 @@ namespace H3Control.Tests
             var elapsed2 = sw.ElapsedMilliseconds;
 
             var keys = result.Headers.Select(x => x.Key).OrderBy(x => x).ToList();
-            var maxKeyLength = Math.Max(20, keys.Max(x => x.Length) + 1);
+            var maxKeyLength = Math.Max(19, keys.Max(x => x.Length) + 1);
             int numHeaders = result.Headers.SelectMany(x => x.Value).Count();
             StringBuilder b = new StringBuilder();
             b.AppendFormat(@"{0} response details:
