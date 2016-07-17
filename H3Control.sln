@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3Control", "H3Control\H3Control.csproj", "{7179B98E-685D-46BF-87C7-B28F54B00B8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3Control.Tests", "H3Control.Tests\H3Control.Tests.csproj", "{C997BACB-5A65-4126-911A-C4043E891700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7179B98E-685D-46BF-87C7-B28F54B00B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7179B98E-685D-46BF-87C7-B28F54B00B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7179B98E-685D-46BF-87C7-B28F54B00B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C997BACB-5A65-4126-911A-C4043E891700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C997BACB-5A65-4126-911A-C4043E891700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C997BACB-5A65-4126-911A-C4043E891700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C997BACB-5A65-4126-911A-C4043E891700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
