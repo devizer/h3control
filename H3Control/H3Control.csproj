@@ -192,7 +192,7 @@
     <Compile Include="DeviceModel.cs" />
     <Compile Include="Links\NDesk.Options.cs" />
     <Compile Include="MyStartup.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="H3Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer\Helpers.cs" />
     <Compile Include="Serializer\JsonNetBodyDeserializer.cs" />

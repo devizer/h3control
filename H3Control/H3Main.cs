@@ -26,7 +26,7 @@ namespace H3Control
 
     using Universe;
 
-    class Program
+    public class H3Main
     {
         
         static int Main(string[] args)
@@ -125,7 +125,7 @@ namespace H3Control
             try
             {
                 NewVerListener.Listen();
-                using (WebApp.Start<NancyStartup>(baseUrl))
+                using (var server = Launch_H3Server(baseUrl))
                 {
                     PsListener_OnLinux.Bind();
                     Console.WriteLine(Environment.NewLine + "HTTP server successefully has been started.");
@@ -153,6 +153,11 @@ namespace H3Control
                 return 1;
             }
 
+        }
+
+        public static IDisposable Launch_H3Server(string baseUrl)
+        {
+            return WebApp.Start<NancyStartup>(baseUrl);
         }
 
         private static void Preload(string baseUrl)
@@ -246,7 +251,7 @@ namespace H3Control
 
     }
 
-    class WhiteListConfig
+    public class WhiteListConfig
     {
         public static string WhiteListArg;
 
@@ -270,7 +275,7 @@ namespace H3Control
         }
     }
 
-    class PasswordConfig
+    public class PasswordConfig
     {
         public static string Hash;
 

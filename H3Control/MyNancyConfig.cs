@@ -36,7 +36,7 @@
 
         public IEnumerable<string> GetDefaultNamespaces()
         {
-            yield return typeof (Program).Namespace;
+            yield return typeof (H3Main).Namespace;
         }
 
         public bool AutoIncludeModelNamespace
@@ -100,7 +100,7 @@
         {
             get
             {
-                var s = typeof (Program).Assembly.GetManifestResourceStream("H3Control.favicon.ico");
+                var s = typeof (H3Main).Assembly.GetManifestResourceStream("H3Control.favicon.ico");
                 if (s == null)
                     throw new InvalidOperationException("Resource 'H3Control.web.favicon.ico' not found");
 

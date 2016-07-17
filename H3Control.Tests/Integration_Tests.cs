@@ -51,7 +51,7 @@ namespace H3Control.Tests
         [Test]
         public void T03_PsListener_OnLinux_Returns_At_Least_One_Process()
         {
-            List<PsProcessInfo> list = PsListener_OnLinux.Select(PsSortOrder.Cpu, 99999);
+            List<PsProcessInfo> list = PsListener_OnLinux.Select(PsSortOrder.Rss, 99999);
             Trace.WriteLine("Total processes: " + list.Count);
             foreach (var p in list)
             {
