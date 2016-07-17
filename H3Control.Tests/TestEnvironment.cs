@@ -23,7 +23,7 @@ namespace H3Control.Tests
                 int port = ((IPEndPoint)l.LocalEndpoint).Port;
                 l.Stop();
                 TcpPort = port;
-                Trace.WriteLine("  Working port is: " + port);
+                Trace.WriteLine("Working port is: " + port);
                 return port;
             }
 

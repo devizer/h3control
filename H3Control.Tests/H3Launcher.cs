@@ -1,8 +1,10 @@
 namespace H3Control.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Reflection;
 
@@ -15,12 +17,15 @@ namespace H3Control.Tests
 
         public void LaunchAndWait(int port)
         {
-            string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var testAssemblyPath = Assembly.GetExecutingAssembly().Location;
+            NiceTrace.Message("Test assembly Path: {0}", testAssemblyPath);
+            string exeDir = Path.GetDirectoryName(testAssemblyPath);
             string exe = Path.Combine(exeDir, "H3Control.exe");
             string args = "--binding=*:" + port;
             Trace.WriteLine("Launch: " + exe + " " + args);
 
-            ProcessStartInfo si = new ProcessStartInfo("");
+
+            ProcessStartInfo si;
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
                 si = new ProcessStartInfo(exe, args);
             else
@@ -28,6 +33,8 @@ namespace H3Control.Tests
 
             si.UseShellExecute = false;
             si.CreateNoWindow = true;
+            IEnumerable<string> files = Directory.GetFiles(exeDir).Select(x => Path.GetFileName(x)).ToList();
+            NiceTrace.Message("Files near test assembly: {0}", string.Join(", ", files));
             H3 = Process.Start(si);
             H3Pid = H3.Id;
             Trace.WriteLine("PID: " + H3Pid);
