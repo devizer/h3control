@@ -1,7 +1,7 @@
 language: csharp
 solution: H3Control.sln 
 mono:
-  - latest
+  - 3.12.0
 install:
   - sudo apt-get install -y sysbench ffmpeg redis-server memcached
   - ffmpeg -codecs
@@ -24,8 +24,8 @@ script:
   - sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run > /dev/null
   - sysbench --test=cpu --cpu-max-prime=20000 --max-time=5 --num-threads=1 run 
   - #du -h -d 4
-  - xbuild H3Control.sln /t:Rebuild /p:Configuration=Release /verbosity:normal
-  - xbuild H3Control.sln /t:Rebuild /p:Configuration=Debug /verbosity:minimal
+  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:normal
+  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug /verbosity:minimal
   - mono --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
   
   
