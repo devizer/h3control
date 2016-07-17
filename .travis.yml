@@ -1,7 +1,7 @@
 language: csharp
 solution: H3Control.sln 
 mono:
-  - 3.2.8
+  - latest
 install:
   - sudo apt-get install -y sysbench ffmpeg redis-server memcached
   - ffmpeg -codecs
