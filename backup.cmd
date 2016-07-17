@@ -1,6 +1,8 @@
 taskkill /f /im h3control.exe
 rd /q /s H3Control\bin
 rd /q /s H3Control\obj
+rd /q /s H3Control.Tests\bin
+rd /q /s H3Control.Tests\obj
 set /p Build=<H3Control\linux-build\_build-number.txt
 set /p Version=<H3Control\linux-build\_version-number.txt 
 for /f %%i in ('datetime local') do set datetime=%%i
