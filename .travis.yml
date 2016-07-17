@@ -8,5 +8,5 @@ script:
   - cat /etc/*release
   - mono --version
   - java -version
-  - du -h -d 4
-  - xbuild devizer/H3Control.sln 
+  - #du -h -d 4
+  - xbuild H3Control.sln /t:Rebuild /p:Configuration=Release /verbosity:normal
