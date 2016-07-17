@@ -2,6 +2,7 @@ language: csharp
 solution: H3Control.sln 
 install:
   - sudo apt-get install -y sysbench ffmpeg redis-server memcached
+  - ffmpeg -codecs
   - nuget restore H3Control.sln 
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:

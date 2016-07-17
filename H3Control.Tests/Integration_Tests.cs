@@ -21,8 +21,11 @@ namespace H3Control.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            string all = File.ReadAllText("/proc/cpuinfo");
-            Console.WriteLine("/proc/cpuinfo:::::::::::::" + Environment.NewLine + all);
+            if (CrossInfo.ThePlatform == CrossInfo.Platform.Linux)
+            {
+                string all = File.ReadAllText("/proc/cpuinfo");
+                Console.WriteLine("/proc/cpuinfo:::::::::::::" + Environment.NewLine + all);
+            }
             CrossInfo.AttachUnitTrace("H3Control unit tests");
         }
         

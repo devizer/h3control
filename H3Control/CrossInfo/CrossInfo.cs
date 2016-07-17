@@ -9,6 +9,7 @@
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
+    using System.Runtime.Remoting.Messaging;
     using System.Threading;
     using System.Web;
 
@@ -457,47 +458,91 @@ BuildVersion:	14B25
             return ret;
         }
 
-        private static string Linux_ProcName()
+    private static string Linux_ProcName_Bit_Working_OnTravis_Ubuntu_12_04()
+    {
+        String name = null, name2 = null, cache = null, processor = null, hardware = null;
+        string fileName = "/proc/cpuinfo";
+        if (!File.Exists(fileName))
+            return (ExecUName("-m") ?? "").Trim();
+
+        var comp = StringComparison.InvariantCultureIgnoreCase;
+        foreach (var line in EnumLines(fileName, Encoding.ASCII))
         {
-            String name = null, name2 = null, cache = null, processor = null, hardware = null;
-            string fileName = "/proc/cpuinfo";
-            if (!File.Exists(fileName))
-                return (ExecUName("-m") ?? "").Trim();
-
-            var comp = StringComparison.InvariantCultureIgnoreCase;
-            foreach (var line in EnumLines(fileName, Encoding.ASCII))
+            string key, value;
+            TrySplit(line, ':', out key, out value);
+            if (key != null)
             {
-                string key, value;
-                TrySplit(line, ':', out key, out value);
-                if (key != null)
-                {
-                    key = key.Trim();
-                    if ("model name".Equals(key, comp))
-                        name = value;
-                    else if ("cpu model".Equals(key, comp))
-                        name2 = value;
-                    else if ("Processor".Equals(key, StringComparison.InvariantCulture))
-                        processor = value;
-                    else if ("Hardware".Equals(key, StringComparison.InvariantCulture))
-                        hardware = value;
+                key = key.Trim();
+                if ("model name".Equals(key, comp))
+                    name = value;
+                else if ("cpu model".Equals(key, comp))
+                    name2 = value;
+                else if ("Processor".Equals(key, StringComparison.InvariantCulture))
+                    processor = value;
+                else if ("Hardware".Equals(key, StringComparison.InvariantCulture))
+                    hardware = value;
 
-                    else if ("cache size".Equals(key, comp))
-                        cache = value;
-                }
+                else if ("cache size".Equals(key, comp))
+                    cache = value;
             }
-
-            name = name ?? name2;
-            if (string.IsNullOrEmpty(name))
-                name = ExecUName("-m");
-
-            if (string.IsNullOrEmpty(name))
-                name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
-
-            name = StripDoubleWhitespace(name.Trim());
-            cache = (cache ?? "").Trim();
-
-            return name + (cache.Length == 0 ? "" : (", Cache " + cache));
         }
+
+        name = name ?? name2;
+        if (string.IsNullOrEmpty(name))
+            name = ExecUName("-m");
+
+        if (string.IsNullOrEmpty(name))
+            name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
+
+        name = StripDoubleWhitespace(name.Trim());
+        cache = (cache ?? "").Trim();
+
+        return name + (cache.Length == 0 ? "" : (", Cache " + cache));
+    }
+
+        private static string Linux_ProcName()
+    {
+        String name = null, name2 = null, cache = null, processor = null, hardware = null;
+        string fileName = "/proc/cpuinfo";
+        if (!File.Exists(fileName))
+            return (ExecUName("-m") ?? "").Trim();
+
+        var comp = StringComparison.InvariantCultureIgnoreCase;
+        var procCpuInfo = File.ReadAllText("/proc/cpuinfo");
+            
+        foreach (var line in EnumLines(new StringReader(procCpuInfo)))
+        {
+            string key, value;
+            TrySplit(line, ':', out key, out value);
+            if (key != null)
+            {
+                key = key.Trim();
+                if ("model name".Equals(key, comp))
+                    name = value;
+                else if ("cpu model".Equals(key, comp))
+                    name2 = value;
+                else if ("Processor".Equals(key, StringComparison.InvariantCulture))
+                    processor = value;
+                else if ("Hardware".Equals(key, StringComparison.InvariantCulture))
+                    hardware = value;
+
+                else if ("cache size".Equals(key, comp))
+                    cache = value;
+            }
+        }
+
+        name = name ?? name2;
+        if (string.IsNullOrEmpty(name))
+            name = ExecUName("-m");
+
+        if (string.IsNullOrEmpty(name))
+            name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
+
+        name = StripDoubleWhitespace(name.Trim());
+        cache = (cache ?? "").Trim();
+
+        return name + (cache.Length == 0 ? "" : (", Cache " + cache));
+    }
 
         private static string Windows_ProcName()
         {
