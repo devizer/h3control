@@ -402,7 +402,9 @@
                 return null;
 
             string raw = null;
-            foreach (var line in EnumLines(fileName))
+            var fileContent = File.ReadAllText(fileName);
+            foreach (var line in EnumLines(new StringReader(fileContent)))
+            // foreach (var line in EnumLines(fileName))
             {
                 string key, value;
                 TrySplit(line, ':', out key, out value);
