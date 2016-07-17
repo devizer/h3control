@@ -1,7 +1,7 @@
 language: csharp
 solution: H3Control.sln 
 install:
-  - sudo apt-get install -y gtk-sharp2
+  - sudo apt-get install -y gtk-sharp2 sysbench
   - nuget restore H3Control.sln 
 script:
   - uname -a
@@ -10,3 +10,6 @@ script:
   - java -version
   - #du -h -d 4
   - xbuild H3Control.sln /t:Rebuild /p:Configuration=Release /verbosity:normal
+  - cat /proc/cpuinfo
+  - cat /proc/meminfo
+  
