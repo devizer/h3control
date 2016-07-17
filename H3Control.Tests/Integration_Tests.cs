@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace H3Control.Tests
 {
     using System.Diagnostics;
+    using System.IO;
 
     using Common;
 
@@ -20,6 +21,8 @@ namespace H3Control.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
+            string all = File.ReadAllText("/proc/cpuinfo");
+            Console.WriteLine("/proc/cpuinfo:::::::::::::" + Environment.NewLine + all);
             CrossInfo.AttachUnitTrace("H3Control unit tests");
         }
         
