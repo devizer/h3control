@@ -65,7 +65,7 @@ namespace H3Control.Tests
                 var url = "http://localhost:" + port + "/Ver";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);
                 return FastCheck(url);
-            }, pollInterval: 111);
+            }, pollInterval: 333);
 
             NiceTrace.Message("Launch result (during {0}): {1}", swLaunch.Elapsed, isOk ? "SUCCESS" : "FAIL");
         }
