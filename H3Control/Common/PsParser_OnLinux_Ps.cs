@@ -51,7 +51,7 @@
 
 
                 return 
-                    PsProcessInfo.Sort(all, order)
+                    PsProcessInfoExtentions.Sort(all, order)
                     .Where((info, i) => i < top).ToList();
             }
         }
@@ -164,22 +164,24 @@
         {
             return string.Format("Pid: {0,6}, CpuUsage: {1,5}, Rss: {2,8}, Swapped: {3,8}, Size: {4,8}, Args: {5}", Pid, CpuUsage, Rss, Swapped, Size, Args);
         }
+    }
 
-        internal static IEnumerable<PsProcessInfo> Sort(IEnumerable<PsProcessInfo> ret, PsSortOrder order)
+    public static class PsProcessInfoExtentions
+    {
+        internal static IEnumerable<PsProcessInfo> Sort(this IEnumerable<PsProcessInfo> arg, PsSortOrder order)
         {
-            if (order == PsSortOrder.Cpu) return ret.OrderByDescending(x => x.CpuUsage);
-            if (order == PsSortOrder.Rss) return ret.OrderByDescending(x => x.Rss);
-            if (order == PsSortOrder.Size) return ret.OrderByDescending(x => x.Size);
-            if (order == PsSortOrder.Swapped) return ret.OrderByDescending(x => x.Swapped);
-            return ret;
+            if (order == PsSortOrder.Cpu) return arg.OrderByDescending(x => x.CpuUsage);
+            if (order == PsSortOrder.Rss) return arg.OrderByDescending(x => x.Rss);
+            if (order == PsSortOrder.Size) return arg.OrderByDescending(x => x.Size);
+            if (order == PsSortOrder.Swapped) return arg.OrderByDescending(x => x.Swapped).ThenByDescending(x => x.Size);
+            return arg;
         }
 
-        internal static IEnumerable<PsProcessInfo> Clone(IEnumerable<PsProcessInfo> ret)
+        public static IEnumerable<PsProcessInfo> Clone(this IEnumerable<PsProcessInfo> arg)
         {
-            foreach (var i in ret)
+            foreach (var i in arg)
                 yield return i.Clone();
         }
-
     }
 
     public class PsListener_OnLinux
@@ -214,9 +216,11 @@
                 ? copyOfAll.Where(x => x.Args == null || x.Args.IndexOf("h3control", StringComparison.InvariantCultureIgnoreCase) < 0)
                 : copyOfAll;
 
-            var ordered = PsProcessInfo.Sort(some, order).Where((info, i) => i < top);
-            var ret = PsProcessInfo.Clone(ordered);
-            return ret.ToList();
+            return some
+                .Sort(order)
+                .Where((info, i) => i < top)
+                .Clone()
+                .ToList();
         }
 
         private static void Start(object o)
