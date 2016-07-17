@@ -12,7 +12,7 @@
     [TestFixture]
     public class H3_HttpServer_Tests
     {
-        private H3Launcher Launcher;
+        private H3LauncherAsTest Launcher;
         private int Port;
 
         string BaseUrl
@@ -24,7 +24,7 @@
         public void TestFixtureSetUp()
         {
             CrossInfo.AttachUnitTrace("H3Control unit tests");
-            Launcher = new H3Launcher();
+            Launcher = new H3LauncherAsTest();
             Port = TestEnvironment.GetTcpPort();
             Launcher.LaunchAndWait(Port);
         }

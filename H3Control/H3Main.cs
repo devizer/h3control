@@ -148,8 +148,12 @@ namespace H3Control
             }
             catch (Exception ex)
             {
-                Console.WriteLine("[ERROR] h3control terminated abnormally:" + Environment.NewLine + ex + Environment.NewLine + Environment.NewLine);
-                Console.WriteLine("Short exception description: " + Environment.NewLine + ex.Get());
+                var m1 = "[ERROR] h3control terminated abnormally:" + Environment.NewLine + ex + Environment.NewLine + Environment.NewLine;
+                NiceTrace.Message(m1);
+                Console.WriteLine(m1);
+                var m2 = "Short exception description: " + Environment.NewLine + ex.Get();
+                NiceTrace.Message(m2);
+                Console.WriteLine(m2);
                 return 1;
             }
 
@@ -157,7 +161,7 @@ namespace H3Control
 
         public static IDisposable Launch_H3Server(string baseUrl)
         {
-            return WebApp.Start<NancyStartup>(baseUrl);
+                return WebApp.Start<NancyStartup>(baseUrl);
         }
 
         private static void Preload(string baseUrl)

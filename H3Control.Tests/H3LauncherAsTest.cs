@@ -10,7 +10,7 @@ namespace H3Control.Tests
 
     using Universe;
 
-    class H3Launcher
+    class H3LauncherAsTest
     {
         public int H3Pid;
         public Process H3;
@@ -19,11 +19,31 @@ namespace H3Control.Tests
         {
             var testAssemblyPath = Assembly.GetExecutingAssembly().Location;
             NiceTrace.Message("Test assembly Path: {0}", testAssemblyPath);
+            NiceTrace.Message("Current directory: {0}", Environment.CurrentDirectory);
+
             string exeDir = Path.GetDirectoryName(testAssemblyPath);
-            string exe = Path.Combine(exeDir, "H3Control.exe");
+            // console runner
+            string exe1 = Path.Combine(exeDir, "H3Control.exe");
+            // resharper
+            string exe2 = Path.Combine(Environment.CurrentDirectory, "H3Control.exe");
+            string exe = exe1;
+            foreach (var s in new[] { exe1, exe2})
+            {
+                var directoryName = Path.GetDirectoryName(s);
+                IEnumerable<string> files = Directory
+                    .GetFiles(directoryName)
+                    .Select(x => Path.GetFileName(x))
+                    .OrderBy(x => Path.GetFileNameWithoutExtension(x))
+                    .ToList();
+
+                var sep = Environment.NewLine + "  * ";
+                NiceTrace.Message("Files in folder {0} assembly: {1}{2}", s, sep, string.Join(sep, files));
+                if (File.Exists(s))
+                    exe = s;
+            }
+
             string args = "--binding=*:" + port;
             Trace.WriteLine("Launch: " + exe + " " + args);
-
 
             ProcessStartInfo si;
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
@@ -33,14 +53,12 @@ namespace H3Control.Tests
 
             si.UseShellExecute = false;
             si.CreateNoWindow = true;
-            IEnumerable<string> files = Directory.GetFiles(exeDir).Select(x => Path.GetFileName(x)).ToList();
-            NiceTrace.Message("Files near test assembly: {0}", string.Join(", ", files));
             H3 = Process.Start(si);
             H3Pid = H3.Id;
             Trace.WriteLine("PID: " + H3Pid);
 
             int counter = 0;
-            PollWithTimeout.Run(10000, () =>
+            PollWithTimeout.Run(20000, () =>
             {
                 var url = "http://localhost:" + port + "/favicon.ico";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);
