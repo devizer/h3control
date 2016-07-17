@@ -465,7 +465,7 @@ BuildVersion:	14B25
                 return (ExecUName("-m") ?? "").Trim();
 
             var comp = StringComparison.InvariantCultureIgnoreCase;
-            foreach (var line in EnumLines(fileName))
+            foreach (var line in EnumLines(fileName, Encoding.ASCII))
             {
                 string key, value;
                 TrySplit(line, ':', out key, out value);
