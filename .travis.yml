@@ -11,7 +11,8 @@ script:
   - java -version
   - #du -h -d 4
   - xbuild H3Control.sln /t:Rebuild /p:Configuration=Release /verbosity:normal
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Release/H3Control.Tests.dll
+  - xbuild H3Control.sln /t:Rebuild /p:Configuration=Debug /verbosity:minimal
+  - mono --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
   - cat /proc/cpuinfo
   - cat /proc/meminfo
   - sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run > /dev/null
