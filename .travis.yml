@@ -1,0 +1,10 @@
+language: csharp
+solution: H3Control.sln 
+install:
+  - sudo apt-get install -y gtk-sharp2
+  - nuget restore H3Control.sln 
+script:
+  - uname -a
+  - cat /etc/*release
+  - mono --version
+  - java -version

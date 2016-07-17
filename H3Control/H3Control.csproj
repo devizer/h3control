@@ -230,6 +230,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
+    <None Include="linux-build\build-via-git.sh" />
     <None Include="linux-build\build.sh" />
     <None Include="linux-build\prepare-mocks.sh" />
     <None Include="linux-build\sample.sh" />
