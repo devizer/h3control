@@ -1,19 +1,19 @@
-@echo off || echo ""
+@echo off || echo 
 git config credential.helper store
 
-echo ""
+echo.
 echo ***************** PULL ********************
 git pull
 
-echo ""
+echo.
 echo ********** ADD --all and COMPPIT **********
 git add --all
 git commit -am "update"
 
-echo ""
+echo.
 echo **************** PUSH *********************
 git push
 
-echo ""
+echo.
 echo *************** STATUS ********************
 git status
