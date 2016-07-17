@@ -27,7 +27,7 @@ namespace H3Control.Tests
             // resharper
             string exe2 = Path.Combine(Environment.CurrentDirectory, "H3Control.exe");
             string exe = exe1;
-            foreach (var s in new[] { exe1, exe2})
+            foreach (var s in new[] { exe1, exe2}.Distinct())
             {
                 var directoryName = Path.GetDirectoryName(s);
                 IEnumerable<string> files = Directory
