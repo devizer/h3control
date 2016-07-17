@@ -39,7 +39,10 @@ namespace Universe.NancyCaching
         {
             applicationPipelines.AfterRequest.AddItemToStartOfPipeline(delegate(NancyContext context)
             {
-                var raw = context.Items[ContextKey];
+                object raw = null;
+                if (!context.Items.TryGetValue(ContextKey, out raw))
+                    return;
+
                 if (raw != null && !(raw is ExpirationState))
                     throw new InvalidOperationException("'" + ContextKey + "' instance type of Context.Item should be NancyExpirationExtentions.ExpirationState");
 
