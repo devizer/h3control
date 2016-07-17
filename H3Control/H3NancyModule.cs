@@ -51,8 +51,10 @@ namespace H3Control
 
             Func<string, Response> asBadRequest = (message) =>
             {
+                var msg = ("Bad Request. " + message).Trim();
                 var response = (Response)("Bad Request. " + message).Trim();
                 response.StatusCode = HttpStatusCode.BadRequest;
+                response.ReasonPhrase = msg;
                 return response;
             };
 
@@ -68,11 +70,11 @@ namespace H3Control
                 {
                     int topN;
                     if (!int.TryParse((string)parameters.top, out topN))
-                        return asBadRequest("{top} argument is invalid or absent");
+                        return asBadRequest("Invalid parameter. {top} argument is invalid or absent");
 
                     PsSortOrder order;
                     if (!Enum.TryParse((string)parameters.column, true, out order))
-                        return asBadRequest("{column} argument is invalid or absent");
+                        return asBadRequest("Invalid parameter. {column} argument is invalid or absent");
 
                     Stopwatch sw3 = Stopwatch.StartNew();
                     var list = PsListener_OnLinux.Select(order, topN);
