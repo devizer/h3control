@@ -642,7 +642,9 @@ BuildVersion:	14B25
             {
                 if (fileInfo.FullName.ToLower().EndsWith("release"))
                 {
-                    foreach (var line in EnumLines(fileInfo.FullName))
+                    var fileContent = File.ReadAllText(fileInfo.FullName);
+                    // foreach (var line in EnumLines(fileInfo.FullName))
+                    foreach (var line in EnumLines(new StringReader(fileContent)))
                     {
                         string key, value;
                         TrySplit(line, '=', out key, out value);
