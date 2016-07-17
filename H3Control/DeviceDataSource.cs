@@ -6,6 +6,7 @@
     using System.Runtime.Caching;
     using System.Text;
     using System.Threading;
+    using System.Web;
 
     using Universe;
 
@@ -64,6 +65,11 @@
 
             ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
             return ret;
+        }
+
+        public static string HostName
+        {
+            get { return Environment.MachineName; }
         }
 
         
