@@ -7,6 +7,8 @@
 
     using NUnit.Framework;
 
+    using Universe;
+
     [TestFixture]
     public class H3_HttpServer_Tests
     {
@@ -21,6 +23,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
+            CrossInfo.AttachUnitTrace("H3Control unit tests");
             Launcher = new H3Launcher();
             Port = TestEnvironment.GetTcpPort();
             Launcher.LaunchAndWait(Port);
