@@ -16,7 +16,7 @@ namespace H3Control.Tests
     using Universe;
 
     [TestFixture]
-    public class Integration_Tests
+    public class F1_Integration_Tests
     {
         [TestFixtureSetUp]
         public void TestFixtureSetUp()

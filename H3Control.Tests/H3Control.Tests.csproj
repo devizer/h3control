@@ -111,8 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="H3LauncherAsTest.cs" />
-    <Compile Include="H3_HttpServer_Tests.cs" />
-    <Compile Include="Integration_Tests.cs" />
+    <Compile Include="F2_HttpServer_Tests.cs" />
+    <Compile Include="F1_Integration_Tests.cs" />
     <Compile Include="PollWithTimeout.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

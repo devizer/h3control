@@ -10,7 +10,7 @@
     using Universe;
 
     [TestFixture]
-    public class H3_HttpServer_Tests
+    public class F2_HttpServer_Tests
     {
         private H3LauncherAsTest Launcher;
         private int Port;
