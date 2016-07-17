@@ -2,19 +2,15 @@
 {
     using System;
     using System.Diagnostics;
-    using System.IO;
     using System.Net;
-    using System.Reflection;
     using System.Threading;
 
     using NUnit.Framework;
 
-    using Universe;
-
     [TestFixture]
     public class H3_HttpServer_Tests
     {
-        private IDisposable H3Server;
+        private H3Launcher Launcher;
         private int Port;
 
         string BaseUrl
@@ -25,10 +21,9 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            WhiteListConfig.WhiteListArg = null;
-            PasswordConfig.Hash = null;
+            Launcher = new H3Launcher();
             Port = TestEnvironment.GetTcpPort();
-            H3Server = H3Main.Launch_H3Server("http://*:" + Port);
+            Launcher.LaunchAndWait(Port);
         }
 
         [Test]
@@ -45,11 +40,11 @@
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            if (H3Server != null)
+            if (Launcher != null)
             {
-                var copy = H3Server;
-                ThreadPool.QueueUserWorkItem(state => copy.Dispose());
-                H3Server = null;
+                var copy = Launcher;
+                ThreadPool.QueueUserWorkItem(state => copy.Close());
+                Launcher = null;
             }
         }
 

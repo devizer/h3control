@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="H3Launcher.cs" />
     <Compile Include="H3_HttpServer_Tests.cs" />
     <Compile Include="Integration_Tests.cs" />
+    <Compile Include="PollWithTimeout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironment.cs" />
   </ItemGroup>
@@ -53,6 +55,9 @@
       <Project>{7179b98e-685d-46bf-87c7-b28f54b00b8c}</Project>
       <Name>H3Control</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
