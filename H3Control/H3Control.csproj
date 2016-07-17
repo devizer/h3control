@@ -181,7 +181,7 @@
     <Compile Include="LoadLogger.cs" />
     <Compile Include="Common\MemInfoParser_OnLinux.cs" />
     <Compile Include="Common\MemInfo_OnLinix.cs" />
-    <Compile Include="MyEnvironment.cs" />
+    <Compile Include="H3Environment.cs" />
     <Compile Include="LinksHtmlHelpersExtensions.cs" />
     <Compile Include="MyNancyConfig.cs" />
     <Compile Include="NancyStartup.cs" />

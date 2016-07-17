@@ -42,9 +42,9 @@ namespace H3Control.Controllers
                 Trace.WriteLine("UPDATE SPEED: " + f + " MSEC");
                 return new ControlStatus() { IsOk = true };
             }
-            
-            if (!DeviceDataSource.IsH3)
-                return new ControlStatus() { IsOk = true };
+
+            if (!H3Environment.IsH3)
+                return new ControlStatus() { IsOk = true /*, Addition_Info = "Device isnt equipped with H3"*/ };
 
             Exception error = null;
             if (side == "ddr")

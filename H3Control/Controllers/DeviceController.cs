@@ -21,12 +21,12 @@ namespace H3Control.Controllers
             try
             {
                 var ret =
-                    !DeviceDataSource.IsH3
+                    !H3Environment.IsH3
                         ? DeviceModel.Sample()
                         : DeviceDataSource.GetLocal();
 
                 ret.VerInfo = NewVerListener.Info;
-                if (!DeviceDataSource.IsH3)
+                if (!H3Environment.IsH3)
                     ret.Mem = new MemInfo_OnLinix()
                     {
                         Total = 1234 * 1024,

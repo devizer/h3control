@@ -39,7 +39,7 @@ namespace H3Control
             {
                 if (_thread == null)
                 {
-                    Info = new BuildInfo() {CurVer = MyEnvironment.Ver};
+                    Info = new BuildInfo() {CurVer = H3Environment.Ver};
                     if (Environment.OSVersion.Platform == PlatformID.Unix)
                     {
                         ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
@@ -83,7 +83,7 @@ namespace H3Control
                             {
                                 NewVer = new Version(raw.version + ".0"),
                                 Date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(raw.date).ToLocalTime(),
-                                CurVer = MyEnvironment.Ver,
+                                CurVer = H3Environment.Ver,
                             };
 
                             Info = newValue;
