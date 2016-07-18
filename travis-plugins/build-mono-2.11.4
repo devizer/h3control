@@ -39,8 +39,8 @@ cd ~/tmp
 time (wget -q -nv -O - http://download.mono-project.com/sources/mono/mono-2.11.4.tar.bz2 | tar xjf -)
 
 cd ~/tmp/mono-2.11.4
-export CFLAGS="-O1"
-export CPPFLAGS="-O1"
+export CFLAGS="-O2"
+export CPPFLAGS="-O2"
 time (./autogen.sh --with-mcs-docs=no --disable-nls --with-profile2=no --with-profile4=no --with-profile4_5=yes --prefix=$HOME/mono-2.11.4)
 time ( make )
 echo '##################################### MAKE MONO: DONE ##########################'
