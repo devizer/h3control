@@ -100,7 +100,7 @@ namespace H3Control.Tests
                 }
             }
 
-            b.AppendLine();
+            // b.AppendLine();
             NiceTrace.Message(b);
             return result;
         }

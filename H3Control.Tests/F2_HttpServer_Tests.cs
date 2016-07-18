@@ -14,7 +14,7 @@
     using Universe;
 
     [TestFixture]
-    public class F2_HttpServer_Tests
+    public class F2_HttpServer_Tests : BaseTest
     {
         private H3LauncherAsTest Launcher;
         private int Port;
@@ -109,9 +109,7 @@
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
             Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
-            var ret = driller.String;
-            string json = JSonFormatter.Format(ret);
-            NiceTrace.Message(json);
+            NiceTrace.Message(JSonFormatter.Format(driller.String));
         }
 
         [Test]
@@ -161,13 +159,18 @@
     {
         public static string Format(string arg)
         {
+/*
+            dynamic parsedJson = JsonConvert.DeserializeObject(arg);
+            return JsonConvert.SerializeObject(parsedJson, Formatting.Indented); 
+*/
+            
             JObject obj = JObject.Parse(arg);
             StringBuilder b = new StringBuilder();
             StringWriter wr = new StringWriter(b);
             JsonTextWriter jwr = new JsonTextWriter(wr);
             jwr.Formatting = Formatting.Indented;
             jwr.IndentChar = ' ';
-            jwr.Indentation = 3;
+            jwr.Indentation = 6;
             
             JsonSerializer ser = new JsonSerializer();
             ser.Formatting = Formatting.Indented;
