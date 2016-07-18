@@ -1,6 +1,7 @@
 ﻿namespace H3Control.Tests
 {
     using System.Net;
+    using System.Net.Http;
     using System.Threading;
 
     using NUnit.Framework;
@@ -100,6 +101,35 @@
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
             Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
+        }
+
+        [Test]
+        public void T07_404()
+        {
+            // yes, there is no such column is Nianyty in processes response
+            string[] paths = new[]
+            {
+                "/Content/no-such-pAgE",
+                "/Content/no-such-pAgE.css",
+/*
+                "/Content/no-such-pAgE.htm",
+                "/Content/no-such-pAgE.js",
+                "/no-such-pAgE",
+                "/no-such-pAgE.css",
+                "/no-such-pAgE.htm",
+                "/no-such-pAgE.js",
+*/
+            };
+
+            foreach (var method in new[] { HttpMethod.Get, HttpMethod.Put, HttpMethod.Post, })
+            foreach (var path in paths)
+            {
+                var url = BaseUrl + path;
+                var req = new HttpRequestMessage(method, url);
+                ResponseDriller driller = ResponseDriller.Create(req);
+                driller.Dump();
+                Assert.AreEqual(HttpStatusCode.NotFound, driller.Result.StatusCode);
+            }
         }
 
 

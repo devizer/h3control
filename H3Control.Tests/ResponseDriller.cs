@@ -96,7 +96,7 @@ namespace H3Control.Tests
                 b.AppendFormat(" {0," + maxKeyLength + "}: {1}", k, values.FirstOrDefault()).AppendLine();
                 foreach (var h in values.Skip(1))
                 {
-                    b.AppendFormat(" {0," + maxKeyLength + "}: {1}", "", values.FirstOrDefault()).AppendLine();
+                    b.AppendFormat(" {0," + maxKeyLength + "}: {1}", "", h).AppendLine();
                 }
             }
 
