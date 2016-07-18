@@ -1,8 +1,13 @@
 ﻿namespace H3Control.Tests
 {
+    using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Text;
     using System.Threading;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     using NUnit.Framework;
 
@@ -73,13 +78,16 @@
                 "api/json/processes/by-Size/top-3",
             };
 
+            int counter = 0;
             foreach (var path in urls)
             {
                 var url = BaseUrl + "/" + path;
                 ResponseDriller driller = ResponseDriller.CreateGetJson(url);
                 driller.Dump();
-                NiceTrace.Message("{0} response: '{1}'", "/" + path, driller.String);
+                // NiceTrace.Message("{0} response: '{1}'", "/" + path, driller.String);
                 Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
+                if (++counter == urls.Length)
+                    NiceTrace.Message(JSonFormatter.Format(driller.String));
             }
         }
 
@@ -101,6 +109,9 @@
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
             Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
+            var ret = driller.String;
+            string json = JSonFormatter.Format(ret);
+            NiceTrace.Message(json);
         }
 
         [Test]
@@ -144,5 +155,26 @@
             }
         }
 
+    }
+
+    class JSonFormatter
+    {
+        public static string Format(string arg)
+        {
+            JObject obj = JObject.Parse(arg);
+            StringBuilder b = new StringBuilder();
+            StringWriter wr = new StringWriter(b);
+            JsonTextWriter jwr = new JsonTextWriter(wr);
+            jwr.Formatting = Formatting.Indented;
+            jwr.IndentChar = ' ';
+            jwr.Indentation = 3;
+            
+            JsonSerializer ser = new JsonSerializer();
+            ser.Formatting = Formatting.Indented;
+            ser.Serialize(jwr, obj);
+            jwr.Flush();
+            string ret = b.ToString();
+            return ret;
+        }
     }
 }
