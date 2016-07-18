@@ -41,13 +41,17 @@ time (wget -q -nv -O - http://download.mono-project.com/sources/mono/mono-2.11.4
 cd ~/tmp/mono-2.11.4
 export CFLAGS="-O1"
 export CPPFLAGS="-O1"
-time (./autogen.sh --disable-nls --prefix=$HOME/mono-2.11.4)
-make
+time (./autogen.sh --with-mcs-docs=no --disable-nls --with-profile2=no --with-profile4=no --with-profile4_5=yes --prefix=$HOME/mono-2.11.4)
+time ( make )
+echo '##################################### MAKE MONO: DONE ##########################'
 sudo make install
 
 
 export PATH="$HOME/mono-2.11.4/bin:$PATH"
-export LD_LIBRARY_PATH=$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
 mono --version
 
 cd $old
+
+
+
