@@ -29,6 +29,12 @@ script:
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
   - mono --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - ######## THE END ######################## MONO 2.11.4?
+  - bash Notes/try-mono-2.11.4
+  - export PATH="$HOME/mono-2.11.4/bin:$PATH"
+  - export LD_LIBRARY_PATH=$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
+  - mono --version
+
   
   
   
