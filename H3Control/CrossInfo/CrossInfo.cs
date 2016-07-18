@@ -824,6 +824,9 @@ BuildVersion:	14B25
 
         public static void AttachUnitTrace(string consoleCaption)
         {
+            if ("true".Equals(Environment.GetEnvironmentVariable("TRAVIS")))
+                goto skipChangeTitle;
+
             _ConsoleTitle = consoleCaption;
             try
             {
@@ -849,6 +852,7 @@ BuildVersion:	14B25
             {
             }
 
+            skipChangeTitle:
             AttachUnitTrace();
         }
 
