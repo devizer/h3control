@@ -2,7 +2,6 @@ namespace Universe.NancyCaching
 {
     using System;
     using System.Globalization;
-    using System.Threading;
 
     using Nancy;
     using Nancy.Bootstrapper;

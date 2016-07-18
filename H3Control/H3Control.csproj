@@ -43,6 +43,10 @@
     <Reference Include="AjaxMin">
       <HintPath>..\Nancy.Libs\Cassette.Nancy.Files\AjaxMin.dll</HintPath>
     </Reference>
+    <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonMark.NET.0.13.4\lib\net45\CommonMark.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Jurassic">
       <HintPath>..\Nancy.Libs\Cassette.Nancy.Files\Jurassic.dll</HintPath>
     </Reference>
@@ -202,6 +206,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="web\Content\commonmark.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="web\Content\reset.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="web\H3Content\h3.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

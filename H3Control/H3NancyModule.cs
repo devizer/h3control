@@ -3,18 +3,17 @@ namespace H3Control
     using System;
     using System.Diagnostics;
     using System.Linq;
-    using System.Reflection;
+    using System.Net.Http;
 
     using Common;
+
+    using CommonMark;
+
     using Controllers;
     using Links;
 
-    using Microsoft.SqlServer.Server;
-
     using Nancy;
     using Nancy.Security;
-
-    using Simple.Owin;
 
     using Universe;
     using Universe.NancyCaching;
@@ -92,12 +91,13 @@ namespace H3Control
                         foreach (var pi in list)
                             pi.Args = pi.Args != null && pi.Args.Length > 80 ? (pi.Args.Substring(0, 77) + "...") : pi.Args;
 
-                    return new {Processes = list};
+                    return Response.AsJson(new { Processes = list });
+                    return new { Processes = list };
                 }
                 catch (Exception ex)
                 {
                     NiceTrace.Message("PsListener_OnLinux.Select() failed:{0}{1}", Environment.NewLine, ex);
-                    return new {Error = ex.Get()};
+                    return Response.AsJson(new {Error = ex.Get()});
                 }
             };
 
@@ -124,11 +124,79 @@ namespace H3Control
                 return Response.AsJson(ret); ;
             };
 
+            Get["/whatsnew/markdown"] = parameters =>
+            {
+                this.Expires(scope: CachingScope.None);
+                var ret = Response.AsText(WhatsNewSource.GetMarkDown());
+                ret.ContentType = "text/plain";
+                return ret;
+            };
+
+            Get["/whatsnew/html"] = parameters =>
+            {
+                this.Expires(scope: CachingScope.None);
+                string content = WhatsNewSource.GetHtml();
+                return AsMarkdown(content);
+            };
+
+            // V:\_GIT\h3control-bin\ 
+            Get["/demo"] = parameters =>
+            {
+                this.Expires(scope: CachingScope.None);
+                string url = "https://github.com/devizer/h3control-bin/raw/master/info/markdown-test.md";
+                string md = new HttpClient().GetStringAsync(url + "?" + Guid.NewGuid().ToString("N")).Result;
+                return AsMarkdown(md);
+            };
+
+
             // NiceTrace.Message("Routing convigured by " + this.GetType().Name);
         }
 
+        private dynamic AsMarkdown(string content)
+        {
+            string html = WhatsNewSource.DraftTemplate.Replace("${CONTENT}", content);
+            var ret = Response.AsText(html);
+            ret.ContentType = "text/html";
+            return ret;
+        }
+    }
 
+    class WhatsNewSource
+    {
+        public static string GetMarkDown()
+        {
+            string url = "https://github.com/devizer/h3control-bin/raw/master/WHATS-NEW.md";
+            var httpClient = new HttpClient();
+            string ret = httpClient.GetStringAsync(url + "?" + Guid.NewGuid().ToString("N")).Result;
+            return ret;
+        }
 
+        public static string GetHtml()
+        {
+            string md = GetMarkDown();
+            var copy = CommonMarkSettings.Default.Clone();
+            copy.OutputFormat = OutputFormat.Html;
+            copy.AdditionalFeatures = CommonMarkAdditionalFeatures.All;
+            copy.RenderSoftLineBreaksAsLineBreaks = true;
+            return CommonMark.CommonMarkConverter.Convert(md, copy);
+        }
+
+       
+
+        public static string @DraftTemplate = @"
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<!--
+<link rel='stylesheet' href='/Content/reset.css' type='text/css' />
+-->
+<link rel='stylesheet' href='/Content/commonmark.css' type='text/css' />
+</head>
+<body>
+<div class='markdown'>
+${CONTENT}
+</div>
+</body>
+";
     }
 
 
