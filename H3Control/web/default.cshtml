@@ -255,7 +255,7 @@
 
                 $(".Restricted").hide();
 
-                window.setTimeout(nextNeverendingUpdate, 200);
+                window.setTimeout(nextNeverendingUpdate, 300);
             });
 
 
@@ -521,6 +521,15 @@
             $scope.order = "Rss";
             $scope.topN = 5;
 
+            var fixProcesses = function (procList, maxCount) {
+                while (procList.length < maxCount)
+                    procList.push({ Pid: null, CpuUsage: null, Rss: null, Size: null, Swapped: null, Args: null });
+
+                return procList;
+            }
+
+            $scope.Processes = fixProcesses([], $scope.topN);
+
             $scope.getHeaderClass = function (column) {
                 return column === $scope.order ? "sorted" : "sortable";
             }
@@ -529,16 +538,6 @@
                 return column === $scope.order ? "&#9679;" : "";
             }
 
-            var fixProcesses = function(procList, maxCount) {
-                // return procList;
-                // if (procList.length > 0) console.log("First process is " + procList[0].Args);
-                while (procList.length < maxCount)
-                    procList.push({ Pid: null, CpuUsage: null, Rss: null, Size: null, Swapped: null, Args: null });
-
-                // console.log("fixProcesses DONE. length is " + procList.length);
-
-                return procList;
-            }
 
             $scope.changeOrder = function (newOrder) {
                 $scope.order = newOrder;
@@ -549,13 +548,7 @@
                     });
             }
 
-
-
-
-
-
-
-            var isNumeric = function(n) {
+            var isNumeric = function (n) {
                 if ((typeof n) === "undefined" || n === null) return false;
                 return !isNaN(parseFloat(n)) && isFinite(n);
             }
@@ -586,13 +579,10 @@
                         window.setTimeout($scope.refresh, 3000);
                     });
 
-
-
-
             };
 
             // refreshProcesses();
-            $scope.refresh();
+            window.setTimeout($scope.refresh, 42);
         });
     </script>
 
