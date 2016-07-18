@@ -9,6 +9,7 @@ install:
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - echo HOME IS $HOME
+  - echo PATH IS $PATH
   - file /usr/bin/cli
   - ls -l /usr/bin/cli*
   - bash travis/show-nuget.sh
