@@ -67,7 +67,7 @@ namespace H3Control.Tests
                 return FastCheck(url);
             }, pollInterval: 333);
 
-            NiceTrace.Message("Launch result (during {0}): {1}", swLaunch.Elapsed, isOk ? "SUCCESS" : "FAIL");
+            NiceTrace.Message("Launch result (during {0}): {1}{2}", swLaunch.Elapsed, isOk ? "SUCCESS" : "FAIL", Environment.NewLine);
         }
 
         static bool FastCheck(string url)
