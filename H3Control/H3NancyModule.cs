@@ -7,8 +7,6 @@ namespace H3Control
 
     using Common;
 
-    using CommonMark;
-
     using Controllers;
     using Links;
 
@@ -145,7 +143,8 @@ namespace H3Control
                 this.Expires(scope: CachingScope.None);
                 string url = "https://github.com/devizer/h3control-bin/raw/master/info/markdown-test.md";
                 string md = new HttpClient().GetStringAsync(url + "?" + Guid.NewGuid().ToString("N")).Result;
-                return AsMarkdown(md);
+                string html = MarkdownTo.Html(md);
+                return AsMarkdown(html);
             };
 
 
@@ -160,44 +159,4 @@ namespace H3Control
             return ret;
         }
     }
-
-    class WhatsNewSource
-    {
-        public static string GetMarkDown()
-        {
-            string url = "https://github.com/devizer/h3control-bin/raw/master/WHATS-NEW.md";
-            var httpClient = new HttpClient();
-            string ret = httpClient.GetStringAsync(url + "?" + Guid.NewGuid().ToString("N")).Result;
-            return ret;
-        }
-
-        public static string GetHtml()
-        {
-            string md = GetMarkDown();
-            var copy = CommonMarkSettings.Default.Clone();
-            copy.OutputFormat = OutputFormat.Html;
-            copy.AdditionalFeatures = CommonMarkAdditionalFeatures.All;
-            copy.RenderSoftLineBreaksAsLineBreaks = true;
-            return CommonMark.CommonMarkConverter.Convert(md, copy);
-        }
-
-       
-
-        public static string @DraftTemplate = @"
-<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-<head>
-<!--
-<link rel='stylesheet' href='/Content/reset.css' type='text/css' />
--->
-<link rel='stylesheet' href='/Content/commonmark.css' type='text/css' />
-</head>
-<body>
-<div class='markdown'>
-${CONTENT}
-</div>
-</body>
-";
-    }
-
-
 }

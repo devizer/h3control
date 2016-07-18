@@ -50,6 +50,10 @@
     <Reference Include="Jurassic">
       <HintPath>..\Nancy.Libs\Cassette.Nancy.Files\Jurassic.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownSharp, Version=1.14.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdown.1.14.7\lib\net45\MarkdownSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
@@ -187,6 +191,7 @@
     <Compile Include="Common\MemInfo_OnLinix.cs" />
     <Compile Include="H3Environment.cs" />
     <Compile Include="LinksHtmlHelpersExtensions.cs" />
+    <Compile Include="MarkdownTo.cs" />
     <Compile Include="MyNancyConfig.cs" />
     <Compile Include="NancyStartup.cs" />
     <Compile Include="NewVerListener.cs" />
@@ -202,6 +207,7 @@
     <Compile Include="Serializer\JsonNetBodyDeserializer.cs" />
     <Compile Include="Serializer\JsonNetSerializer.cs" />
     <Compile Include="StaticContentConventionBuilderAddOn.cs" />
+    <Compile Include="WhatsNewSource.cs" />
     <Compile Include="WhiteListMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>

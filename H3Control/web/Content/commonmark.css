@@ -1,9 +1,32 @@
 ﻿.markdown {
-    background: #fefefe;
+    background: white;
     color: #424242;
     font-family: "Open Sans", arial, sans-serif;
     font-size: 17px;
 }
+
+    pre > code {
+        border: none;
+/*
+        margin-left: 3px;
+        margin-right: 3px;
+        padding-left: 3px;
+        padding-right: 3px;
+        background-color: #F0F0F0;
+        white-space: nowrap;
+*/
+    }
+
+    li code, p code {
+        border: 1px dashed gray;
+        margin-left: 3px;
+        margin-right: 3px;
+        padding-left: 3px;
+        padding-right: 3px;
+        background-color: #F0F0F0;
+        white-space: nowrap;
+    }
+
 
     .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
         margin-bottom: 33px;
@@ -75,7 +98,7 @@
 
 .markdown img {
   display: block;
-  margin: 40px 0;
+  margin: 10px 0;
   width: auto;
   max-width: 100%;
 }
@@ -84,7 +107,7 @@
   background: #F1F0EA;
   border: 1px solid #DDDBCC;
   border-radius: 3px;
-  margin: 0 0 30px;
+  margin: 0 0px 30px; 
   padding: 15px 20px;
 }
 
