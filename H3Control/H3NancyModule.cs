@@ -44,7 +44,7 @@ namespace H3Control
             Get["/"] = _ =>
             {
                 var model = new DeviceController().GetDevice("me");
-                model.HasChangeAccess = !PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
+                model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
                 var jsonDevice = JSonExtentions.ToNewtonJSon(model, isIntended: !H3Environment.IsRelease);
                 return View["default", new {JSonDevice = jsonDevice}];
             };
@@ -107,7 +107,7 @@ namespace H3Control
                 this.Expires(scope: CachingScope.None);
                 string device = (string)parameters.device;
                 var model = new DeviceController().GetDevice(device);
-                model.HasChangeAccess = !PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
+                model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
                 return Response.AsJson(model);
             };
 
@@ -116,7 +116,7 @@ namespace H3Control
                 if (Context.CurrentUser.IsAuthenticated())
                     NiceTrace.Message("CONTROL action recieved from by user '{0}': {1}", Context.CurrentUser.UserName, Request.Url.Path);
 
-                if (PasswordConfig.IsStricted && !Context.CurrentUser.IsAuthenticated())
+                if (H3PasswordConfig.IsStricted && !Context.CurrentUser.IsAuthenticated())
                     return 403;
 
                 var side = (string) parameters.side;

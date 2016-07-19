@@ -22,12 +22,21 @@ namespace H3Control
     {
 
         // { version: '1.5.77', date: 1447211522 }
-        // private const string _url = "https://www.dropbox.com/s/ikvj3edhovhh8ow/h3control-version.json?dl=1";
-        private const string _url = "https://github.com/devizer/h3control-bin/raw/master/public/h3control-version.json";
+        // private const string VerUrl = "https://www.dropbox.com/s/ikvj3edhovhh8ow/h3control-version.json?dl=1";
+        private const string VerUrl = "https://raw.githubusercontent.com/devizer/h3control-bin/master/public/h3control-version.json";
+        private const string WhatsNewUrl = "https://raw.githubusercontent.com/devizer/h3control-bin/master/WHATS-NEW.md";
         
         static BuildInfo _info;
+        private static string _whatsNew_md;
         static object _sync = new object();
         static Thread _thread;
+
+
+        public static string WhatsNewMd
+        {
+            get { lock (_sync) return _whatsNew_md; }
+            set { lock (_sync) _whatsNew_md = value; }
+        }
 
         public static BuildInfo Info
         {
@@ -54,7 +63,7 @@ namespace H3Control
                     {
                         while (true)
                         {
-                            Thread.Sleep(1000);
+                            Thread.Sleep(1);
                             RefreshInfo();
                             Thread.Sleep(5*60*1000);
                         }
@@ -65,16 +74,27 @@ namespace H3Control
             }
         }
 
-        private static void RefreshInfo()
+        
+        private static bool RefreshInfo()
         {
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var message = client.GetAsync(_url).Result;
-                    var rawString = message.Content.ReadAsStringAsync().Result;
+                    HttpResponseMessage verResponse = client.GetAsync(VerUrl).Result;
+                    if (verResponse.StatusCode != HttpStatusCode.OK)
+                        throw new InvalidOperationException(VerUrl + " response status isnt OK(200). Status is " + verResponse.StatusCode);
+
+                    var jsonVer = verResponse.Content.ReadAsStringAsync().Result;
+
+                    HttpResponseMessage whatsNewResponse = client.GetAsync(WhatsNewUrl).Result;
+                    if (whatsNewResponse.StatusCode != HttpStatusCode.OK)
+                        throw new InvalidOperationException(WhatsNewUrl + " response status isnt OK(200). Status is " + whatsNewResponse.StatusCode);
+
+                    var whatsNew = whatsNewResponse.Content.ReadAsStringAsync().Result;
+
                     // Console.WriteLine("NEW VERINFO STRING: " + rawString);
-                    BuildInfoRaw raw = JsonConvert.DeserializeObject<BuildInfoRaw>(rawString);
+                    BuildInfoRaw raw = JsonConvert.DeserializeObject<BuildInfoRaw>(jsonVer);
                     // Console.WriteLine("NEW VERINFO OBJECT: " + raw);
                     if (raw != null && raw.version != null)
                     {
@@ -88,26 +108,32 @@ namespace H3Control
                                 CurVer = H3Environment.Ver,
                             };
 
-                            Info = newValue;
-                            FirstRound.Only("Fresh Public Version", RoundCounter.Twice, () =>
+                            lock (_sync)
                             {
-                                NiceTrace.Message("Info about FRESH PUBLIC arrived. {0}.", newValue);
-                            });
+                                Info = newValue;
+                                WhatsNewMd = whatsNew;
+                                FirstRound.Only("Fresh Public Version", RoundCounter.Twice, () =>
+                                {
+                                    NiceTrace.Message("Info about FRESH PUBLIC arrived. {0}.", newValue + Environment.NewLine + whatsNew);
+                                });
+                            }
 
                             if (newValue.IsNew)
                             {
-                                NiceTrace.Message("FRESH PUBLIC version is new one. " + newValue.NewVer);
+                                NiceTrace.Message("FRESH PUBLIC version is available. " + newValue.NewVer);
                             }
                         }
+
+                        return true;
                     }
-
-
                 }
             }
             catch (Exception ex)
             {
-                NiceTrace.Message("Check new version by {0} failed. {1}", _url, ex.Get());
+                NiceTrace.Message("Check new version by {0} failed. {1}", VerUrl, ex.Get());
             }
+
+            return false;
         }
 
         // Input schema

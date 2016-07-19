@@ -1,7 +1,5 @@
 ﻿using Microsoft.Owin.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,9 +51,9 @@ namespace H3Control
             var p = new OptionSet()
             {
                 {"b|binding=", "Http binding, e.g. ip:port. Default is *:5000 (asterisk means all IPs)", v => binding = v},
-                {"w|white-list=", "Comma separated IPs. Default or empty arg turns restrictions off", v => WhiteListConfig.WhiteListArg = v},
+                {"w|white-list=", "Comma separated IPs. Default or empty arg turns restrictions off", v => H3WhiteListConfig.WhiteListArg = v},
                 {"g|generate-pwd=", "Generate password hash (encrypt) and exit", v => generatePasswordHash = v},
-                {"p|password=", "HASH of the desired password", v => PasswordConfig.Hash = v},
+                {"p|password=", "HASH of the desired password", v => H3PasswordConfig.Hash = v},
                 {"v|version", "Show version", v => isver = true},
                 {"h|?|help", "Display this help", v => help = v != null},
                 {"n|nologo", "Hide logo", v => nologo = v != null}
@@ -88,6 +86,8 @@ namespace H3Control
                 return 0;
             }
 
+            NewVerListener.Listen();
+
             try
             {
                 if (H3Environment.IsH3)
@@ -110,11 +110,11 @@ namespace H3Control
 
             StringBuilder cfg = new StringBuilder("Configuration by command line:").AppendLine();
             cfg.AppendLine("  Url is " + baseUrl);
-            if (WhiteListConfig.HasWhiteList)
-                cfg.AppendFormat("  WHITE-list restriction(s) are activated: {0}", string.Join("; ", WhiteListConfig.WhiteList)).AppendLine();
+            if (H3WhiteListConfig.HasWhiteList)
+                cfg.AppendFormat("  WHITE-list restriction(s) are activated: {0}", string.Join("; ", H3WhiteListConfig.WhiteList)).AppendLine();
             else
                 cfg.AppendLine("  Warning: white-list isn't specified, so ip restrictions are absent");
-            if (PasswordConfig.IsStricted)
+            if (H3PasswordConfig.IsStricted)
                 cfg.AppendLine("  Access to change a frequency IS RESTRICTED by a password");
             if (DebugTraceListener.LogFolder != null)
                 cfg.AppendLine("  Logs are located in " + DebugTraceListener.LogFolder);
@@ -124,7 +124,7 @@ namespace H3Control
 
             try
             {
-                NewVerListener.Listen();
+
                 using (var server = Launch_H3Server(baseUrl))
                 {
                     PsListener_OnLinux.Bind();
@@ -156,12 +156,11 @@ namespace H3Control
                 Console.WriteLine(m2);
                 return 1;
             }
-
         }
 
         public static IDisposable Launch_H3Server(string baseUrl)
         {
-                return WebApp.Start<NancyStartup>(baseUrl);
+                return WebApp.Start<H3ControlNancyStartup>(baseUrl);
         }
 
         private static void Preload(string baseUrl)
@@ -253,43 +252,6 @@ namespace H3Control
             }
         }
 
-    }
-
-    public class WhiteListConfig
-    {
-        public static string WhiteListArg;
-
-        public static bool HasWhiteList
-        {
-            get { return WhiteList.Count > 0; }
-        }
-
-        public static HashSet<string> WhiteList
-        {
-            get
-            {
-                var s = WhiteListArg;
-                return s != null && s.Length > 0
-                    ? new HashSet<string>(s
-                        .Split(',', ';')
-                        .Select(x => x.Trim())
-                        .Where(x => x.Length > 0))
-                    : new HashSet<string>();
-            }
-        }
-    }
-
-    public class PasswordConfig
-    {
-        public static string Hash;
-
-        public static bool IsStricted
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(Hash) && Hash.Length == 40; 
-            }
-        }
     }
 }
 

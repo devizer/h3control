@@ -69,12 +69,12 @@
             Func<NancyContext, bool> isAuthenticationRequired = delegate(NancyContext nancyContext)
             {
                 // We ask authentication only for default page
-                return PasswordConfig.IsStricted && nancyContext.Request.Url.Path == "/";
+                return H3PasswordConfig.IsStricted && nancyContext.Request.Url.Path == "/";
             };
 
             Func<string, string, IUserIdentity> tryAuthenticate = (login, password) =>
             {
-                return HashExtentions.SHA1(password).Equals(PasswordConfig.Hash)
+                return HashExtentions.SHA1(password).Equals(H3PasswordConfig.Hash)
                     ? new BasicAuthenticationExtentions.SuperSimpleNancyIdentity(login)
                     : null;
             };

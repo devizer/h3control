@@ -10,8 +10,12 @@ namespace H3Control
     using System.Reflection;
     using System.Web.Http;
 
+    using Common;
+
     using Microsoft.Owin.FileSystems;
     using Microsoft.Owin.StaticFiles;
+
+    using Universe;
 
     public class PureOwinStartup
     {
@@ -25,7 +29,15 @@ namespace H3Control
             }
             catch{}
 
-            app.Use(typeof (WhiteListMiddleware), WhiteListConfig.WhiteList);
+            Action<string> trace = dump =>
+                FirstRound.Only("OWIN request dump", RoundCounter.Twice, () =>
+                {
+                    NiceTrace.Message(dump);
+                });
+
+
+            app.Use(typeof(TraceMiddleware), trace);
+            app.Use(typeof(WhiteListMiddleware), H3WhiteListConfig.WhiteList);
             
 
 /*

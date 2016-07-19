@@ -185,6 +185,8 @@
     <Compile Include="CrossInfo\SmartyTemp.cs" />
     <Compile Include="CrossInfo\UnitStress.cs" />
     <Compile Include="H3NancyModule.cs" />
+    <Compile Include="H3PasswordConfig.cs" />
+    <Compile Include="H3WhiteListConfig.cs" />
     <Compile Include="Links\ExMessage.cs" />
     <Compile Include="Links\QuitHandler.cs" />
     <Compile Include="LoadLogger.cs" />
@@ -194,7 +196,7 @@
     <Compile Include="LinksHtmlHelpersExtensions.cs" />
     <Compile Include="MarkdownTo.cs" />
     <Compile Include="MyNancyConfig.cs" />
-    <Compile Include="NancyStartup.cs" />
+    <Compile Include="H3ControlNancyStartup.cs" />
     <Compile Include="NewVerListener.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Controllers\DeviceController.cs" />

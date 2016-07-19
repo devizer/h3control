@@ -556,118 +556,121 @@
                 <div id="whatsnew_markdown" class="markdown" style="height: 420px; overflow-y: scroll; padding-right: 10px">
                     <pre id="whatsnew_there_are_new_version" style="text-align: center"><code style="text-align: center; line-height: 1.8em"><span style="font-size: 1.8em" class="glyphicon glyphicon-cloud-download"></span>&#10;wget -q -nv -O - https://github.com/devizer/h3control-bin/raw/master/public/h3control.sh | bash</code></pre>
                     <pre id="whatsnew_its_latest_version" style="text-align: center"><code style="text-align: center">this h3control is the latest available <strong>public</strong> version <span class="glyphicon glyphicon-thumbs-up"></span></code></pre>
-                    <p>&nbsp;</p>
-                    <h4>UPDATE 22</h4>
-                    <ul>
-                    <li>Important fix 1.22.542. It fixes wierd rare incomplete initialization of dashboard during loading</li>
-                    <li>Fixed launchers (<code>h3control-console.sh</code> &amp; <code>h3control-install-daemons.sh</code>)</li>
-                    <li>Building moved to github</li>
-                    </ul>
-                    <h4>UPDATE 21</h4>
-                    <ul>
-                    <li>Improoved responsiblity of frequency control. E.g. gauges are updated immediately in response to click | tap on frequency. Intervals of refresh extended to <code>10s</code>.</li>
-                    <li>Dashboard is redesigned. All the widgets of dashboard fit on a tablet 1024x768 or above.</li>
-                    <li>Dashboard in disabled state (when H3-board is down) is also redesigned.</li>
-                    <li>Added swap utilization column to the list of the top memory usage list.</li>
-                    <li>Added sorting choice for top processes list.</li>
-                    <li>Fixed permissions inside h3control.tar.gz</li>
-                    </ul>
-                    <h4>UPDATE 19 (1.19.386)</h4>
-                    <ul>
-                    <li>LESS colors, LESS gradients, LESS blur</li>
-                    <li>Added preliminary top process list</li>
-                    </ul>
-                    <h4>UPDATE 18 (1.18.310)</h4>
-                    <ul>
-                    <li>Fixed support of Fedora and OpenSUSE in <code>./h3control-install-daemon.sh</code> script.</li>
-                    <li>Added info about mono and OS into logs.</li>
-                    </ul>
-                    <h4>UPDATE 17</h4>
-                    <ul>
-                    <li>Added logging: log are writing into /tmp/h3control.logs/, /var/log/h3control.logs/ or /var/tmp/h3control.logs depending on permissions to that folder. h3control automatically trims own old logs.</li>
-                    <li>Added optional password protection of changing frequency. Screenshot: h3control_v1.17_readonly_mode. How Dow do we do it? First, encrypt password:</li>
-                    </ul>
-                    <pre><code>    &gt; ./h3control-console.sh -g=mySecret
+                    <div>
+                        <p>&nbsp;</p>
+                        <h4>UPDATE 22</h4>
+                        <ul>
+                            <li>Important fix 1.22.542. It fixes wierd rare incomplete initialization of dashboard during loading</li>
+                            <li>Fixed launchers (<code>h3control-console.sh</code> &amp; <code>h3control-install-daemons.sh</code>)</li>
+                            <li>Building moved to github</li>
+                        </ul>
+                        <h4>UPDATE 21</h4>
+                        <ul>
+                            <li>Improoved responsiblity of frequency control. E.g. gauges are updated immediately in response to click | tap on frequency. Intervals of refresh extended to <code>10s</code>.</li>
+                            <li>Dashboard is redesigned. All the widgets of dashboard fit on a tablet 1024x768 or above.</li>
+                            <li>Dashboard in disabled state (when H3-board is down) is also redesigned.</li>
+                            <li>Added swap utilization column to the list of the top memory usage list.</li>
+                            <li>Added sorting choice for top processes list.</li>
+                            <li>Fixed permissions inside h3control.tar.gz</li>
+                        </ul>
+                        <h4>UPDATE 19 (1.19.386)</h4>
+                        <ul>
+                            <li>LESS colors, LESS gradients, LESS blur</li>
+                            <li>Added preliminary top process list</li>
+                        </ul>
+                        <h4>UPDATE 18 (1.18.310)</h4>
+                        <ul>
+                            <li>Fixed support of Fedora and OpenSUSE in <code>./h3control-install-daemon.sh</code> script.</li>
+                            <li>Added info about mono and OS into logs.</li>
+                        </ul>
+                        <h4>UPDATE 17</h4>
+                        <ul>
+                            <li>Added logging: log are writing into /tmp/h3control.logs/, /var/log/h3control.logs/ or /var/tmp/h3control.logs depending on permissions to that folder. h3control automatically trims own old logs.</li>
+                            <li>Added optional password protection of changing frequency. Screenshot: h3control_v1.17_readonly_mode. How Dow do we do it? First, encrypt password:</li>
+                        </ul>
+                        <pre><code>    &gt; ./h3control-console.sh -g=mySecret
     7D018BB3DF0E523692845AF1F27E992CE8A41650
 </code></pre>
-                    <p>Note, space before command above causes shell to eliminate the command from the history. By this way clear password will be stored nowhere. Finally, add parameter -p=7D018BB3DF0E523692845AF1F27E992CE8A41650 to h3control-console.sh or /etc/init.d/h3control daemon. For example:</p>
-                    <pre><code>    &gt; ./h3control-console.sh -p=7D018BB3DF0E523692845AF1F27E992CE8A41650 -b=*:5000
+                        <p>Note, space before command above causes shell to eliminate the command from the history. By this way clear password will be stored nowhere. Finally, add parameter -p=7D018BB3DF0E523692845AF1F27E992CE8A41650 to h3control-console.sh or /etc/init.d/h3control daemon. For example:</p>
+                        <pre><code>    &gt; ./h3control-console.sh -p=7D018BB3DF0E523692845AF1F27E992CE8A41650 -b=*:5000
 </code></pre>
-                    <p>Without -p option behavior is the same as prev version - anybody from white-list, or anybody, could change frequency of an Orange PI</p>
-                    <h4>UPDATE 16 (1.16.255)</h4>
-                    <ul>
-                    <li>Server side redesigned. Samart cache improoved according to best practice recommendations (if-modified-since, etag).</li>
-                    <li>UI wasn't changed, Ctrl-F5 is still required after upgrade.</li>
-                    <li>[1.16.256] Cache of js and css was agressively improoved in comparision with 1.16.255</li>
-                    <li>Added bug: Icons for mobile browsers were lost. Fixed in 1.16.260</li>
-                    </ul>
-                    <h4>UPDATE 15 (1.15.239)</h4>
-                    <ul>
-                    <li>Added 'Rate Me' and version number on the dashboard. Five Stars are welcome</li>
-                    </ul>
-                    <h4>UPDATE 14 (1.14.225)</h4>
-                    <ul>
-                    <li>Added Memory Usage (Ctrl-F5). Compatiblity with old IE on Windows XP restored.</li>
-                    </ul>
-                    <h4>UPDATE 12</h4>
-                    <ul>
-                    <li>CPU Usage bar was rearranged</li>
-                    <li>Warning: IE on Windows XP isnt supported since 1.12 Sorry for that. Please use Chrome or Firefox on Windows XP</li>
-                    </ul>
-                    <h4>UPDATE 11 (1.11.180)</h4>
-                    <ul>
-                    <li>Improved UI perfomance (Ctrl-F5). Owners of old smartphones/tablets should prize this update</li>
-                    </ul>
-                    <h4>UPDATE 10 (1.10.172)</h4>
-                    <ul>
-                    <li>Added update speed selector: 0.5s, 1s, 2s or 5s</li>
-                    </ul>
-                    <h4>UPDATE 9 (1.9.166)</h4>
-                    <ul>
-                    <li>Dependencies (jquery, bootstrap) moved from the internet to h3control distribution. So h3control app works without the internet since 1.9.166</li>
-                    </ul>
-                    <h4>UPDATE 8 (1.8.151):</h4>
-                    <ul>
-                    <li>Added CPU usage bar. (Ctrl-F5)</li>
-                    <li>Fixed CPU usage bar for old IE (1.8.161)</li>
-                    </ul>
-                    <h4>UPDATE 7 (1.7.116):</h4>
-                    <ul>
-                    <li>Fixed the vaule of the DDR RANGE</li>
-                    <li>Added H3 icons for mobile &amp; desktop browsers</li>
-                    </ul>
-                    <h4>UPDATE 6</h4>
-                    <ul>
-                    <li>Added versioning during build. Current version is 1.6.102.</li>
-                    <li>Added h3control-install-daemon.sh to the tarball, default deployment path of the daemon is $HOME/bin/h3control</li>
-                    <li>Improved handling of <code>/etc/init.d/h3control stop</code></li>
-                    </ul>
-                    <h4>UPDATE 5:</h4>
-                    <ul>
-                    <li>Added 60 Mhz choice of a frequency</li>
-                    </ul>
-                    <h4>UPDATE 4:</h4>
-                    <ul>
-                    <li>Added command line parameters of http server and ip's white-list configuration:</li>
-                    </ul>
-                    <pre><code>~&gt;./h3control-console --help
+                        <p>Without -p option behavior is the same as prev version - anybody from white-list, or anybody, could change frequency of an Orange PI</p>
+                        <h4>UPDATE 16 (1.16.255)</h4>
+                        <ul>
+                            <li>Server side redesigned. Samart cache improoved according to best practice recommendations (if-modified-since, etag).</li>
+                            <li>UI wasn't changed, Ctrl-F5 is still required after upgrade.</li>
+                            <li>[1.16.256] Cache of js and css was agressively improoved in comparision with 1.16.255</li>
+                            <li>Added bug: Icons for mobile browsers were lost. Fixed in 1.16.260</li>
+                        </ul>
+                        <h4>UPDATE 15 (1.15.239)</h4>
+                        <ul>
+                            <li>Added 'Rate Me' and version number on the dashboard. Five Stars are welcome</li>
+                        </ul>
+                        <h4>UPDATE 14 (1.14.225)</h4>
+                        <ul>
+                            <li>Added Memory Usage (Ctrl-F5). Compatiblity with old IE on Windows XP restored.</li>
+                        </ul>
+                        <h4>UPDATE 12</h4>
+                        <ul>
+                            <li>CPU Usage bar was rearranged</li>
+                            <li>Warning: IE on Windows XP isnt supported since 1.12 Sorry for that. Please use Chrome or Firefox on Windows XP</li>
+                        </ul>
+                        <h4>UPDATE 11 (1.11.180)</h4>
+                        <ul>
+                            <li>Improved UI perfomance (Ctrl-F5). Owners of old smartphones/tablets should prize this update</li>
+                        </ul>
+                        <h4>UPDATE 10 (1.10.172)</h4>
+                        <ul>
+                            <li>Added update speed selector: 0.5s, 1s, 2s or 5s</li>
+                        </ul>
+                        <h4>UPDATE 9 (1.9.166)</h4>
+                        <ul>
+                            <li>Dependencies (jquery, bootstrap) moved from the internet to h3control distribution. So h3control app works without the internet since 1.9.166</li>
+                        </ul>
+                        <h4>UPDATE 8 (1.8.151):</h4>
+                        <ul>
+                            <li>Added CPU usage bar. (Ctrl-F5)</li>
+                            <li>Fixed CPU usage bar for old IE (1.8.161)</li>
+                        </ul>
+                        <h4>UPDATE 7 (1.7.116):</h4>
+                        <ul>
+                            <li>Fixed the vaule of the DDR RANGE</li>
+                            <li>Added H3 icons for mobile &amp; desktop browsers</li>
+                        </ul>
+                        <h4>UPDATE 6</h4>
+                        <ul>
+                            <li>Added versioning during build. Current version is 1.6.102.</li>
+                            <li>Added h3control-install-daemon.sh to the tarball, default deployment path of the daemon is $HOME/bin/h3control</li>
+                            <li>Improved handling of <code>/etc/init.d/h3control stop</code></li>
+                        </ul>
+                        <h4>UPDATE 5:</h4>
+                        <ul>
+                            <li>Added 60 Mhz choice of a frequency</li>
+                        </ul>
+                        <h4>UPDATE 4:</h4>
+                        <ul>
+                            <li>Added command line parameters of http server and ip's white-list configuration:</li>
+                        </ul>
+                        <pre><code>~&gt;./h3control-console --help
     -b, --binding=VALUE         HTTP binding, e.g. ip:port, default is *:5000
     -w, --white-list=VALUE      Comma separated IPs, default or empty arg turns restrictions off
     -v, --version               Show version
     -h, -?, --help              Display this help
     -n, --nologo                Hide logo
 </code></pre>
-                    <h4>UPDATE 3:</h4>
-                    <ul>
-                    <li><strong>Control</strong> CPU frequency</li>
-                    </ul>
-                    <h4>UPDATE 2:</h4>
-                    <ul>
-                    <li>Added user defined limits of CPU &amp; DDR frequency</li>
-                    </ul>
-                    <h4>FIRST Version:</h4>
-                    <p><img src="https://github.com/devizer/h3control-bin/raw/master/images/h3control-first.jpg" alt="first version" title="h3control first version" />
-                    </p>
+                        <h4>UPDATE 3:</h4>
+                        <ul>
+                            <li><strong>Control</strong> CPU frequency</li>
+                        </ul>
+                        <h4>UPDATE 2:</h4>
+                        <ul>
+                            <li>Added user defined limits of CPU &amp; DDR frequency</li>
+                        </ul>
+                        <h4>FIRST Version:</h4>
+                        <p>
+                            <img src="https://github.com/devizer/h3control-bin/raw/master/images/h3control-first.jpg" alt="first version" title="h3control first version" />
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
