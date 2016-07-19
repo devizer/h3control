@@ -19,6 +19,8 @@ script:
   - /usr/bin/cli -h || true
   - uname -a
   - cat /etc/*release
+  - apt-cache showpkg libc6 | head -3
+  - gcc --version
   - mono --version
   - java -version
   - cat /proc/cpuinfo
@@ -29,23 +31,5 @@ script:
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
   - mono --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - ######## THE END ######################## MONO 2.11.4?
-  - sudo apt-get remove mono-runtime -y
-  - sudo apt-get remove mono-complete -y
-  - sudo apt-get remove mono-mcs -y
-  - bash travis-plugins/build-mono-2.11.4
-  - echo SO, PATH IS $PATH
-  - export PATH="$HOME/mono-2.11.4/bin:$PATH"
-  - export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
-  - mono --version
-  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
-  - mono --runtime=v4.0 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - mono --runtime=v4.0 --debug $HOME/mono-2.11.4/lib/mono/4.5/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - mono --runtime=v4.5 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - mono --runtime=v4.5 --debug $HOME/mono-2.11.4/lib/mono/4.5/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - find $HOME/mono-2.11.4 | grep nunit-console
-  - mono --runtime=v4.0 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - mono --runtime=v4.5 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - apt-cache search mono | sort
-
+  
   

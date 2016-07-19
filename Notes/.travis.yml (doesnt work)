@@ -1,0 +1,51 @@
+language: csharp
+solution: H3Control.sln 
+mono:
+  - latest
+install:
+  - sudo apt-get install -y sysbench ffmpeg redis-server memcached
+  - ffmpeg -codecs
+  - nuget restore H3Control.sln 
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - echo HOME IS $HOME
+  - echo PATH IS $PATH
+  - file /usr/bin/cli
+  - ls -l /usr/bin/cli*
+  - bash travis/show-nuget.sh
+  - /usr/bin/cli || true
+  - /usr/bin/cli --help || true
+  - /usr/bin/cli /? || true
+  - /usr/bin/cli -h || true
+  - uname -a
+  - cat /etc/*release
+  - mono --version
+  - java -version
+  - cat /proc/cpuinfo
+  - cat /proc/meminfo
+  - sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run > /dev/null
+  - sysbench --test=cpu --cpu-max-prime=20000 --max-time=5 --num-threads=1 run 
+  - #du -h -d 4
+  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
+  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
+  - mono --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - ######## THE END ######################## MONO 2.11.4?
+  - sudo apt-get remove mono-runtime -y
+  - sudo apt-get remove mono-complete -y
+  - sudo apt-get remove mono-mcs -y
+  - bash travis-plugins/build-mono-2.11.4
+  - echo SO, PATH IS $PATH
+  - export PATH="$HOME/mono-2.11.4/bin:$PATH"
+  - export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
+  - mono --version
+  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
+  - mono --runtime=v4.0 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - mono --runtime=v4.0 --debug $HOME/mono-2.11.4/lib/mono/4.5/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - mono --runtime=v4.5 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - mono --runtime=v4.5 --debug $HOME/mono-2.11.4/lib/mono/4.5/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - find $HOME/mono-2.11.4 | grep nunit-console
+  - mono --runtime=v4.0 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - mono --runtime=v4.5 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - apt-cache search mono | sort
+
+  
