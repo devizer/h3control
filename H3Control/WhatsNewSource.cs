@@ -15,7 +15,7 @@ namespace H3Control
             return ret;
         }
 
-        public static string GetHtml()
+        public static string GetHtmlInclude()
         {
             string md = GetMarkDown();
             return MarkdownTo.Html(md);
@@ -25,6 +25,8 @@ namespace H3Control
             copy.RenderSoftLineBreaksAsLineBreaks = true;
             return CommonMark.CommonMarkConverter.Convert(md, copy);
         }
+
+
 
        
 

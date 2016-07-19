@@ -263,6 +263,7 @@
 
 
                 $("#newVersionInfo").on('click', function(event) {
+                    LaunchWatsNewLoader();
                     $('#whatsnew_popup').popup({
                         transition: 'all 0.3s',
                         pagecontainer: "#PageContainer"
@@ -280,6 +281,24 @@
                 }
 
             });
+
+            function LaunchWatsNewLoader() {
+                $("#whatsnew_loading").show();
+                $("#whatsnew_html").hide();
+
+                var req = jQuery.ajax({
+                    url: "whatsnew/html-include?" + $.now(),
+                    method: "GET",
+                    dataType: "html"
+                });
+
+                req.done(function(data) {
+                    $("#whatsnew_html").html(data);
+                    $("#whatsnew_loading").hide();
+                    $("#whatsnew_html").show();
+                    // alert(data);
+                });
+            }
 
 
             function BindEmptyMemoryUsage() {
@@ -556,28 +575,8 @@
                 <div id="whatsnew_markdown" class="markdown" style="height: 420px; overflow-y: scroll; padding-right: 10px">
                     <pre id="whatsnew_there_are_new_version" style="text-align: center"><code style="text-align: center; line-height: 1.8em"><span style="font-size: 1.8em" class="glyphicon glyphicon-cloud-download"></span>&#10;wget -q -nv -O - https://github.com/devizer/h3control-bin/raw/master/public/h3control.sh | bash</code></pre>
                     <pre id="whatsnew_its_latest_version" style="text-align: center"><code style="text-align: center">this h3control is the latest available <strong>public</strong> version <span class="glyphicon glyphicon-thumbs-up"></span></code></pre>
-                    <div>
-                        <p>&nbsp;</p>
-                        <h4>UPDATE 22</h4>
-                        <ul>
-                            <li>Important fix 1.22.542. It fixes wierd rare incomplete initialization of dashboard during loading</li>
-                            <li>Fixed launchers (<code>h3control-console.sh</code> &amp; <code>h3control-install-daemons.sh</code>)</li>
-                            <li>Building moved to github</li>
-                        </ul>
-                        <h4>UPDATE 21</h4>
-                        <ul>
-                            <li>Improoved responsiblity of frequency control. E.g. gauges are updated immediately in response to click | tap on frequency. Intervals of refresh extended to <code>10s</code>.</li>
-                            <li>Dashboard is redesigned. All the widgets of dashboard fit on a tablet 1024x768 or above.</li>
-                            <li>Dashboard in disabled state (when H3-board is down) is also redesigned.</li>
-                            <li>Added swap utilization column to the list of the top memory usage list.</li>
-                            <li>Added sorting choice for top processes list.</li>
-                            <li>Fixed permissions inside h3control.tar.gz</li>
-                        </ul>
-                        <h4>UPDATE 19 (1.19.386)</h4>
-                        <ul>
-                            <li>LESS colors, LESS gradients, LESS blur</li>
-                            <li>Added preliminary top process list</li>
-                        </ul>
+                    <div id="whatsnew_loading" style="padding-top: 110px; text-align: center">loading...</div>
+                    <div id="whatsnew_html" style="display:none">
                         <h4>UPDATE 18 (1.18.310)</h4>
                         <ul>
                             <li>Fixed support of Fedora and OpenSUSE in <code>./h3control-install-daemon.sh</code> script.</li>
@@ -671,7 +670,7 @@
                             <img src="https://github.com/devizer/h3control-bin/raw/master/images/h3control-first.jpg" alt="first version" title="h3control first version" />
                         </p>
                     </div>
-                </div>
+                    </div>
             </div>
         </div>
 

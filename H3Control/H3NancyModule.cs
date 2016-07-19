@@ -128,16 +128,31 @@ namespace H3Control
             Get["/whatsnew/markdown"] = parameters =>
             {
                 this.Expires(scope: CachingScope.None);
-                var ret = Response.AsText(WhatsNewSource.GetMarkDown());
+                var ret = Response.AsText(NewVerListener.WhatsNewMd);
                 ret.ContentType = "text/plain";
                 return ret;
             };
 
+            Get["/whatsnew/html-include"] = parameters =>
+            {
+                this.Expires(scope: CachingScope.None);
+                var md = NewVerListener.WhatsNewMd;
+                var html = MarkdownTo.Html(md);
+                var ret = Response.AsText(html);
+                ret.ContentType = "text/plain";
+                return ret;
+            };
+
+
             Get["/whatsnew/html"] = parameters =>
             {
                 this.Expires(scope: CachingScope.None);
-                string content = WhatsNewSource.GetHtml();
-                return AsMarkdown(content);
+                var md = NewVerListener.WhatsNewMd;
+                var htmlFragment = MarkdownTo.Html(md);
+                string html = WhatsNewSource.DraftTemplate.Replace("${CONTENT}", htmlFragment);
+                var ret = Response.AsText(html);
+                ret.ContentType = "text/html";
+                return ret;
             };
 
             // V:\_GIT\h3control-bin\ 
@@ -161,5 +176,7 @@ namespace H3Control
             ret.ContentType = "text/html";
             return ret;
         }
+
+
     }
 }
