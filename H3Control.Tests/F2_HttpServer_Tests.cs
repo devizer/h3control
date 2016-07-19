@@ -51,9 +51,9 @@
             ResponseDriller driller = ResponseDriller.CreateGet(url);
             driller.Dump();
             NiceTrace.Message("/Ver response: '{0}'", driller.String);
-            var expected = H3Environment.Ver.ToString(3);
+            var expectedVersion = H3Environment.VerAsPublic;
             Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
-            Assert.AreEqual(expected, driller.String);
+            Assert.AreEqual(expectedVersion, driller.String);
         }
 
         [Test]

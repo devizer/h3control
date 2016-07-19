@@ -9,6 +9,7 @@ namespace H3Control
     using System.IO;
     using System.Reflection;
     using System.Threading;
+    using System.Web;
 
     using Universe;
 
@@ -19,6 +20,16 @@ namespace H3Control
             return Assembly.GetExecutingAssembly().GetName().Version;
         });
 
+        static Lazy<string> _VerAsPublic = new Lazy<string>(() =>
+        {
+            return Ver.ToString(3);
+        });
+
+        public static string VerAsPublic
+        {
+            get { return _VerAsPublic.Value; }
+        }
+        
         public static Version Ver
         {
             get { return _Ver.Value; }

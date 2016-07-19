@@ -57,7 +57,7 @@ namespace H3Control
 
             Get["Ver"] = _ =>
             {
-                return Response.AsText(H3Environment.Ver.ToString(3));
+                return Response.AsText(H3Environment.VerAsPublic);
             };
 
             Get["api/json/processes/by-{column}/top-{top}"] = parameters =>

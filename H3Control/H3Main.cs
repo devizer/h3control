@@ -71,13 +71,13 @@ namespace H3Control
 
             if (isver)
             {
-                Console.WriteLine(H3Environment.Ver.ToString(3));
+                Console.WriteLine(H3Environment.VerAsPublic);
                 return 0;
             }
 
             if (!nologo)
             {
-                Console.WriteLine("H3Control " + H3Environment.Ver.ToString(3) +
+                Console.WriteLine("H3Control " + H3Environment.VerAsPublic +
                                   " is a console/daemon which \n   * \"Displays\" temperature, frequency and usage via built-in http server.\n   * Allows to control CPU & DDR frequency");
                 Console.WriteLine();
             }
@@ -239,7 +239,7 @@ namespace H3Control
                 return "  Memory ............ " + totalMem + "; Working Set: " + (workingSet64/1024L/1024).ToString("n0") + " Mb";
             });
 
-            NiceTrace.Message("H3Control " + H3Environment.Ver.ToString(3) + ". Environment:" + Environment.NewLine + b);
+            NiceTrace.Message("H3Control " + H3Environment.VerAsPublic + ". Environment:" + Environment.NewLine + b);
         }
 
         static void Try(StringBuilder b, Func<string> action)
