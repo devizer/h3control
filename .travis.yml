@@ -32,6 +32,7 @@ script:
   - ######## THE END ######################## MONO 2.11.4?
   - sudo apt-get remove mono-runtime -y
   - sudo apt-get remove mono-complete -y
+  - sudo apt-get remove mono-mcs -y
   - bash travis-plugins/build-mono-2.11.4
   - echo SO, PATH IS $PATH
   - export PATH="$HOME/mono-2.11.4/bin:$PATH"
