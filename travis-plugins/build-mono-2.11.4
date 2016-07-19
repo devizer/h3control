@@ -48,4 +48,13 @@ export PATH="$HOME/mono-2.11.4/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
 mono --version
 
+
+mkdir -p $HOME/bin
+wget -O nunit-260.7z https://www.dropbox.com/s/sfunn3ypho2nfo0/nunit-260.7z?dl=1
+7za x -y -o$HOME/bin nunit-260.7z || 7z x -y -o$HOME/bin nunit-260.7z
+rm -f nunit-260.7z
+mono --desktop --runtime=v4.0 $HOME/bin/nunit-260/nunit-console.exe
+mono --desktop --runtime=v4.5 $HOME/bin/nunit-260/nunit-console.exe
+
+
 cd $old
