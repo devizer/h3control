@@ -173,6 +173,7 @@
     <Compile Include="Common\DebugTraceListener.cs" />
     <Compile Include="Common\FirstRound.cs" />
     <Compile Include="Common\HashExtentions.cs" />
+    <Compile Include="Common\JSonExtentions.cs" />
     <Compile Include="Common\LinuxKernelCache.cs" />
     <Compile Include="Common\NancyExpirationExtentions.cs" />
     <Compile Include="Common\PsParser_OnLinux_Ps.cs" />
@@ -233,6 +234,9 @@
     <Content Include="web\H3Content\h3_nextIter.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="web\H3Content\h3_processesCtrl.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="web\H3Content\h3_refreshRate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -252,6 +256,7 @@
     <None Include="linux-build\sample.sh" />
     <None Include="linux-dist\h3control-console.sh" />
     <None Include="linux-dist\h3control-install-daemon.sh" />
+    <None Include="linux-dist\TROUBLESHOOTING" />
     <None Include="packages.config" />
     <EmbeddedResource Include="favicon.ico" />
     <Content Include="web\Content\bootstrap-theme.css.map">

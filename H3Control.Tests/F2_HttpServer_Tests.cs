@@ -87,7 +87,7 @@
                 // NiceTrace.Message("{0} response: '{1}'", "/" + path, driller.String);
                 Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
                 if (++counter == urls.Length)
-                    NiceTrace.Message(JSonFormatter.Format(driller.String));
+                    NiceTrace.Message(JSonExtentions.Format(driller.String));
             }
         }
 
@@ -109,7 +109,7 @@
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
             Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
-            NiceTrace.Message(JSonFormatter.Format(driller.String));
+            NiceTrace.Message(JSonExtentions.Format(driller.String));
         }
 
         [Test]
@@ -155,29 +155,4 @@
 
     }
 
-    class JSonFormatter
-    {
-        public static string Format(string arg)
-        {
-/*
-            dynamic parsedJson = JsonConvert.DeserializeObject(arg);
-            return JsonConvert.SerializeObject(parsedJson, Formatting.Indented); 
-*/
-            
-            JObject obj = JObject.Parse(arg);
-            StringBuilder b = new StringBuilder();
-            StringWriter wr = new StringWriter(b);
-            JsonTextWriter jwr = new JsonTextWriter(wr);
-            jwr.Formatting = Formatting.Indented;
-            jwr.IndentChar = ' ';
-            jwr.Indentation = 6;
-            
-            JsonSerializer ser = new JsonSerializer();
-            ser.Formatting = Formatting.Indented;
-            ser.Serialize(jwr, obj);
-            jwr.Flush();
-            string ret = b.ToString();
-            return ret;
-        }
-    }
 }

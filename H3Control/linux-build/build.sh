@@ -2,11 +2,11 @@
 set -e
 # VER 6
 
-src=/m/v/NoVCS/H3Control
+src=/m/v/_GIT/h3control
 
 rm -rf {tmp,dist}
 mkdir -p tmp/h3control
-cp -R $src ./tmp/src
+time (cp -R $src ./tmp/src)
 cp build.sh $src/H3Control/linux-build/build.sh
 echo COPIED!
 sync

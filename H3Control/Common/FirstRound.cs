@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace H3Control.Common
 {
-
     public class FirstRound
     {
         static Dictionary<object, short> _Cache = new Dictionary<object, short>(EqualityComparer<object>.Default);
