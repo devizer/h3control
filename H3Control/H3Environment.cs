@@ -12,7 +12,7 @@ namespace H3Control
 
     using Universe;
 
-    public class H3Environment
+    public static class H3Environment
     {
         static Lazy<Version> _Ver = new Lazy<Version>(() =>
         {
@@ -54,6 +54,18 @@ namespace H3Control
                 return false;
             }
         }, LazyThreadSafetyMode.ExecutionAndPublication);
+
+        public static bool IsRelease
+        {
+            get
+            {
+#if DEBUG
+                return false;
+#else
+                return true;
+#endif
+            }
+        }
         
 
     }

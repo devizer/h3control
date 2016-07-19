@@ -76,9 +76,14 @@ namespace H3Control
                 dump.AppendLine("  Request headers::");
                 foreach (var key in headers.Keys)
                 {
+                    string arrAsString =
+                        H3Environment.IsRelease && key == "Authorization"
+                            ? "************ protected *************"
+                            : string.Join(", ", (headers[key] ?? new string[0]).Select(x => "'" + x + "'"));
+
                     dump.AppendFormat("   \"{0}\": {1}", 
                         key,
-                        string.Join(", ", (headers[key] ?? new string[0]).Select(x => "'" + x + "'")))
+                        arrAsString)
                         .AppendLine();
                 }
             }
