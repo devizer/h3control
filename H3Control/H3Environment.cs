@@ -9,7 +9,6 @@ namespace H3Control
     using System.IO;
     using System.Reflection;
     using System.Threading;
-    using System.Web;
 
     using Universe;
 

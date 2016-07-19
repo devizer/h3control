@@ -10,6 +10,8 @@ namespace H3Control
     using System.Net.Http;
     using System.Threading;
 
+    using Common;
+
     using Links;
 
     using Newtonsoft.Json;
@@ -20,8 +22,8 @@ namespace H3Control
     {
 
         // { version: '1.5.77', date: 1447211522 }
-        private const string _url = "https://www.dropbox.com/s/ikvj3edhovhh8ow/h3control-version.json?dl=1";
-        
+        // private const string _url = "https://www.dropbox.com/s/ikvj3edhovhh8ow/h3control-version.json?dl=1";
+        private const string _url = "https://github.com/devizer/h3control-bin/raw/master/public/h3control-version.json";
         
         static BuildInfo _info;
         static object _sync = new object();
@@ -87,8 +89,15 @@ namespace H3Control
                             };
 
                             Info = newValue;
+                            FirstRound.Only("Fresh Public Version", RoundCounter.Twice, () =>
+                            {
+                                NiceTrace.Message("Info about FRESH PUBLIC arrived. {0}.", newValue);
+                            });
+
                             if (newValue.IsNew)
-                                NiceTrace.Message("New Version Available: " + newValue.NewVer);
+                            {
+                                NiceTrace.Message("FRESH PUBLIC version is new one. " + newValue.NewVer);
+                            }
                         }
                     }
 

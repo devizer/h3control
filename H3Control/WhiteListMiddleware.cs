@@ -8,6 +8,8 @@ namespace H3Control
 {
     using System.Diagnostics;
 
+    using Common;
+
     using Microsoft.Owin;
 
     using Universe;
@@ -45,26 +47,47 @@ namespace H3Control
         [Conditional("DEBUG")]
         private static void DumpRequest(IOwinContext context)
         {
-            NiceTrace.Message("");
+            StringBuilder dump = new StringBuilder();
             var env = context.Request.Environment;
             object owinRequestPath;
             env.TryGetValue("owin.RequestPath", out owinRequestPath);
-            if (owinRequestPath != null) NiceTrace.Message("REQUEST " + owinRequestPath);
+            if (owinRequestPath != null) dump.AppendLine("Owin REQUEST " + owinRequestPath);
 
             foreach (var k in env.Keys.OrderBy(x => x))
             {
-                NiceTrace.Message("  {0}: {1}", k, env[k]);
+                dump.AppendFormat("  {0}: {1}", k, env[k]).AppendLine();
             }
 
             var caps = context.Request.Environment["server.Capabilities"] as Dictionary<string, object>;
             if (caps != null)
             {
-                NiceTrace.Message("  Capabilities::");
+                dump.AppendLine("  Capabilities::");
                 foreach (var k in caps.Keys.OrderBy(x => x))
                 {
-                    NiceTrace.Message("  |   {0}: {1}", k, caps[k]);
+                    dump.AppendFormat("  |   {0}: {1}", k, caps[k]).AppendLine();
                 }
             }
+
+            // headersRaw is internal Microsoft.Owin.Host.HttpListener.RequestProcessing.RequestHeadersDictionary
+            var headersRaw = context.Request.Environment["owin.RequestHeaders"];
+            IDictionary<string, string[]> headers = context.Request.Environment["owin.RequestHeaders"] as IDictionary<string, string[]>;
+            if (headers != null)
+            {
+                dump.AppendLine("  Request headers::");
+                foreach (var key in headers.Keys)
+                {
+                    dump.AppendFormat("   \"{0}\": {1}", 
+                        key,
+                        string.Join(", ", (headers[key] ?? new string[0]).Select(x => "'" + x + "'")))
+                        .AppendLine();
+                }
+            }
+
+            FirstRound.Only("OWIN request dump", RoundCounter.Twice, () =>
+            {
+                NiceTrace.Message(dump);
+            });
+
         }
     }
 }
