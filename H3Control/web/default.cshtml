@@ -283,6 +283,7 @@
             });
 
             function LaunchWatsNewLoader() {
+                $("#whatsnew_loading").html("formatting markdown ...");
                 $("#whatsnew_loading").show();
                 $("#whatsnew_html").hide();
 
@@ -298,6 +299,11 @@
                     $("#whatsnew_html").show();
                     // alert(data);
                 });
+
+                req.fail(function (jqXHR, textStatus) {
+                    $("#whatsnew_loading").html("<a href='@NewVerListener.WhatsNewUrl' target='_blank'>WHATS-NEW.md</a>");
+                });
+
             }
 
 

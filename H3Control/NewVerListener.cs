@@ -24,7 +24,7 @@ namespace H3Control
         // { version: '1.5.77', date: 1447211522 }
         // private const string VerUrl = "https://www.dropbox.com/s/ikvj3edhovhh8ow/h3control-version.json?dl=1";
         private const string VerUrl = "https://raw.githubusercontent.com/devizer/h3control-bin/master/public/h3control-version.json";
-        private const string WhatsNewUrl = "https://raw.githubusercontent.com/devizer/h3control-bin/master/WHATS-NEW.md";
+        public static readonly string WhatsNewUrl = "https://raw.githubusercontent.com/devizer/h3control-bin/master/WHATS-NEW.md";
         
         static BuildInfo _info;
         private static string _whatsNew_md;
