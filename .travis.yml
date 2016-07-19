@@ -41,5 +41,6 @@ script:
   - mono --runtime=v4.5 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
   - mono --runtime=v4.5 --debug $HOME/mono-2.11.4/lib/mono/4.5/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
   - find $HOME/mono-2.11.4 | grep nunit-console
-  
+  - mono --runtime=v4.0 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - mono --runtime=v4.5 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
   
