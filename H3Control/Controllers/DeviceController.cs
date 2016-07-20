@@ -27,11 +27,25 @@ namespace H3Control.Controllers
                         ? DeviceModel.Sample()
                         : DeviceDataSource.GetLocal();
 
-
                 ret.VerInfo = NewVerListener.Info;
 
                 // ON H3 WE READ MemInfo TWICE TWICE
-                if (!CrossInfo.IsMono || ret.Mem == null)
+                if (!H3Environment.IsH3)
+                {
+                    // Intel Linux || Windows
+                    try
+                    {
+                        MemInfo_OnLinix info;
+                        if (MemInfoParser_OnLinux.TryParse(out info))
+                            ret.Mem = info;
+                    }
+                    catch (Exception ex)
+                    {
+                        NiceTrace.Message("MemInfo Parser failed" + Environment.NewLine + ex);
+                    }
+                }
+
+                if (ret.Mem == null)
                     ret.Mem = new MemInfo_OnLinix()
                     {
                         Total = 1234 * 1024,
