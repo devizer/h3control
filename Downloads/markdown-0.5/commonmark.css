@@ -1,0 +1,125 @@
+﻿.markdown {
+    background: white;
+    color: #424242;
+    font-family: "Open Sans", arial, sans-serif;
+    font-size: 15px;
+}
+
+    pre > code {
+        border: none;
+/*
+        margin-left: 3px;
+        margin-right: 3px;
+        padding-left: 3px;
+        padding-right: 3px;
+        background-color: #F0F0F0;
+        white-space: nowrap;
+*/
+    }
+
+    li code, p code {
+        border: 1px dashed gray;
+        margin-left: 3px;
+        margin-right: 3px;
+        padding-left: 3px;
+        padding-right: 3px;
+        background-color: #F0F0F0;
+        white-space: nowrap;
+    }
+
+    .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+        padding-top: 9px;
+        margin-bottom: 33px;
+        text-transform: none;
+    }
+
+    .markdown h1 {
+        font-size: 26px;
+    }
+
+.markdown h2 {
+  font-size: 24px;
+}
+
+.markdown h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.markdown h4 {
+    font-size: 18px;
+  margin-bottom: 18px;
+}
+
+.markdown h5 {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.markdown h6 {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.markdown p {
+  line-height: 1.1em;
+  margin: 0 0 30px;
+}
+
+.markdown a {
+  color: #f03838;
+  text-decoration: underline;
+}
+
+.markdown ul, .markdown ol {
+  list-style-position: inside;
+  line-height: 1.2em;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+    .markdown ul li, .markdown ol li {
+        margin: 0 0 2px 20px;
+    }
+
+.markdown blockquote {
+  border-left: 1px dotted #303030;
+  margin: 40px 0;
+  padding: 5px 30px;
+}
+
+.markdown blockquote p {
+  color: #AEADAD;
+  display: block;
+  font-style: italic;
+  margin: 0;
+  width: 100%;
+}
+
+.markdown img {
+  display: block;
+  margin: 10px 0;
+  width: auto;
+  max-width: 100%;
+}
+
+.markdown pre {
+  background: #F1F0EA;
+  border: 1px solid #DDDBCC;
+  border-radius: 3px;
+  margin: 0 0px 30px; 
+  padding: 15px 20px;
+}
+
+.markdown ::selection {
+  background: #FFF5B8;
+  color: #000;
+  display: block;
+}
+
+.markdown ::-moz-selection {
+  background: #FFF5B8;
+  color: #000;
+  display: block;
+}
+

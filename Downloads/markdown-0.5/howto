@@ -1,0 +1,7 @@
+sudo apt-get install nodejs npm -y
+mkdir -p ~/npm-libs
+cd ~/npm-libs
+npm install markdown
+file node_modules/markdown/lib/markdown.js
+cat node_modules/markdown/lib/markdown.js | head -20
+
