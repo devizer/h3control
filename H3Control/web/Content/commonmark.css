@@ -2,7 +2,7 @@
     background: white;
     color: #424242;
     font-family: "Open Sans", arial, sans-serif;
-    font-size: 17px;
+    font-size: 15px;
 }
 
     pre > code {
@@ -28,7 +28,7 @@
     }
 
     .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
-        margin-top: 6px;
+        padding-top: 9px;
         margin-bottom: 33px;
         text-transform: none;
     }
@@ -47,7 +47,7 @@
 }
 
 .markdown h4 {
-  font-size: 18px;
+    font-size: 18px;
   margin-bottom: 18px;
 }
 
