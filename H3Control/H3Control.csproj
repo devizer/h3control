@@ -242,6 +242,9 @@
     <Content Include="web\H3Content\h3_refreshRate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="web\H3Content\jquery.extentions.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="web\Scripts\angular.1.2.29.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

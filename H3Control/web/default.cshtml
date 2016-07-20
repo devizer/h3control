@@ -24,6 +24,8 @@
 
         @Html.Script(this)["Scripts/jquery-1.12.4.min.js"]
         @Html.Script(this)["Scripts/angular.1.2.29.min.js"]
+        @Html.Script(this)["H3Content/jquery.extentions.js"]
+
         
 
         <!-- through  out bootstrapper? -->
@@ -265,7 +267,7 @@
                 $(".Restricted").hide();
 
 
-                $("#newVersionInfo").on('click', function(event) {
+                $("#newVersionInfo, #oldVersionInfo").on('click', function(event) {
                     LaunchWatsNewLoader();
                     $('#whatsnew_popup').popup({
                         transition: 'all 0.3s',
@@ -277,10 +279,10 @@
 
 
                 if (initialDeviceInfo && initialDeviceInfo.IsSuccess) {
-                    window.setTimeout(bindInitialDeviceInfo, 99);
+                    window.setTimeout(bindInitialDeviceInfo, 200);
                     window.setTimeout(nextNeverendingUpdate, 500);
                 } else {
-                    window.setTimeout(nextNeverendingUpdate, 222);
+                    window.setTimeout(nextNeverendingUpdate, 444);
                 }
 
             });
@@ -331,38 +333,30 @@
                     + '<div class="InfoBlock-Value truncate">${VALUE}</div>'
                     + '</div>';
 
-                var memUsage = $("#memUsage");
-                if (false && (mem == null || typeof mem === 'undefined'))
-                    memUsage.hide();
-                else {
-                    memUsage.show();
-                    for (var i = 0; i < mem.length; i++) {
-                        var item = mem[i];
-                        var str = "&nbsp;";
-                        if (item.Value !== null) {
-                            var mb = Math.round(item.Value / 1024);
-                            str = '<span class="InfoBlock-Mb">&mdash;</span>';
-                            if (mb != 0)
-                                str = '<span class="InfoBlock-Mb MyNumber">' + mb + '</span>&nbsp;<small>Mb</small>';
-
-                        }
-
-                        var htmlItem = template.replace("${LABEL}", item.Label).replace("${VALUE}", str);
-                        html = html + htmlItem;
+                for (var i = 0; i < mem.length; i++) {
+                    var item = mem[i];
+                    var str = "&nbsp;";
+                    if (item.Value !== null) {
+                        var mb = Math.round(item.Value / 1024);
+                        str = '<span class="InfoBlock-Mb">&mdash;</span>';
+                        if (mb != 0)
+                            str = '<span class="InfoBlock-Mb MyNumber">' + mb + '</span>&nbsp;<small>Mb</small>';
                     }
-                    memUsage.html(html);
+
+                    var htmlItem = template.replace("${LABEL}", item.Label).replace("${VALUE}", str);
+                    html = html + htmlItem;
                 }
 
+                var memUsage = $("#memUsage");
+                memUsage.show();
+                memUsage.html(html);
             }
 
             function BindHasAccess(hasAccess) {
                 if (hasAccess === null)
                     return;
 
-                if (hasAccess)
-                    $(".Restricted").hide();
-                else
-                    $(".Restricted").show();
+                $(".Restricted").applyDisplay(!hasAccess);
 
                 var isIE8 = (BrowserDetect.browser === "Explorer" && BrowserDetect.version <= 8.9);
                 if (isIE8) {
@@ -549,7 +543,8 @@
             </div>
 
             <div style="position: absolute; left: 535px; top: 375px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px;">
-                <button id="newVersionInfo" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
+                <button id="newVersionInfo" style="display:none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
+                <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor:pointer"  class="glyphicon glyphicon-info-sign"></span>
             </div>
 
         </div>

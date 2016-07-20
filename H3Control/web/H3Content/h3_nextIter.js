@@ -43,6 +43,14 @@ function bindSuccessDeviceInfo(data) {
         $("#labelNewVersion").text(newVerText);
 
         // shit!
+        var isNew = data.VerInfo.IsNew !== undefined && data.VerInfo.IsNew;
+        $("#whatsnew_there_are_new_version").applyDisplay(isNew);
+        $("#whatsnew_its_latest_version").applyDisplay(!isNew);
+        // #newVersionInfo, #oldVersionInfo
+        $("#newVersionInfo").applyDisplay(isNew);
+        $("#oldVersionInfo").applyDisplay(!isNew);
+
+        /*
         if (data.VerInfo.IsNew !== undefined) {
             if (data.VerInfo.IsNew) {
                 $("#whatsnew_there_are_new_version").show();
@@ -55,6 +63,7 @@ function bindSuccessDeviceInfo(data) {
             $("#whatsnew_there_are_new_version").hide();
             $("#whatsnew_its_latest_version").show();
         }
+*/
     }
 
 
