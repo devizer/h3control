@@ -36,7 +36,8 @@ script:
   - # sudo apt-get remove mono-runtime -y
   - # sudo apt-get remove mono-complete -y
   - # sudo apt-get remove mono-mcs -y
-  - bash travis-plugins/build-mono-3.2.8
+  - # bash travis-plugins/build-mono-3.2.8
+  - bash travis-plugins/download-mono-3.2.8 
   - echo SO, PATH IS $PATH
   - export PATH="$HOME/mono-3.2.8/bin:$PATH"
   - export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH"
