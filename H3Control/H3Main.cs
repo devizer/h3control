@@ -171,11 +171,14 @@ namespace H3Control
             Stopwatch sw = Stopwatch.StartNew();
             string[] list = new[]
             {
-                baseUrl, 
                 baseUrl + "/api/json/device/me", 
                 baseUrl + "/H3Content/h3.css",
                 baseUrl + "/favicon.ico",
-                baseUrl + "/api/json/processes/by-Rss/top-1"
+                baseUrl + "/api/json/processes/by-Rss/top-1",
+                baseUrl + "/whatsnew/html",
+                baseUrl + "/whatsnew/markdown",
+                baseUrl + "/whatsnew/html-include",
+                baseUrl, 
             };
 
             bool hasErrors = false;

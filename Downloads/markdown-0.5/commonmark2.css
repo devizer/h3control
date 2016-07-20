@@ -1,7 +1,7 @@
 ﻿.markdown {
     background: white;
     color: #424242;
-    font-family: "Open Sans", arial, sans-serif;
+    font-family: Verdana, Helvetica, "Open Sans", arial, sans-serif;
     font-size: 15px;
 }
 
@@ -31,6 +31,7 @@
         padding-top: 9px;
         margin-bottom: 33px;
         text-transform: none;
+    font-family: Verdana, Helvetica, "Open Sans", arial, sans-serif;
     }
 
     .markdown h1 {

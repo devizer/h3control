@@ -13,6 +13,8 @@ namespace H3Control
     using Nancy;
     using Nancy.Security;
 
+    using Simple.Owin;
+
     using Universe;
     using Universe.NancyCaching;
 
@@ -109,6 +111,13 @@ namespace H3Control
                 var model = new DeviceController().GetDevice(device);
                 model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
                 return Response.AsJson(model);
+            };
+
+            Post["flush/kernel/cache"] = parameters =>
+            {
+                this.Expires(scope: CachingScope.None);
+                LinuxKernelCache.Flush("by user request");
+                return Response.AsJson(new {OK = true});
             };
 
             Post["api/control/{side}/{freq}"] = parameters =>

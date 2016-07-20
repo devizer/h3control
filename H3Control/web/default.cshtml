@@ -279,8 +279,8 @@
 
 
                 if (initialDeviceInfo && initialDeviceInfo.IsSuccess) {
-                    window.setTimeout(bindInitialDeviceInfo, 200);
-                    window.setTimeout(nextNeverendingUpdate, 500);
+                    window.setTimeout(bindInitialDeviceInfo, 300);
+                    window.setTimeout(nextNeverendingUpdate, 2000);
                 } else {
                     window.setTimeout(nextNeverendingUpdate, 444);
                 }
@@ -328,7 +328,7 @@
 
             function BindMemoryUsage(mem) {
                 var html = '';
-                var template = '<div class="InfoBlock-Div">'
+                var template = '<div class="InfoBlock-Div ${CLASS}">'
                     + '<div class="InfoBlock-Label truncate">${LABEL}</div>'
                     + '<div class="InfoBlock-Value truncate">${VALUE}</div>'
                     + '</div>';
@@ -336,6 +336,7 @@
                 for (var i = 0; i < mem.length; i++) {
                     var item = mem[i];
                     var str = "&nbsp;";
+                    var cls = item.Label.indexOf("BUFFERS") >= 0 ? "flush-cache" : "";
                     if (item.Value !== null) {
                         var mb = Math.round(item.Value / 1024);
                         str = '<span class="InfoBlock-Mb">&mdash;</span>';
@@ -343,13 +344,22 @@
                             str = '<span class="InfoBlock-Mb MyNumber">' + mb + '</span>&nbsp;<small>Mb</small>';
                     }
 
-                    var htmlItem = template.replace("${LABEL}", item.Label).replace("${VALUE}", str);
+                    var htmlItem = template.replace("${LABEL}", item.Label).replace("${VALUE}", str).replace("${CLASS}", cls);
                     html = html + htmlItem;
                 }
 
                 var memUsage = $("#memUsage");
                 memUsage.show();
                 memUsage.html(html);
+
+                $(".flush-cache").on('click', function(event) {
+                    var req = jQuery.ajax({
+                        url: "flush/kernel/cache",
+                        method: "POST",
+                        dataType: "json"
+                    });
+                });
+
             }
 
             function BindHasAccess(hasAccess) {
