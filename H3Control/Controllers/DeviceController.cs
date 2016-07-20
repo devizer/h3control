@@ -26,7 +26,7 @@ namespace H3Control.Controllers
                         : DeviceDataSource.GetLocal();
 
                 ret.VerInfo = NewVerListener.Info;
-                if (!H3Environment.IsH3)
+                if (ret.Mem == null || Environment.OSVersion.Platform == PlatformID.Win32NT)
                     ret.Mem = new MemInfo_OnLinix()
                     {
                         Total = 1234 * 1024,
