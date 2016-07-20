@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace H3Control.Links
 {
+    using System.Diagnostics;
     using System.Security.Principal;
 
     using Mono.Unix;
@@ -19,7 +20,14 @@ namespace H3Control.Links
             if (Environment.OSVersion.Platform != PlatformID.Unix)
                 return;
 
-            BindImplementation(signalHandler, signals);
+            try
+            {
+                BindImplementation(signalHandler, signals);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine("Ctlr-C handler via Mono.Posix failed" + Environment.NewLine + ex);
+            }
         }
 
         private static void BindImplementation(Action<string> signalHandler, Signal[] signals)
