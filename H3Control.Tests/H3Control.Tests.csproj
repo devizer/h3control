@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="F0_Test_HttpClientExtentions.cs" />
     <Compile Include="H3LauncherAsTest.cs" />
     <Compile Include="F2_HttpServer_Tests.cs" />
     <Compile Include="F1_Integration_Tests.cs" />

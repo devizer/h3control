@@ -1,0 +1,60 @@
+old=`pwd`
+monover=3.2.8
+sudo apt-get -y install subversion git p7zip-full mc wget htop iotop curl ca-certificates build-essential autoconf libtool automake autoconf pkg-config libtool zlib1g zlib1g-dev make pv libncurses5-dev libncurses5 libncursesw5-dev libncursesw5 gettext 
+
+############# AUTOTOOLS, LIBTOOLS
+mkdir -p ~/src/auto-old
+# 2010-06-09 11:00 
+
+cd ~/src/auto-old
+
+# 2012-07-09 11:33 
+wget -O automake-1.12.2.tar.gz https://ftp.gnu.org/gnu/automake/automake-1.12.2.tar.gz
+
+# 2010-06-09 11:00 
+wget -O libtool-2.2.10.tar.gz https://ftp.gnu.org/gnu/libtool/libtool-2.2.10.tar.gz
+
+for a in libtool-2.2.10 automake-1.12.2; do
+  tar xzf $a.tar.gz
+  cd $a
+  ./configure --prefix=/$HOME/old-auto
+  make 
+  sudo make install
+  cd ..
+done
+
+
+echo '#################################  OLD TOOOOLS: DONE  #################################'
+export PATH="/$HOME/old-auto/bin:$PATH"
+libtool --version
+automake --version
+
+
+
+mkdir -p ~/src
+cd ~/src
+time (wget -q -nv -O - http://download.mono-project.com/sources/mono/mono-$monover.tar.bz2 | tar xjf -)
+
+cd ~/src/mono-$monover
+export CFLAGS="-O2"
+export CPPFLAGS="-O2"
+time (./autogen.sh --with-mcs-docs=no --disable-nls --with-profile2=yes --with-profile4=yes --with-profile4_5=yes --prefix=$HOME/mono-$monover)
+time ( make )
+echo '##################################### MAKE MONO: DONE ##########################'
+sudo make install
+
+
+export PATH="$HOME/mono-$monover/bin:$PATH"
+export LD_LIBRARY_PATH="$HOME/mono-$monover/lib:$LD_LIBRARY_PATH"
+mono --version
+
+
+mkdir -p $HOME/bin
+wget -O nunit-260.7z https://www.dropbox.com/s/sfunn3ypho2nfo0/nunit-260.7z?dl=1
+7za x -y -o$HOME/bin nunit-260.7z || 7z x -y -o$HOME/bin nunit-260.7z
+rm -f nunit-260.7z
+mono --desktop --runtime=v4.0 $HOME/bin/nunit-260/nunit-console.exe
+mono --desktop --runtime=v4.5 $HOME/bin/nunit-260/nunit-console.exe
+
+
+cd $old

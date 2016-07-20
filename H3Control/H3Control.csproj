@@ -187,6 +187,7 @@
     <Compile Include="H3NancyModule.cs" />
     <Compile Include="H3PasswordConfig.cs" />
     <Compile Include="H3WhiteListConfig.cs" />
+    <Compile Include="Common\HttpClientExtentions.cs" />
     <Compile Include="Links\ExMessage.cs" />
     <Compile Include="Links\QuitHandler.cs" />
     <Compile Include="LoadLogger.cs" />

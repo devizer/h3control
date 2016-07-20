@@ -59,7 +59,6 @@ namespace H3Control.Tests
             }
 
             Assert.IsTrue(list.Count > 0);
-
             Trace.WriteLine("");
         }
 

@@ -81,21 +81,14 @@ namespace H3Control
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage verResponse = client.GetAsync(VerUrl).Result;
-                    if (verResponse.StatusCode != HttpStatusCode.OK)
-                        throw new InvalidOperationException(VerUrl + " response status isnt OK(200). Status is " + verResponse.StatusCode);
+                    var taskVer = client.GetAsString(VerUrl);
+                    var taskWhatsNew = client.GetAsString(WhatsNewUrl);
+                    // Task.WaitAll(taskVer, taskWhatsNew);
+                    string jsonVer = taskVer.Result;
+                    string whatsNew = taskWhatsNew.Result;
 
-                    var jsonVer = verResponse.Content.ReadAsStringAsync().Result;
-
-                    HttpResponseMessage whatsNewResponse = client.GetAsync(WhatsNewUrl).Result;
-                    if (whatsNewResponse.StatusCode != HttpStatusCode.OK)
-                        throw new InvalidOperationException(WhatsNewUrl + " response status isnt OK(200). Status is " + whatsNewResponse.StatusCode);
-
-                    var whatsNew = whatsNewResponse.Content.ReadAsStringAsync().Result;
-
-                    // Console.WriteLine("NEW VERINFO STRING: " + rawString);
                     BuildInfoRaw raw = JsonConvert.DeserializeObject<BuildInfoRaw>(jsonVer);
-                    // Console.WriteLine("NEW VERINFO OBJECT: " + raw);
+
                     if (raw != null && raw.version != null)
                     {
                         string[] arr = raw.version.Split('.');
@@ -130,7 +123,7 @@ namespace H3Control
             }
             catch (Exception ex)
             {
-                NiceTrace.Message("Check new version by {0} failed. {1}", VerUrl, ex.Get());
+                NiceTrace.Message("Check new version failed. {0}", ex.Get());
             }
 
             return false;
