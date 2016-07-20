@@ -1,5 +1,7 @@
 #!/bin/bash
+sudo apt-get install p7zip-full -y
 cd $HOME
 wget -q -nv -O /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z https://www.dropbox.com/s/we4qixrcveg1cys/mono-3.2.8.tar-x64-ubuntu-12.tar.7z?dl=1 
 7za x -so /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z | tar xf -
+7z x -so /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z | tar xf -
 $HOME/mono-3.2.8/bin/mono --version
