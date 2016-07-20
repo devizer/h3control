@@ -286,9 +286,11 @@
             });
 
             function LaunchWatsNewLoader() {
-                $("#whatsnew_loading").html("formatting markdown ...");
-                $("#whatsnew_loading").show();
-                $("#whatsnew_html").hide();
+                var loading = $("#whatsnew_loading");
+                var content = $("#whatsnew_html");
+                loading.html("formatting markdown ...");
+                loading.show();
+                content.hide();
 
                 var req = jQuery.ajax({
                     url: "whatsnew/html-include?" + $.now(),
@@ -297,14 +299,13 @@
                 });
 
                 req.done(function(data) {
-                    $("#whatsnew_html").html(data);
-                    $("#whatsnew_loading").hide();
-                    $("#whatsnew_html").show();
-                    // alert(data);
+                    content.html(data);
+                    loading.hide();
+                    content.show();
                 });
 
                 req.fail(function (jqXHR, textStatus) {
-                    $("#whatsnew_loading").html("<a href='@NewVerListener.WhatsNewUrl' target='_blank'>WHATS-NEW.md</a>");
+                    loading.html("<a href='@NewVerListener.WhatsNewUrl' target='_blank'>WHATS-NEW.md</a>");
                 });
 
             }
