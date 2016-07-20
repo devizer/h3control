@@ -61,7 +61,7 @@ namespace H3Control
                 Total = memTotal.Value,
                 Free = (memFree + buffers + cached).Value,
                 BuffersAndCache = (buffers + cached).Value,
-                Buffers = buffers. Value, 
+                Buffers = buffers.Value, 
                 SwapFree = swapFree.Value,
                 SwapTotal = swapTotal.Value
 

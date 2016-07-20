@@ -7,6 +7,8 @@ namespace H3Control.Controllers
 {
     using System.Web.Http;
 
+    using Universe;
+
     public class DeviceController : ApiController
     {
         [HttpGet]
@@ -25,8 +27,11 @@ namespace H3Control.Controllers
                         ? DeviceModel.Sample()
                         : DeviceDataSource.GetLocal();
 
+
                 ret.VerInfo = NewVerListener.Info;
-                if (ret.Mem == null || Environment.OSVersion.Platform == PlatformID.Win32NT)
+
+                // ON H3 WE READ MemInfo TWICE TWICE
+                if (!CrossInfo.IsMono || ret.Mem == null)
                     ret.Mem = new MemInfo_OnLinix()
                     {
                         Total = 1234 * 1024,
