@@ -35,12 +35,15 @@ namespace H3Control.Controllers
                     // Intel Linux || Windows
                     try
                     {
+                        // Linux :)
+                        ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
                         MemInfo_OnLinix info;
                         if (MemInfoParser_OnLinux.TryParse(out info))
                             ret.Mem = info;
                     }
                     catch (Exception ex)
                     {
+                        // Windows :(
                         NiceTrace.Message("MemInfo Parser failed" + Environment.NewLine + ex);
                     }
                 }
