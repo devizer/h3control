@@ -47,7 +47,7 @@ namespace H3Control.Tests
                 {
                     var exInfo = ex.Get();
                     Assert.IsTrue(exInfo.IndexOf(nyanUrl) >= 0);
-                    Trace.WriteLine("Expected exception has been catched:" + Environment.NewLine + ex);
+                    Trace.WriteLine("Expected exception has been catched:" + Environment.NewLine + ex.Get());
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace H3Control.Tests
                 {
                     var exInfo = ex.Get();
                     Assert.IsTrue(exInfo.IndexOf(url404) >= 0);
-                    Trace.WriteLine("Expected exception has been catched:" + Environment.NewLine + ex);
+                    Trace.WriteLine("Expected exception has been catched:" + Environment.NewLine + ex.Get());
                 }
             }
         }
