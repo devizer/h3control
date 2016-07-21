@@ -10,7 +10,7 @@ namespace H3Control.Tests
 
     using Universe;
 
-    class H3LauncherAsTest
+    class H3LauncherForTests
     {
         public int H3Pid;
         public Process H3;

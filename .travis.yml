@@ -48,13 +48,13 @@ script:
   - bash travis-plugins/download-mono-3.2.8 
   - export PATH="$HOME/mono-3.2.8/bin:$PATH"
   - export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH"
-  - bash H3Control.tests.sh
+  - bash -e H3Control.tests.sh
   
 
   - bash travis-plugins/download-mono-2.11.4
   - export PATH="$HOME/mono-2.11.4/bin:$PATH"
   - export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
-  - bash H3Control.tests.sh
+  - bash -e H3Control.tests.sh
 
   
   
