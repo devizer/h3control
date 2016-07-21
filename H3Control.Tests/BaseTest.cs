@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Net;
     using System.Text;
 
     using NUnit.Framework;
@@ -13,7 +14,14 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            CrossInfo.AttachUnitTrace("MySQL Tests");
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
+                {
+                    return true;
+                };
+            }
+            CrossInfo.AttachUnitTrace("H3Control unit tests");
             StartAt = Stopwatch.StartNew();
         }
 

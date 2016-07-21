@@ -1,5 +1,6 @@
 namespace Universe
 {
+    using System;
     using System.IO;
     using System.Text;
 
@@ -8,6 +9,27 @@ namespace Universe
 
     public static class JSonExtentions
     {
+        public static void CheckFormat(string candidate, string context = null)
+        {
+            string suffix = string.IsNullOrWhiteSpace(context) ? "" : (" (" + context + ")");
+            if (candidate == null)
+                throw new ArgumentNullException("candidate", "Null string is invalid json" + suffix);
+
+            if (string.IsNullOrWhiteSpace(candidate))
+                throw new ArgumentException("Empty or white space string is invalid json" + suffix, "candidate");
+
+            try
+            {
+                JObject obj = JObject.Parse(candidate);
+            }
+            catch (Exception ex)
+            {
+                string trimmed = candidate.Length > 20 ? candidate.Substring(0, 20) : candidate;
+                throw new ArgumentException("Invalid json string" + suffix + ". String starts with " + trimmed, "candidate", ex);
+            }
+            
+        }
+        
         public static string Format(string arg)
         {
             /*

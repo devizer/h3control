@@ -1,5 +1,6 @@
 ﻿namespace H3Control.Tests
 {
+    using System;
     using System.IO;
     using System.Net;
     using System.Net.Http;
@@ -84,8 +85,8 @@
                 var url = BaseUrl + "/" + path;
                 ResponseDriller driller = ResponseDriller.CreateGetJson(url);
                 driller.Dump();
-                // NiceTrace.Message("{0} response: '{1}'", "/" + path, driller.String);
                 Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
+                JSonExtentions.CheckFormat(driller.String, path);
                 if (++counter == urls.Length)
                     NiceTrace.Message(JSonExtentions.Format(driller.String));
             }
@@ -109,28 +110,44 @@
             ResponseDriller driller = ResponseDriller.CreateGetJson(url);
             driller.Dump();
             Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
+            JSonExtentions.CheckFormat(driller.String, "/api/json/device/me");
             NiceTrace.Message(JSonExtentions.Format(driller.String));
         }
 
         [Test]
-        public void T07_404()
+        public void T07_Get_WhatsNew_Doest_Fail_And_Return_200()
+        {
+            var urls = new[]
+            {
+                BaseUrl + "/whatsnew/html",
+                BaseUrl + "/whatsnew/markdown",
+                BaseUrl + "/whatsnew/html-include",
+            };
+            foreach (var url in urls)
+            {
+                ResponseDriller driller = ResponseDriller.CreateGet(url);
+                driller.Dump();
+                Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode, "URL is {0}", url);
+                Assert.IsTrue(
+                    driller.String.IndexOf("Update", StringComparison.InvariantCultureIgnoreCase) >= 0,
+                    "Response of {0} SHOULD include word 'UPDATE'. Response is{1}{2}", 
+                    url,
+                    Environment.NewLine,
+                    driller.String);
+            }
+        }
+
+        [Test]
+        public void T08_404()
         {
             // yes, there is no such column is Nianyty in processes response
             string[] paths = new[]
             {
                 "/Content/no-such-pAgE",
                 "/Content/no-such-pAgE.css",
-/*
-                "/Content/no-such-pAgE.htm",
-                "/Content/no-such-pAgE.js",
-                "/no-such-pAgE",
-                "/no-such-pAgE.css",
-                "/no-such-pAgE.htm",
-                "/no-such-pAgE.js",
-*/
             };
 
-            foreach (var method in new[] { HttpMethod.Get, HttpMethod.Put, HttpMethod.Post, })
+            foreach (var method in new[] { HttpMethod.Get, HttpMethod.Put, })
             foreach (var path in paths)
             {
                 var url = BaseUrl + path;
