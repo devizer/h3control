@@ -19,7 +19,7 @@ Public build - is a copy of corresponding staging build after some manual tests 
 
 ### configuration
 By default 
-- h3control listen browser requests on the all IP adresses at port 5000. 
+- h3control listens browser requests on the all IP adresses at port 5000. 
 - h3control allows full access to CPU and DDR frequency.
 
 IP adresses can by restricted by **white-list**. Also changes of CPU & DDR frequency can be protected by **a password**.
