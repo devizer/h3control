@@ -6,7 +6,7 @@ Short answer:
 ```bash
 wget -q -nv -O - https://github.com/devizer/h3control-bin/raw/master/public/h3control.sh | bash
 ```
-This installer also suitable for upgrade.  More installation options, for example h3control-daemon which starts during boot, are described on ![h3control-bin repository](https://github.com/devizer/h3control-bin)
+This installer also suitable for upgrade.  More installation options, for example h3control-daemon which starts during boot, are described on ![h3control-bin repository](https://github.com/devizer/h3control-bin/blob/master/README.md)
 
 ### what does **build passed** mean
 - Latest source push compiled
@@ -16,6 +16,28 @@ This installer also suitable for upgrade.  More installation options, for exampl
 Staging version is built automatically. Ususally it works fine, but it MAY not be tested. Thats why staging build isnt recommended for download/upgrade.
 
 Public build - is a copy of corresponding staging build after some manual tests on real board running Ubuntu 15.04. Rarely i test staging or public builds on x64 environment using another linux distributions (Fedora 24, OpenSUSE 42 and debian 7)
+
+### configuration
+By default h3control listen browser requests on the all IP adresses at port 5000. By default h3control allows full access to CPU and DDR frequency.
+
+IP adresses can by restricted by **white-list**. Also changes of CPU & DDR frequency can be protected by **a password**.
+
+All the options are specified using command line parameters:
+```
+root@OrangePI ~/bin/h3control $ ./h3control-console.sh --help
+
+H3Control 1.23.573 is a console/daemon which
+  * "Displays" temperature, frequency and usage via built-in http server.
+  * Allows to control CPU & DDR frequency
+
+  -b, --binding=VALUE         Http binding, e.g. ip:port. Default is *:5000 (asterisk means all IPs)
+  -w, --white-list=VALUE      Comma separated IPs. Default or empty arg turns restrictions off
+  -g, --generate-pwd=VALUE    Generate password hash (encrypt) and exit
+  -p, --password=VALUE        HASH of the desired password
+  -v, --version               Show version
+  -h, -?, --help              Display this help
+  -n, --nologo                Hide logo
+```
 
 
 ### Screenshot: h3control just works
