@@ -18,7 +18,9 @@ Staging version is built automatically. Ususally it works fine, but it MAY not b
 Public build - is a copy of corresponding staging build after some manual tests on real board running Ubuntu 15.04. Rarely i test staging or public builds on x64 environment using another linux distributions (Fedora 24, OpenSUSE 42 and debian 7)
 
 ### configuration
-By default h3control listen browser requests on the all IP adresses at port 5000. By default h3control allows full access to CPU and DDR frequency.
+By default 
+- h3control listen browser requests on the all IP adresses at port 5000. 
+- h3control allows full access to CPU and DDR frequency.
 
 IP adresses can by restricted by **white-list**. Also changes of CPU & DDR frequency can be protected by **a password**.
 
