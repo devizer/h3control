@@ -14,6 +14,7 @@ This installer also suitable for upgrade.  More installation options, for exampl
 
 ### what does public and staging banners means.
 Staging version is built automatically. Ususally it works fine, but it MAY not be tested. Thats why staging build isnt recommended for download/upgrade.
+
 Public build - is a copy of corresponding staging build after some manual tests on real board running Ubuntu 15.04. Rarely i test staging or public builds on x64 environment using another linux distributions (Fedora 24, OpenSUSE 42 and debian 7)
 
 
