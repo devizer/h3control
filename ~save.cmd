@@ -8,7 +8,7 @@ git pull
 echo.
 echo ********** ADD --all and COMPPIT **********
 git add --all
-git commit -am "NUnit ConsoleRunner 3.4.1"
+git commit -am "try mono 2.11.4"
 
 echo.
 echo **************** PUSH *********************
