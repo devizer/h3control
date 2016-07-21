@@ -6,7 +6,7 @@ install:
   - sudo apt-get install -y sysbench ffmpeg redis-server memcached
   - ffmpeg -codecs
   - nuget restore H3Control.sln 
-  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+  - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - echo HOME IS $HOME
   - echo PATH IS $PATH
@@ -30,7 +30,7 @@ script:
   - #du -h -d 4
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
-  - mono --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+  - bash H3Control.tests.sh
   
   - ######## THE END ######################## MONO 3.2.8?
   - # sudo apt-get remove mono-runtime -y
