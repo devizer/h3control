@@ -21,7 +21,7 @@ namespace H3Control.Tests
         }
 
         [Test]
-        public void T01_GetGoogle_Is_OK()
+        public void T01_Get_Google_Returns_200()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -32,7 +32,7 @@ namespace H3Control.Tests
         }
 
         [Test]
-        public void T02_Get_Nyan_Schema()
+        public void T02_Get_Nyan_Schema_Fails_into_ArgumentException()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -53,7 +53,7 @@ namespace H3Control.Tests
         }
 
         [Test]
-        public void T03_Get_404_Schema()
+        public void T03_Get_404_Schema_Fails_into_404()
         {
             using (HttpClient client = new HttpClient())
             {

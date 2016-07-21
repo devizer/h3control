@@ -14,6 +14,7 @@ namespace H3Control.Tests
     {
         public int H3Pid;
         public Process H3;
+        private static readonly long WaitForLaunch = 30000;
 
         public void LaunchAndWait(int port)
         {
@@ -58,9 +59,8 @@ namespace H3Control.Tests
             Trace.WriteLine("PID: " + H3Pid);
 
             int counter = 0;
-            var waitForLaunch = 20000;
             var swLaunch = Stopwatch.StartNew();
-            bool isOk = PollWithTimeout.Run(waitForLaunch, () =>
+            bool isOk = PollWithTimeout.Run(WaitForLaunch, () =>
             {
                 var url = "http://localhost:" + port + "/Ver";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);
