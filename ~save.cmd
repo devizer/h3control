@@ -8,7 +8,7 @@ git pull
 echo.
 echo ********** ADD --all and COMPPIT **********
 git add --all
-git commit -am "try mono 2.11.4"
+git commit -am "update"
 
 echo.
 echo **************** PUSH *********************
