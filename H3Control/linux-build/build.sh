@@ -17,10 +17,15 @@ pwd
 vers=`cat tmp/src/H3Control/linux-build/_version-number.txt`
 build=$(( `cat tmp/src/H3Control/linux-build/_build-number.txt` + 1 ))
 fullver=$vers.$build
+builddate=$(date --utc +"%a, %d %b %Y %T GMT")
 echo $build > tmp/src/H3Control/linux-build/_build-number.txt
 echo NEW VERSION IS $fullver
 echo $fullver > tmp/h3control/VERSION
-echo "[assembly: System.Reflection.AssemblyVersion(\"$fullver.0\")]" > tmp/src/H3Control/Properties/AssemblyVersion.cs
+echo "
+   [assembly: System.Reflection.AssemblyVersion(\"$fullver.0\")]
+   [assembly: Universe.AssemblyBuildDateTime(\"$builddate\")]
+" > tmp/src/H3Control/Properties/AssemblyVersion.cs
+
 cp tmp/src/H3Control/linux-build/_version-number.txt $src/H3Control/linux-build/_version-number.txt
 cp tmp/src/H3Control/linux-build/_build-number.txt $src/H3Control/linux-build/_build-number.txt
 cp tmp/src/H3Control/Properties/AssemblyVersion.cs $src/H3Control/Properties/AssemblyVersion.cs

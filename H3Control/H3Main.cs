@@ -241,7 +241,13 @@ namespace H3Control
                 return "  Memory ............ " + totalMem + "; Working Set: " + (workingSet64/1024L/1024).ToString("n0") + " Mb";
             });
 
-            NiceTrace.Message("H3Control " + H3Environment.VerAsPublic + ". Environment:" + Environment.NewLine + b);
+            DateTime? built = AssemblyBuildDateTimeAttribute.CallerUtcBuildDate;
+            NiceTrace.Message(string.Format(
+                "H3Control {0} (built date is '{1}'). Environment:{2}{3}", 
+                H3Environment.VerAsPublic, 
+                built.HasValue ? built.Value.ToString("R") : "N/A",
+                Environment.NewLine, 
+                b));
         }
 
         static void Try(StringBuilder b, Func<string> action)

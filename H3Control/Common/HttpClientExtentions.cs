@@ -12,7 +12,7 @@ namespace Universe
 
     public static class HttpClientExtentions
     {
-        public static Task<string> GetAsString(this HttpClient client, string url)
+        public static Task<string> GetAsStringAsync(this HttpClient client, string url)
         {
             Task<HttpResponseMessage> taskGet;
             try

@@ -169,6 +169,7 @@
     <Compile Include="App_Packages\Simple.Owin.Cookies.0.10.0\ResponseExtensions.cs" />
     <Compile Include="App_Packages\Simple.Owin.Forms.0.10.0\FormData.cs" />
     <Compile Include="App_Packages\Simple.Owin.Forms.0.10.0\FormsMiddleware.cs" />
+    <Compile Include="Common\AssemblyBuildDateTimeAttribute.cs" />
     <Compile Include="Common\BasicAuthenticationExtentions.cs" />
     <Compile Include="Common\DebugTraceListener.cs" />
     <Compile Include="Common\FirstRound.cs" />

@@ -25,7 +25,7 @@ namespace H3Control.Tests
         {
             using (HttpClient client = new HttpClient())
             {
-                var t = client.GetAsString("https://google.com");
+                var t = client.GetAsStringAsync("https://google.com");
                 string result = t.Result;
                 Assert.IsTrue(result.IndexOf("google", StringComparison.InvariantCulture) >= 0);
             }
@@ -39,7 +39,7 @@ namespace H3Control.Tests
                 var nyanUrl = "nyan://google.com";
                 try
                 {
-                    var task = client.GetAsString(nyanUrl);
+                    var task = client.GetAsStringAsync(nyanUrl);
                     string result = task.Result;
                     Assert.Fail();
                 }
@@ -60,7 +60,7 @@ namespace H3Control.Tests
                 var url404 = "https://google.com/404-billiard";
                 try
                 {
-                    var task = client.GetAsString(url404);
+                    var task = client.GetAsStringAsync(url404);
                     string result = task.Result;
                     Assert.Fail();
                 }

@@ -24,7 +24,7 @@ namespace H3Control.Tests
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Linux)
             {
                 string all = File.ReadAllText("/proc/cpuinfo");
-                Console.WriteLine("/proc/cpuinfo:::::::::::::" + Environment.NewLine + all);
+                Trace.WriteLine("/proc/cpuinfo:::::::::::::" + Environment.NewLine + all);
             }
 
             CrossInfo.AttachUnitTrace("H3Control unit tests");

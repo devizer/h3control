@@ -81,8 +81,8 @@ namespace H3Control
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var taskVer = client.GetAsString(VerUrl);
-                    var taskWhatsNew = client.GetAsString(WhatsNewUrl);
+                    var taskVer = client.GetAsStringAsync(VerUrl);
+                    var taskWhatsNew = client.GetAsStringAsync(WhatsNewUrl);
                     // Task.WaitAll(taskVer, taskWhatsNew);
                     string jsonVer = taskVer.Result;
                     string whatsNew = taskWhatsNew.Result;
