@@ -3,6 +3,7 @@ namespace H3Control.Tests
 {
     using System;
     using System.Diagnostics;
+    using System.Net;
     using System.Net.Http;
 
     using Links;
@@ -17,6 +18,13 @@ namespace H3Control.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
+                {
+                    return true;
+                };
+            }
             CrossInfo.AttachUnitTrace("H3Control unit tests");
         }
 
