@@ -5,9 +5,6 @@ namespace Universe
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using System.Web;
-
-    using Microsoft.Ajax.Utilities;
 
     using Simple.Owin.Helpers;
 
@@ -49,8 +46,9 @@ namespace Universe
             arg.ContinueWith(delegate(Task<T> t)
             {
                 var ex = t.Exception;
+                if (ex != null) ex = ex.Flatten();
                 return t.Result;
-            }, TaskContinuationOptions.NotOnFaulted);
+            }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
 
             return arg;
         }
@@ -61,7 +59,8 @@ namespace Universe
             arg.ContinueWith(delegate(Task t)
             {
                 var ex = t.Exception;
-            }, TaskContinuationOptions.NotOnFaulted);
+                if (ex != null) ex = ex.Flatten();
+            }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
 
             return arg;
         }
@@ -72,8 +71,10 @@ namespace Universe
             arg.ContinueWith(delegate(Task t)
             {
                 var ex = t.Exception;
-                Trace.WriteLine("Task '" + taskTitle + "' failed." + Environment.NewLine + ex);
-            }, TaskContinuationOptions.NotOnFaulted);
+                if (ex != null)
+                    Trace.WriteLine("Task '" + taskTitle + "' failed." + Environment.NewLine + ex);
+
+            }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
 
             return arg;
         }
@@ -84,8 +85,10 @@ namespace Universe
             arg.ContinueWith(delegate(Task t)
             {
                 var ex = t.Exception;
-                Debug.WriteLine("Task '" + taskTitle + "' failed." + Environment.NewLine + ex);
-            }, TaskContinuationOptions.NotOnFaulted);
+                if (ex != null)
+                    Debug.WriteLine("Task '" + taskTitle + "' failed." + Environment.NewLine + ex);
+
+            }, TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously);
 
             return arg;
         }
@@ -104,6 +107,5 @@ namespace Universe
             {
             }
         }
-    
     }
 }
