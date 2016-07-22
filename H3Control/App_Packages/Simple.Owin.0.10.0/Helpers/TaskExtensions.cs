@@ -390,8 +390,7 @@ namespace Simple.Owin.Helpers
                                 {
                                     tcs.TrySetResult(t.Result);
                                 }
-                            },
-                                TaskContinuationOptions.ExecuteSynchronously);
+                            }, TaskContinuationOptions.ExecuteSynchronously);
                         }
                     }
                     catch (Exception exc)
@@ -399,8 +398,8 @@ namespace Simple.Owin.Helpers
                         tcs.TrySetException(exc);
                     }
                 }
-            },
-                TaskContinuationOptions.ExecuteSynchronously);
+            }, TaskContinuationOptions.ExecuteSynchronously);
+                
             return tcs.Task;
         }
     }

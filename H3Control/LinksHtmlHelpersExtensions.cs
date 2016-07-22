@@ -53,7 +53,7 @@
         {
             get
             {
-                var dir = new MyRootPathProvider().GetRootPath();
+                var dir = new H3RootPathProvider().GetRootPath();
                 List<string> parts = new List<string>();
                 parts.Add(dir);
                 if (!relUri.StartsWith("/") && _basePath != "" && _basePath != "/") parts.Add(_basePath);

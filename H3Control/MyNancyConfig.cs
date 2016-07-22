@@ -13,6 +13,7 @@
     using Nancy;
     using Nancy.Bootstrapper;
     using Nancy.Conventions;
+    using Nancy.Diagnostics;
     using Nancy.Responses;
     using Nancy.Security;
     using Nancy.Serialization.JsonNet;
@@ -61,10 +62,24 @@
             // container.Register(typeof(JsonSerializer), typeof(JsonNetSerializer));
         }
 
+        protected override DiagnosticsConfiguration DiagnosticsConfiguration
+        {
+            get
+            {
+                return new DiagnosticsConfiguration { Password = "pass"};
+            }
+        }
+
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
             StaticConfiguration.DisableErrorTraces = false;
+
+            pipelines.OnError += (context, exception) =>
+            {
+                NiceTrace.Message("Exception thrown ducring request handling of " + context.Request.Url + Environment.NewLine + exception + Environment.NewLine);
+                return null;
+            };
 
             Func<NancyContext, bool> isAuthenticationRequired = delegate(NancyContext nancyContext)
             {
@@ -116,7 +131,7 @@
 
         protected override IRootPathProvider RootPathProvider
         {
-            get { return new MyRootPathProvider(); }
+            get { return new H3RootPathProvider(); }
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)
@@ -158,7 +173,7 @@
     }
 
 
-    public class MyRootPathProvider : IRootPathProvider
+    public class H3RootPathProvider : IRootPathProvider
     {
         public string GetRootPath()
         {

@@ -24,17 +24,17 @@ namespace Universe
                 throw new ArgumentException(string.Format("URL '{0}' is not suitable with HttpClient", url), "url", ex);
             }
 
-            Task<string> taskRead = taskGet.Then(x =>
+            Task<string> taskRead = taskGet.Then(response =>
             {
-                
-                if (x.StatusCode != HttpStatusCode.OK)
+                response.EnsureSuccessStatusCode();
+                if (response.StatusCode != HttpStatusCode.OK)
                     throw new InvalidOperationException(string.Format(
                         "Status of '{0}' response isn't OK(200). Status is {1}. Phrase is '{2}'", 
                         url, 
-                        x.StatusCode, 
-                        x.ReasonPhrase));
+                        response.StatusCode, 
+                        response.ReasonPhrase));
                 
-                return x.Content.ReadAsStringAsync();
+                return response.Content.ReadAsStringAsync();
             });
 
             return taskRead;
@@ -50,7 +50,7 @@ namespace Universe
             {
                 var ex = t.Exception;
                 return t.Result;
-            });
+            }, TaskContinuationOptions.NotOnFaulted);
 
             return arg;
         }
@@ -61,7 +61,7 @@ namespace Universe
             arg.ContinueWith(delegate(Task t)
             {
                 var ex = t.Exception;
-            });
+            }, TaskContinuationOptions.NotOnFaulted);
 
             return arg;
         }
@@ -73,7 +73,7 @@ namespace Universe
             {
                 var ex = t.Exception;
                 Trace.WriteLine("Task '" + taskTitle + "' failed." + Environment.NewLine + ex);
-            });
+            }, TaskContinuationOptions.NotOnFaulted);
 
             return arg;
         }
@@ -85,7 +85,7 @@ namespace Universe
             {
                 var ex = t.Exception;
                 Debug.WriteLine("Task '" + taskTitle + "' failed." + Environment.NewLine + ex);
-            });
+            }, TaskContinuationOptions.NotOnFaulted);
 
             return arg;
         }
