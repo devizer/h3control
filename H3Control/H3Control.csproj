@@ -213,7 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="web\H3Content\h3_commonmark.css">
+    <Content Include="web\H3Content\h3_commonmark2.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="web\Content\reset.css">
@@ -230,6 +230,9 @@
     </Content>
     <Content Include="web\H3Content\h3_cpuUsage.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="web\H3Content\h3_main.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="web\H3Content\h3_nextIter.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
