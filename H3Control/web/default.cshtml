@@ -1,10 +1,8 @@
-﻿@using Cassette.Nancy
-@using H3Control
+﻿@using H3Control
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 
 @{
     Layout = null;
-    Bundles.Reference("H3Content");
 }
 
 
@@ -61,7 +59,8 @@
     -->
 
         @Html.Script(this)["Scripts/BrowserDetect.js"]
-        <!-- H3 Scripts and styles as is
+    
+        <!-- H3 Scripts and styles as is -->
         @Html.Css(this)["H3Content/h3.css"]
         @Html.Css(this)["H3_Content/h3_commonmark.css"]
         @Html.Script(this)["H3Content/h3_cpuMenu.js"]
@@ -70,13 +69,7 @@
         @Html.Script(this)["H3Content/h3_refreshRate.js"]
         @Html.Script(this)["H3Content/h3_nextIter.js"]
         @Html.Script(this)["H3Content/h3_processesCtrl.js"]
-        -->
 
-    
-
-        <!-- CASSETTE SCRIPTS & Styles -->
-        @Bundles.RenderStylesheets()
-        @Bundles.RenderScripts()
 
     <script type="text/javascript">
 

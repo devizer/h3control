@@ -1,6 +1,5 @@
 namespace H3Control
 {
-    using MarkdownSharp;
 
     class MarkdownTo
     {

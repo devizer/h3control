@@ -33,7 +33,6 @@
         public IEnumerable<string> GetAssemblyNames()
         {
             yield return Assembly.GetExecutingAssembly().GetName().Name;
-            yield return "Cassette";
         }
 
         public IEnumerable<string> GetDefaultNamespaces()

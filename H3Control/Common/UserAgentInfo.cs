@@ -10,8 +10,6 @@ namespace Universe
 
     using H3Control.Common;
 
-    using Microsoft.Ajax.Utilities;
-
     using Nancy;
     using Nancy.Bootstrapper;
 
