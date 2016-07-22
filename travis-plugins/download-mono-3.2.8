@@ -1,13 +1,8 @@
-#!/bin/bash
+#!/bin/bash -e
 sudo apt-get install p7zip-full -y
 cd $HOME
-wget -q -nv -O /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z https://www.dropbox.com/s/we4qixrcveg1cys/mono-3.2.8.tar-x64-ubuntu-12.tar.7z?dl=1 
-7za x -so /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z | tar xf -
+wget -q -nv -O /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z 'https://www.dropbox.com/s/we4qixrcveg1cys/mono-3.2.8.tar-x64-ubuntu-12.tar.7z?dl=1'
+7za x -bd -so /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z | tar xf -
+rm -f /tmp/mono-3.2.8.tar-x64-ubuntu-12.tar.7z
 $HOME/mono-3.2.8/bin/mono --version
 
-mkdir -p $HOME/bin
-wget -O nunit-260.7z https://www.dropbox.com/s/sfunn3ypho2nfo0/nunit-260.7z?dl=1
-7za x -y -o$HOME/bin nunit-260.7z || 7z x -y -o$HOME/bin nunit-260.7z
-rm -f nunit-260.7z
-mono --desktop --runtime=v4.0 $HOME/bin/nunit-260/nunit-console.exe
-mono --desktop --runtime=v4.5 $HOME/bin/nunit-260/nunit-console.exe
