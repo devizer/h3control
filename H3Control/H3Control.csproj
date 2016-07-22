@@ -234,7 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="web\Content\commonmark.css">
+    <Content Include="web\H3Content\h3_commonmark.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="web\Content\reset.css">
@@ -281,6 +281,9 @@
     <None Include="linux-dist\h3control-console.sh" />
     <None Include="linux-dist\h3control-install-daemon.sh" />
     <None Include="linux-dist\TROUBLESHOOTING" />
+    <Content Include="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <EmbeddedResource Include="favicon.ico" />
     <Content Include="web\Content\bootstrap-theme.css.map">

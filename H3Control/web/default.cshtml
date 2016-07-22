@@ -1,11 +1,14 @@
-﻿@using H3Control
+﻿@using Cassette.Nancy
+@using H3Control
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 
 @{
     Layout = null;
+    Bundles.Reference("H3Content");
 }
 
-    <!DOCTYPE HTML>
+
+<!DOCTYPE HTML>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="h3control" style="padding-left: 0">
     <head>
@@ -57,18 +60,23 @@
         @Html.Script(this)["jqwidgets/jqxangular.js"] 
     -->
 
-        @Html.Css(this)["H3Content/h3.css"]
         @Html.Script(this)["Scripts/BrowserDetect.js"]
+        <!-- H3 Scripts and styles as is
+        @Html.Css(this)["H3Content/h3.css"]
+        @Html.Css(this)["H3_Content/h3_commonmark.css"]
         @Html.Script(this)["H3Content/h3_cpuMenu.js"]
         @Html.Script(this)["H3Content/h3_cpuFreq.js"]
         @Html.Script(this)["H3Content/h3_cpuUsage.js"]
         @Html.Script(this)["H3Content/h3_refreshRate.js"]
         @Html.Script(this)["H3Content/h3_nextIter.js"]
         @Html.Script(this)["H3Content/h3_processesCtrl.js"]
+        -->
 
     
-        @Html.Css(this)["Content/commonmark.css"]
 
+        <!-- CASSETTE SCRIPTS & Styles -->
+        @Bundles.RenderStylesheets()
+        @Bundles.RenderScripts()
 
     <script type="text/javascript">
 
@@ -328,7 +336,8 @@
 
             function BindMemoryUsage(mem) {
                 var html = '';
-                var template = '<div class="InfoBlock-Div ${CLASS}">'
+                var template = ''
+                    + '<div class="InfoBlock-Div ${CLASS}">'
                     + '<div class="InfoBlock-Label truncate">${LABEL}</div>'
                     + '<div class="InfoBlock-Value truncate">${VALUE}</div>'
                     + '</div>';
