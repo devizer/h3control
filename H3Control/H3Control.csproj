@@ -40,8 +40,17 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxMin">
-      <HintPath>..\Nancy.Libs\Cassette.Nancy.Files\AjaxMin.dll</HintPath>
+    <Reference Include="AjaxMin, Version=4.84.4790.14405, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxMin.4.84.4790.14417\lib\net40\AjaxMin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Cassette, Version=2.4.2.13844, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cassette.2.4.2\lib\net40-client\Cassette.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Cassette.Nancy, Version=2.1.1.18130, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cassette.Nancy.2.2.1\lib\net40\Cassette.Nancy.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonMark.NET.0.13.4\lib\net45\CommonMark.dll</HintPath>
@@ -74,7 +83,8 @@
       <HintPath>..\libs\Mono.Posix.dll</HintPath>
     </Reference>
     <Reference Include="Nancy">
-      <HintPath>..\Nancy.Libs\Nancy.dll</HintPath>
+      <HintPath>..\packages\Nancy.1.4.1\lib\net40\Nancy.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nancy.Owin">
       <HintPath>..\Nancy.Libs\Nancy.Owin.dll</HintPath>
@@ -82,8 +92,17 @@
     <Reference Include="Nancy.RouteHelpers">
       <HintPath>..\Nancy.Libs\Nancy.RouteHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.ViewEngines.Razor">
-      <HintPath>..\Nancy.Libs\Nancy.ViewEngines.Razor.dll</HintPath>
+    <Reference Include="Nancy.Serialization.JsonNet">
+      <HintPath>..\packages\Nancy.Serialization.JsonNet.1.4.1\lib\net40\Nancy.Serialization.JsonNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy.ViewEngines.Razor, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.Viewengines.Razor.0.23.0\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.3.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.Owin">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
@@ -121,9 +140,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Nancy.Libs\System.Web.Razor.dll</HintPath>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -169,6 +188,7 @@
     <Compile Include="App_Packages\Simple.Owin.Cookies.0.10.0\ResponseExtensions.cs" />
     <Compile Include="App_Packages\Simple.Owin.Forms.0.10.0\FormData.cs" />
     <Compile Include="App_Packages\Simple.Owin.Forms.0.10.0\FormsMiddleware.cs" />
+    <Compile Include="CassetteConfiguration.cs" />
     <Compile Include="Common\AssemblyBuildDateTimeAttribute.cs" />
     <Compile Include="Common\BasicAuthenticationExtentions.cs" />
     <Compile Include="Common\DebugTraceListener.cs" />
@@ -208,9 +228,6 @@
     <Compile Include="MyStartup.cs" />
     <Compile Include="H3Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serializer\Helpers.cs" />
-    <Compile Include="Serializer\JsonNetBodyDeserializer.cs" />
-    <Compile Include="Serializer\JsonNetSerializer.cs" />
     <Compile Include="StaticContentConventionBuilderAddOn.cs" />
     <Compile Include="WhatsNewSource.cs" />
     <Compile Include="WhiteListMiddleware.cs" />
@@ -1605,6 +1622,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Serializer\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -1613,6 +1631,13 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+if $(ConfigurationName) == Debug (
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.23.0\BuildProviders\Nancy.ViewEngines.Razor.BuildProviders.dll" "$(ProjectDir)bin\"
+xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.23.0\lib\Net40\Nancy.ViewEngines.Razor.dll" "$(ProjectDir)bin\"
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

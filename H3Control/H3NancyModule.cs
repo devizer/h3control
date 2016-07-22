@@ -51,6 +51,15 @@ namespace H3Control
                 return View["default", new {JSonDevice = jsonDevice}];
             };
 
+            Get["/a/b/c/d"] = _ =>
+            {
+                var model = new DeviceController().GetDevice("me");
+                model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
+                var jsonDevice = JSonExtentions.ToNewtonJSon(model, isIntended: !H3Environment.IsRelease);
+                return View["default", new { JSonDevice = jsonDevice }];
+            };
+
+
             Func<string, Response> asBadRequest = (message) =>
             {
                 var msg = ("Bad Request. " + message).Trim();

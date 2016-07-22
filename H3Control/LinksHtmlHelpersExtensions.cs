@@ -8,33 +8,48 @@
 
     public static class LinksHtmlHelpersExtensions
     {
-        public static CssLinks Css(this HtmlHelpers helpers, NancyRazorViewBase<dynamic> view)
+        public static CssLinks Css(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase<dynamic> view)
         {
-            var path = view.Path ?? view.Request.Path;
+            var url = view.Url;
+            var rc = url.RenderContext;
+            var url2 = rc.Context.Request.Url;
+            var path = url2.Path;
             return new CssLinks(path);
         }
 
-        public static CssLinks Css(this HtmlHelpers helpers, NancyRazorViewBase view)
+        public static CssLinks Css(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase view)
         {
-            var path = view.Path ?? view.Request.Path;
+            var url = view.Url;
+            var rc = url.RenderContext;
+            var url2 = rc.Context.Request.Url;
+            var path = url2.Path;
             return new CssLinks(path);
         }
 
-        public static ScriptLinks Script(this HtmlHelpers helpers, NancyRazorViewBase<dynamic> view)
+        public static ScriptLinks Script(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase<dynamic> view)
         {
-            var path = view.Path ?? view.Request.Path;
+            var url = view.Url;
+            var rc = url.RenderContext;
+            var url2 = rc.Context.Request.Url;
+            var path = url2.Path;
             return new ScriptLinks(path);
         }
 
-        public static ScriptLinks Script(this HtmlHelpers helpers, NancyRazorViewBase view)
+        public static ScriptLinks Script(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase view)
         {
-            var path = view.Path ?? view.Request.Path;
+            var url = view.Url;
+            var rc = url.RenderContext;
+            var url2 = rc.Context.Request.Url;
+            var path = url2.Path;
             return new ScriptLinks(path);
         }
 
-        public static HrefLinks HRef(this HtmlHelpers helpers, NancyRazorViewBase<dynamic> view)
+        public static HrefLinks HRef(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase<dynamic> view)
         {
-            var path = view.Path ?? view.Request.Path;
+            var url = view.Url;
+            var rc = url.RenderContext;
+            var url2 = rc.Context.Request.Url;
+            var path = url2.Path;
             return new HrefLinks(path);
         }
 
@@ -53,19 +68,26 @@
         {
             get
             {
-                var dir = new H3RootPathProvider().GetRootPath();
+                string fake = "http://host" + _basePath;
+                Uri uriBase = new Uri("http://host" + _basePath);
+                Uri uri = new Uri(uriBase, relUri);
+                var uriPath = uri.LocalPath;
+                var root = new H3RootPathProvider().GetRootPath();
                 List<string> parts = new List<string>();
-                parts.Add(dir);
-                if (!relUri.StartsWith("/") && _basePath != "" && _basePath != "/") parts.Add(_basePath);
-                parts.Add(relUri);
+                parts.Add(root);
+                bool isWin = Environment.OSVersion.Platform == PlatformID.Win32NT;
+                string append = uriPath.TrimStart('/');
+                parts.Add(isWin ? append.Replace("/", "\\") : append);
                 string absFile = Path.Combine(parts.ToArray());
 
                 string changed = "";
                 var info = new FileInfo(absFile);
+                string prefix = relUri.Contains("?") ? "&" : "?";
                 if (info.Exists)
-                    changed = "?___" + info.LastWriteTimeUtc.ToString("yyyy'-'MMMM'-'dd'('HH'-'mm'-'ss.fff')'", new CultureInfo("en-US"));
+                    changed = prefix + "___" + info.LastWriteTimeUtc.ToString("yyyy'-'MMMM'-'dd'('HH'-'mm'-'ss.fff')'", new CultureInfo("en-US"));
 
-                return relUri + changed;
+                var ret = relUri + changed;
+                return ret;
             }
 
 

@@ -38,7 +38,11 @@ namespace H3Control
         {
             get
             {
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                    return null;
+
                 Bind();
+                
                 CpuUsageModel ret;
                 lock (Sync)
                 {

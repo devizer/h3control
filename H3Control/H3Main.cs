@@ -178,7 +178,7 @@ namespace H3Control
                 baseUrl + "/whatsnew/html",
                 baseUrl + "/whatsnew/markdown",
                 baseUrl + "/whatsnew/html-include",
-                baseUrl, 
+                baseUrl + "", 
             };
 
             bool hasErrors = false;
