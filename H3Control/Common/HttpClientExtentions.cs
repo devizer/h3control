@@ -28,7 +28,7 @@ namespace Universe
             Task<string> taskRead = taskGet.Then(response =>
             {
                 if (response.StatusCode != HttpStatusCode.OK)
-                    throw new InvalidOperationException(string.Format(
+                    throw new HttpRequestException(string.Format(
                         "Status of '{0}' response isn't OK(200). Status is {1}. Phrase is '{2}'", 
                         url, 
                         response.StatusCode, 
