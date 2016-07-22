@@ -8,11 +8,11 @@ install:
   - nuget restore H3Control.sln 
   - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
+  - bash travis-plugins/show-nuget.sh
   - echo HOME IS $HOME
   - echo PATH IS $PATH
   - file /usr/bin/cli
   - ls -l /usr/bin/cli*
-  - bash travis/show-nuget.sh
   - /usr/bin/cli || true
   - /usr/bin/cli --help || true
   - /usr/bin/cli /? || true
