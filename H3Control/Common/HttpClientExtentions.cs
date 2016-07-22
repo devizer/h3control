@@ -5,6 +5,7 @@ namespace Universe
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using System.Web;
 
     using Microsoft.Ajax.Utilities;
 
@@ -90,5 +91,20 @@ namespace Universe
             return arg;
         }
 
+    }
+
+    public static class DrunkActionExtentions
+    {
+        public static void TryAndForget(this Delegate action, params object[] @params)
+        {
+            try
+            {
+                action.DynamicInvoke(@params);
+            }
+            catch
+            {
+            }
+        }
+    
     }
 }

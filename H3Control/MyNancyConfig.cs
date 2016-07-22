@@ -77,7 +77,7 @@
 
             pipelines.OnError += (context, exception) =>
             {
-                NiceTrace.Message("Exception thrown ducring request handling of " + context.Request.Url + Environment.NewLine + exception + Environment.NewLine);
+                NiceTrace.Message("Exception thrown during request handling of " + context.Request.Url + Environment.NewLine + exception + Environment.NewLine);
                 return null;
             };
 

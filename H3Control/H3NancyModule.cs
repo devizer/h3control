@@ -174,6 +174,11 @@ namespace H3Control
                 return AsMarkdown(html);
             };
 
+            Get["/error"] = parameters =>
+            {
+                throw new InvalidOperationException("Requested exception thrown");
+            };
+
 
             // NiceTrace.Message("Routing convigured by " + this.GetType().Name);
         }
