@@ -67,7 +67,7 @@ namespace H3Control
 
             };
 
-            Trace.WriteLine("MemInfo_OnLinix: " + Environment.NewLine + "   " + info);
+            // Trace.WriteLine("MemInfo_OnLinix: " + Environment.NewLine + "   " + info);
 
             return true;
         }
