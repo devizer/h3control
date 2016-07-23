@@ -1,4 +1,5 @@
 ﻿CrossInfo on FreeBSD depends on:
+
 # FreeBSD
 uname -s 
 
@@ -9,7 +10,7 @@ sysctl kern.version kern.osrelease kern.ostype kern.osrevision
 sysctl hw.model hw.machine hw.ncpu
 
 # Total memory (same as Mac OSX)
-sysctl hw.memsize
+sysctl hw.physmem
 
 
 Message from mono-4.2.3.4:

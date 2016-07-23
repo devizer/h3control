@@ -434,7 +434,12 @@
 
         static int? FreeBSD_TotalMemory()
         {
-            return MacOs_TotalMemory();
+            var raw = ExecSysCtl("-n hw.physmem");
+            long bytes;
+            if (long.TryParse(raw, out bytes))
+                return (int)(bytes / 1024L);
+
+            return null;
         }
 
         private static int? Linux_TotalMemory()
