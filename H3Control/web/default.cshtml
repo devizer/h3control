@@ -216,7 +216,7 @@
                             <table class="PList">
                                 <tr>
                                     <th class="pid">pid</th>
-                                    <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')" style="display: none">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
+                                    <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
                                     <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
                                     <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
                                     <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
@@ -224,11 +224,11 @@
                                 </tr>
                                 <tr ng-repeat="pr in Processes">
                                     <td class="pid" ng-bind="pr.Pid"></td>
-                                    <td class="cpu" style="display: none">{{ pr.CpuUsage }}</td>
+                                    <td class="cpu" ng-bind="pr.CpuUsage"></td>
                                     <td class="rss" ><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
                                     <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
                                     <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
-                                    <td class="process">{{ pr.Args }}</td>
+                                    <td class="process" ng-bind="pr.Args"></td>
                                 </tr>
                             </table>
                         </div>

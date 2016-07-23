@@ -212,9 +212,17 @@
             lock (SyncProcesses)
                 copyOfAll = _Processes;
 
+            var myPid = _CurrentProcessId.Value;
+            var myInfo = copyOfAll.FirstOrDefault(x => x.Pid == myPid);
+            if (myInfo != null) myInfo.CpuUsage = 100m*(decimal) ProcessCpuUsageListener.GetCpuUsage();
+
+            var some = copyOfAll;
+
+/*
             var some = order == PsSortOrder.Cpu
                 ? copyOfAll.Where(x => x.Args == null || x.Args.IndexOf("h3control", StringComparison.InvariantCultureIgnoreCase) < 0)
                 : copyOfAll;
+*/
 
             return some
                 .Sort(order)
@@ -222,6 +230,11 @@
                 .Clone()
                 .ToList();
         }
+
+        static readonly Lazy<int> _CurrentProcessId = new Lazy<int>(() =>
+        {
+            return Process.GetCurrentProcess().Id;
+        });
 
         private static void Start(object o)
         {
