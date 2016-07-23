@@ -1,4 +1,18 @@
-﻿Message from mono-4.2.3.4:
+﻿CrossInfo on FreeBSD depends on:
+# FreeBSD
+uname -s 
+
+# OS Name:
+sysctl kern.version kern.osrelease kern.ostype kern.osrevision
+
+# CPU Name:
+sysctl hw.model hw.machine hw.ncpu
+
+# Total memory (same as Mac OSX)
+sysctl hw.memsize
+
+
+Message from mono-4.2.3.4:
 ************************************************************************
 If you have build/runtime errors with Mono and Gtk# apps please try the
 following first:
@@ -100,14 +114,3 @@ vm.swap_total: 1073704960
 
 /usr/sbin/sysinstall
 
-# FreeBSD
-uname -s 
-
-# OS Name:
-sysctl kern.version kern.osrelease kern.ostype kern.osrevision
-
-# CPU Name:
-sysctl hw.model hw.machine
-
-# Total memory (same as Mac OSX)
-sysctl hw.memsize
