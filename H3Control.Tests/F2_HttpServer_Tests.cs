@@ -87,7 +87,7 @@
                 driller.Dump();
                 Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
                 JSonExtentions.CheckFormat(driller.String, path);
-                if (++counter == urls.Length)
+                if (true || ++counter == urls.Length)
                     NiceTrace.Message(JSonExtentions.Format(driller.String));
             }
         }
