@@ -4,13 +4,24 @@
 uname -s 
 
 # OS Name:
-sysctl kern.version kern.osrelease kern.ostype kern.osrevision
+$ sysctl kern.version kern.osrelease kern.ostype kern.osrevision
+kern.version: FreeBSD 7.4-RELEASE #0: Fri Feb 18 01:55:22 UTC 2011
+    root@driscoll.cse.buffalo.edu:/usr/obj/usr/src/sys/GENERIC
 
-# CPU Name:
-sysctl hw.model hw.machine hw.ncpu
+kern.osrelease: 7.4-RELEASE
+kern.ostype: FreeBSD
+kern.osrevision: 199506
 
-# Total memory (same as Mac OSX)
-sysctl hw.physmem
+
+# CPU Name: machine - i386 | amd64, ncpu - 1|2|3|...
+$ sysctl hw.model hw.machine hw.ncpu
+hw.model: Intel(R) Core(TM)2 Duo CPU     P8400  @ 2.26GHz
+hw.machine: amd64
+hw.ncpu: 2
+
+# Total memory (in bytes)
+$ sysctl hw.physmem
+hw.physmem: 930217984
 
 
 Message from mono-4.2.3.4:
