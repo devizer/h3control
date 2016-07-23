@@ -58,7 +58,7 @@
         }
 
         [Test]
-        public void T03_Get_Default_cshtml_Doest_Fail_And_Returns_200()
+        public void T03_Get_Default_cshtml_Doesnt_Fail_And_Returns_200()
         {
             var url = BaseUrl + "/";
             ResponseDriller driller = ResponseDriller.CreateGet(url);
@@ -68,7 +68,7 @@
         }
 
         [Test]
-        public void T04_Select_Processes_Doest_Fail_And_Returns_200()
+        public void T04_Select_Processes_Doesnt_Fail_And_Returns_200()
         {
             // Cpu, Rss, Swapped, Size
             string[] urls = new[]
@@ -103,7 +103,7 @@
         }
 
         [Test]
-        public void T06_Get_Device_Doest_Fail_And_Returns_200()
+        public void T06_Get_Device_Doesnt_Fail_And_Returns_200()
         {
             // yes, there is no such column is Nianyty in processes response
             var url = BaseUrl + "/api/json/device/me";
@@ -115,7 +115,7 @@
         }
 
         [Test]
-        public void T07_Get_WhatsNew_Doest_Fail_And_Returns_200()
+        public void T07_Get_WhatsNew_Doesnt_Fail_And_Returns_200()
         {
             var urls = new[]
             {
@@ -130,7 +130,7 @@
                 Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode, "URL is {0}", url);
                 Assert.IsTrue(
                     driller.String.IndexOf("Update", StringComparison.InvariantCultureIgnoreCase) >= 0,
-                    "Response of {0} SHOULD include word 'UPDATE'. Response is{1}{2}", 
+                    "Response of {0} SHOULD include word 'UPDATE'. But Response is{1}{2}", 
                     url,
                     Environment.NewLine,
                     driller.String);

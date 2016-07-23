@@ -59,15 +59,16 @@
         {
             var ret = SizeOfPtr == 4 ? "32-bit" : "64-bit";
             if (ThePlatform == Platform.Linux)
-            {
                 ret = Linux_ProcName();
-            }
 
             else if (ThePlatform == Platform.MacOSX)
                 ret = MacOs_ProcName();
 
             else if (ThePlatform == Platform.Windows)
                 ret = Windows_ProcName();
+
+            else if (ThePlatform == Platform.FreeBSD)
+                ret = FreeBSD_ProcName();
 
             var cores = Environment.ProcessorCount;
             return ret 
@@ -89,6 +90,9 @@
 
             if (ThePlatform == Platform.Windows)
                 return Windows_TotalMemory();
+
+            if (ThePlatform == Platform.FreeBSD)
+                return FreeBSD_TotalMemory();
 
             return null;
         });
@@ -349,7 +353,8 @@
             Windows,
             Linux,
             MacOSX,
-            Unknown
+            FreeBSD,
+            Unknown,
         }
 
         static Lazy<Platform> _Platform = new Lazy<Platform>(() =>
@@ -365,6 +370,8 @@
                 var sName = ExecUName("-s");
                 if ("Darwin".Equals(sName, StringComparison.InvariantCultureIgnoreCase))
                     return Platform.MacOSX;
+                else if ("FreeBSD".Equals(sName, StringComparison.InvariantCultureIgnoreCase))
+                    return Platform.FreeBSD;
                 else
                     return Platform.Linux;
             }
@@ -385,6 +392,36 @@
                 + (cache != null && cache.Trim() != "" ? "; Cache " + cache.Trim() : "");
         }
 
+        private static string FreeBSD_ProcName()
+        {
+            var name = StripDoubleWhitespace(ExecSysCtl("-n hw.model") ?? "");
+            if (string.IsNullOrEmpty(name))
+                StripDoubleWhitespace(ExecSysCtl("-n hw.machine") ?? "");
+
+            return name;
+        }
+
+        private static string FreeBSD_OsName()
+        {
+            var name = StripDoubleWhitespace(ExecSysCtl("-n kern.version") ?? "");
+            if (string.IsNullOrEmpty(name))
+            {
+                var type = StripDoubleWhitespace(ExecSysCtl("-n kern.ostype") ?? "");
+                var ver = StripDoubleWhitespace(ExecSysCtl("-n kern.osrelease") ?? "");
+                name = (type + " " + ver).Trim();
+                if (string.IsNullOrEmpty(name))
+                    name = ThePlatform.ToString();
+            }
+
+            string rev = StripDoubleWhitespace(ExecSysCtl("-n kern.osrevision") ?? "");
+            if (!string.IsNullOrEmpty(rev))
+                name += " Rev " + rev;
+
+            return name;
+        }
+
+
+
         private static int? MacOs_TotalMemory()
         {
             var raw = ExecSysCtl("-n hw.memsize");
@@ -393,6 +430,11 @@
                 return (int) (bytes/1024L);
 
             return null;
+        }
+
+        static int? FreeBSD_TotalMemory()
+        {
+            return MacOs_TotalMemory();
         }
 
         private static int? Linux_TotalMemory()
@@ -624,7 +666,7 @@ BuildVersion:	14B25
                 ;
         }
 
-        private static string MacOS_AndLinux_OsArch()
+        private static string MacOS_AndLinux_AndFreeBSD_OsArch()
         {
             var arch = ExecUName("-m");
             return string.IsNullOrEmpty(arch) ? null : arch;
@@ -669,6 +711,7 @@ BuildVersion:	14B25
 
         static string StripDoubleWhitespace(string arg)
         {
+            arg = (arg ?? "").Replace("\t", " ").Replace("\r", " ").Replace("\n", " ");
             while (arg.IndexOf("  ") > 0)
                 arg = arg.Replace("  ", " ");
 
@@ -679,7 +722,7 @@ BuildVersion:	14B25
         {
             if (ThePlatform == Platform.Linux)
             {
-                var arch = MacOS_AndLinux_OsArch();
+                var arch = MacOS_AndLinux_AndFreeBSD_OsArch();
                 var archSuffix = string.IsNullOrEmpty(arch) ? "" : " (" + arch + ")";
                 var s1 = Linux_OsName();
                 var s2 = ExecUName("-r");
@@ -688,9 +731,16 @@ BuildVersion:	14B25
 
             else if (ThePlatform == Platform.MacOSX)
             {
-                var arch = MacOS_AndLinux_OsArch();
+                var arch = MacOS_AndLinux_AndFreeBSD_OsArch();
                 var archSuffix = string.IsNullOrEmpty(arch) ? "" : " (" + arch + ")";
                 return MacOs_OsName() + archSuffix;
+            }
+
+            else if (ThePlatform == Platform.FreeBSD)
+            {
+                var arch = MacOS_AndLinux_AndFreeBSD_OsArch();
+                var archSuffix = string.IsNullOrEmpty(arch) ? "" : " (" + arch + ")";
+                return FreeBSD_OsName() + archSuffix;
             }
 
             else
@@ -1444,3 +1494,4 @@ D9DAE2E3E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C03010002110311003F00F70A2BE8CF92
     }
 
 }
+

@@ -63,6 +63,8 @@
                 NiceTrace.Message("MemInfo Parser failed" + Environment.NewLine + ex);
             }
 
+            ret.Host = HostName;
+
             ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
             return ret;
         }

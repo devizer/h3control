@@ -1,0 +1,113 @@
+﻿Message from mono-4.2.3.4:
+************************************************************************
+If you have build/runtime errors with Mono and Gtk# apps please try the
+following first:
+
+* Build Mono and gtk+ (x11-toolkits/gtk20) without CPUTYPE and with the
+  default FreeBSD CFLAGS ('-O2 -fno-strict-aliasing -pipe') as Mono has
+  been known to expose compiler bugs.
+
+* Try building and running Mono with the GENERIC kernel.
+  - Mono requires SYSVSHM, SYSVMSG, and SYSVSEM which are part of the
+    GENERIC kernel.
+  - Removing kernel options or changing defaults to use experimental
+    options can adversely affect Mono's ability to build and run.
+
+* Remove leftover semaphores / increase semaphore limits.
+  - Close apps which use Mono and run `ipcs -sbt`.  Remove the
+    semaphores with MODE "--rw-------" and NSEMS "8" using ipcrm (1)
+  - _OR_ simply reboot which is the safest method.
+  - On multi-user systems the semaphore limits may need to be increased
+    from the defaults. The following should comfortably support 30 users.
+
+    # echo "kern.ipc.semmni=40" >> /boot/loader.conf
+    # echo "kern.ipc.semmns=300" >> /boot/loader.conf
+
+* If you are in a jailed environment, ensure System V IPC are enabled.
+  You can rely on the security.jail.sysvipc_allowed  sysctl to check
+  this status.  The following enables this feature on the host system:
+    # echo "jail_sysvipc_allow=\"YES\"" >> /etc/rc.conf
+
+* Some process information are acceded through /proc (e.g. when using
+  NUnit) and procfs(5) has to be mounted for these features to work:
+    # echo "proc            /proc   procfs  rw 0 0" >> /etc/fstab
+
+
+
+
+kern.ostype: FreeBSD
+kern.osrelease: 10.3-RELEASE
+kern.osrevision: 199506
+kern.version: FreeBSD 10.3-RELEASE #0 r297264: Fri Mar 25 03:51:29 UTC 2016
+    root@releng1.nyi.freebsd.org:/usr/obj/usr/src/sys/GENERIC
+
+root@freebsd10x86:~ # sysctl hw.model hw.machine hw.ncpu
+hw.model: Intel(R) Core(TM)2 Duo CPU     P8400  @ 2.26GHz
+hw.machine: i386
+hw.ncpu: 1
+
+hw.machine: i386
+hw.model: Intel(R) Core(TM)2 Duo CPU     P8400  @ 2.26GHz
+hw.ncpu: 1
+hw.byteorder: 1234
+hw.physmem: 1047945216
+hw.usermem: 1011290112
+hw.pagesize: 4096
+hw.floatingpoint: 1
+hw.machine_arch: i386
+hw.realmem: 1073741824
+hw.acpi.acline: 1
+hw.acpi.cpu.cx_lowest: C1
+hw.acpi.reset_video: 0
+hw.acpi.handle_reboot: 1
+hw.acpi.disable_on_reboot: 0
+hw.acpi.verbose: 0
+hw.acpi.s4bios: 0
+hw.acpi.sleep_delay: 1
+hw.acpi.suspend_state: NONE
+hw.acpi.standby_state: S1
+hw.acpi.lid_switch_state: NONE
+hw.acpi.sleep_button_state: S1
+hw.acpi.power_button_state: S5
+hw.acpi.supported_sleep_state: S1 S4 S5
+hw.mca.cmc_throttle: 60
+hw.mca.force_scan: 0
+hw.mca.interval: 3600
+hw.mca.count: 0
+hw.mca.erratum383: 0
+hw.mca.intel6h_HSD131: 0
+hw.mca.amd10h_L1TP: 1
+hw.mca.enabled: 1
+hw.apic.enable_extint: 0
+hw.hv_vendor: VMwareVMware
+hw.clockrate: 2261
+
+vm.swap_enabled: 1
+vm.disable_swapspace_pageouts: 0
+vm.defer_swapspace_pageouts: 0
+vm.swap_idle_enabled: 0
+vm.stats.vm.v_swappgsout: 0
+vm.stats.vm.v_swappgsin: 0
+vm.stats.vm.v_swapout: 0
+vm.stats.vm.v_swapin: 0
+vm.swap_idle_threshold2: 10
+vm.swap_idle_threshold1: 2
+vm.nswapdev: 1
+vm.swap_async_max: 4
+vm.swap_maxpages: 4022304
+vm.swap_reserved: 258207744
+vm.swap_total: 1073704960
+
+/usr/sbin/sysinstall
+
+# FreeBSD
+uname -s 
+
+# OS Name:
+sysctl kern.version kern.osrelease kern.ostype kern.osrevision
+
+# CPU Name:
+sysctl hw.model hw.machine
+
+# Total memory (same as Mac OSX)
+sysctl hw.memsize

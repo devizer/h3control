@@ -213,6 +213,7 @@
     <Compile Include="WhiteListMiddleware.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CrossInfo\FreeBSD.txt" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="web\H3Content\h3_commonmark2.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
