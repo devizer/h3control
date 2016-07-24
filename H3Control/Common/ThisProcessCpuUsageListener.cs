@@ -15,7 +15,7 @@ namespace Universe
         private static Stopwatch Watch;
         private static TimeSpan PrevTime;
         private static TimeSpan PrevUsage;
-        private static float CpuUsage;
+        private static float? CpuUsage;
 
         public static void Bind(long interval = 1000)
         {
@@ -45,7 +45,7 @@ namespace Universe
             }
         }
 
-        public static float GetCpuUsage()
+        public static float? GetCpuUsage()
         {
             Bind();
             lock(Sync) return CpuUsage;
@@ -86,6 +86,7 @@ namespace Universe
             }
             catch (Exception ex)
             {
+                CpuUsage = null;
                 NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() failed {0}{1}", Environment.NewLine, ex);
             }
         }
