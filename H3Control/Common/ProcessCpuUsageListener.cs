@@ -58,6 +58,9 @@ namespace Universe
             var cpuSeconds = nextUsage.TotalSeconds - PrevUsage.TotalSeconds;
             CpuUsage = (float) (Math.Abs(cpuSeconds) > 0.0001d ? cpuSeconds/watchSeconds : 0);
 
+            NiceTrace.Message("nextUsage: {0}, PrevUsage: {1}", nextUsage.TotalSeconds, PrevUsage.TotalSeconds);
+            NiceTrace.Message("nextTime: {0}, PrevTime: {1}", nextTime.TotalSeconds, PrevTime.TotalSeconds);
+
             PrevTime = nextTime;
             PrevUsage = nextUsage;
         }
