@@ -54,7 +54,9 @@ namespace Universe
             var nextTime = Watch.Elapsed;
             var nextUsage = GetProcessorTime();
 
-            CpuUsage = (float) (nextUsage.TotalSeconds/nextTime.TotalSeconds);
+            var watchSeconds = (nextTime.TotalSeconds - PrevTime.TotalSeconds);
+            var cpuSeconds = nextUsage.TotalSeconds - PrevUsage.TotalSeconds;
+            CpuUsage = (float) (Math.Abs(cpuSeconds) > 0.0001d ? cpuSeconds/watchSeconds : 0);
 
             PrevTime = nextTime;
             PrevUsage = nextUsage;
