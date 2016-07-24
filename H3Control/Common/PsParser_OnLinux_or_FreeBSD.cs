@@ -18,7 +18,7 @@
         public static List<PsProcessInfo> Select(PsSortOrder order = PsSortOrder.Cpu, int top = 5)
         {
             Stopwatch watch = Stopwatch.StartNew();
-            // on FreeBSD size should be changed to vsz or vsize
+            // on FreeBSD `size` should be changed to vsz or vsize
             // https://www.freebsd.org/cgi/man.cgi?ps(1)
             ProcessStartInfo si = new ProcessStartInfo("ps", "ax -o pid,pcpu,rss,vsz,args");
             si.UseShellExecute = false;
@@ -53,7 +53,7 @@
 
 
                 return 
-                    PsProcessInfoExtentions.Sort(all, order)
+                    PsProcessInfoExtentions.SortBy(all, order)
                     .Where((info, i) => i < top).ToList();
             }
         }
@@ -170,7 +170,7 @@
 
     public static class PsProcessInfoExtentions
     {
-        internal static IEnumerable<PsProcessInfo> Sort(this IEnumerable<PsProcessInfo> arg, PsSortOrder order)
+        internal static IEnumerable<PsProcessInfo> SortBy(this IEnumerable<PsProcessInfo> arg, PsSortOrder order)
         {
             if (order == PsSortOrder.Cpu) return arg.OrderByDescending(x => x.CpuUsage);
             if (order == PsSortOrder.Rss) return arg.OrderByDescending(x => x.Rss);
@@ -200,7 +200,7 @@
             {
                 if (_t == null)
                 {
-                    _t = new Thread(Start) { IsBackground = true };
+                    _t = new Thread(Start, 64*1024) { IsBackground = true };
                     _Processes = PsParser_OnLinux_or_FreeBSD.Select(order: PsSortOrder.None, top: 99999);
                     _t.Start();
                 }
@@ -218,16 +218,8 @@
             var myInfo = copyOfAll.FirstOrDefault(x => x.Pid == myPid);
             if (myInfo != null) myInfo.CpuUsage = 100m*(decimal) ProcessCpuUsageListener.GetCpuUsage();
 
-            var some = copyOfAll;
-
-/*
-            var some = order == PsSortOrder.Cpu
-                ? copyOfAll.Where(x => x.Args == null || x.Args.IndexOf("h3control", StringComparison.InvariantCultureIgnoreCase) < 0)
-                : copyOfAll;
-*/
-
-            return some
-                .Sort(order)
+            return copyOfAll
+                .SortBy(order)
                 .Where((info, i) => i < top)
                 .Clone()
                 .ToList();

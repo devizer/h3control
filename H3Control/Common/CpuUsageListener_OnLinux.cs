@@ -28,7 +28,7 @@ namespace H3Control
                     PrevModel = GetLocalSnapshot();
                     Thread.Sleep(1);
                     CurrentDelta = GetNextDelta();
-                    _thread = new Thread(() => GathererRunner()) {IsBackground = true};
+                    _thread = new Thread(GathererRunner, 64*1024) {IsBackground = true};
                     _thread.Start();
                 }
             }

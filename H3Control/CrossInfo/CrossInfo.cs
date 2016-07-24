@@ -216,7 +216,7 @@
                 {
                     errorDone.Set();
                 }
-            }) { IsBackground = true };
+            }, 64*1024) { IsBackground = true };
 
             Thread t2 = new Thread(() =>
             {
@@ -233,7 +233,7 @@
                 {
                     outputDone.Set();
                 }
-            }) { IsBackground = true };
+            }, 64*1024) { IsBackground = true };
 
             using (p)
             {

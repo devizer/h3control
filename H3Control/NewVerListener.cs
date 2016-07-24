@@ -67,7 +67,7 @@ namespace H3Control
                             RefreshInfo();
                             Thread.Sleep(5*60*1000);
                         }
-                    }) { IsBackground = true, Name = "New Version Info Listener" };
+                    }, 64*1024) { IsBackground = true, Name = "New Version Info Listener" };
 
                     _thread.Start();
                 }
