@@ -228,7 +228,7 @@ function LaunchWatsNewLoader() {
     });
 
     req.fail(function (jqXHR, textStatus) {
-        loading.html("<a href='@NewVerListener.WhatsNewUrl' target='_blank'>WHATS-NEW.md</a>");
+        loading.html("<a href='https://github.com/devizer/h3control-bin/blob/master/WHATS-NEW.md' target='_blank'>WHATS-NEW.md</a>");
     });
 
 }

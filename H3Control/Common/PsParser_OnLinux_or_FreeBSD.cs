@@ -11,7 +11,7 @@
     using Universe;
 
 
-    public class PsParser_OnLinux_Ps
+    public class PsParser_OnLinux_or_FreeBSD
     {
         private static readonly string[] ColumnKeys = new[] { "pid", "pcpu", "rss", "vsz", "args" };
 
@@ -201,7 +201,7 @@
                 if (_t == null)
                 {
                     _t = new Thread(Start) { IsBackground = true };
-                    _Processes = PsParser_OnLinux_Ps.Select(order: PsSortOrder.None, top: 99999);
+                    _Processes = PsParser_OnLinux_or_FreeBSD.Select(order: PsSortOrder.None, top: 99999);
                     _t.Start();
                 }
             }
@@ -243,7 +243,7 @@
             while (true)
             {
                 Thread.Sleep(3333);
-                var all = PsParser_OnLinux_Ps.Select(order: PsSortOrder.None, top: 99999);
+                var all = PsParser_OnLinux_or_FreeBSD.Select(order: PsSortOrder.None, top: 99999);
                 lock (SyncProcesses)
                 {
                     _Processes = all;
