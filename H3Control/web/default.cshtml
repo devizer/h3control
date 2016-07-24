@@ -224,7 +224,7 @@
                                 </tr>
                                 <tr ng-repeat="pr in Processes">
                                     <td class="pid" ng-bind="pr.Pid"></td>
-                                    <td class="cpu" ng-bind="pr.CpuUsage"></td>
+                                    <td class="cpu" ng-bind="pr.CpuUsage | number:1"></td>
                                     <td class="rss" ><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
                                     <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
                                     <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
