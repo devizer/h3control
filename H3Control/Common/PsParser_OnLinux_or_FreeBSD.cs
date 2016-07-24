@@ -216,7 +216,7 @@
 
             var myPid = _CurrentProcessId.Value;
             var myInfo = copyOfAll.FirstOrDefault(x => x.Pid == myPid);
-            if (myInfo != null) myInfo.CpuUsage = 100m*(decimal) ProcessCpuUsageListener.GetCpuUsage();
+            if (myInfo != null) myInfo.CpuUsage = 100m*(decimal) ThisProcessCpuUsageListener.GetCpuUsage();
 
             return copyOfAll
                 .SortBy(order)
