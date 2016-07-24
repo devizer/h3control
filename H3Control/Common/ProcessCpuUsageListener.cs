@@ -33,6 +33,7 @@ namespace Universe
 
         public static float GetCpuUsage()
         {
+            Bind();
             lock(Sync) return CpuUsage;
         }
 
