@@ -61,6 +61,7 @@ namespace H3Control.Controllers
                         File.WriteAllText(pathMin, freq + "000");
                         File.WriteAllText(pathMax, freq + "000");
                         File.WriteAllText(pathCur, freq + "000");
+                        Thread.Sleep(111);
                         File.WriteAllText(pathMin, 408 + "000");
 
                         return new ControlStatus() {IsOk = true};
