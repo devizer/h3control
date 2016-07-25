@@ -50,6 +50,7 @@ namespace H3Control.Controllers
             if (side == "ddr")
             {
                 // api/control/ddr/{freq}
+                // paranoja?
                 for (int i = 0; i < 5; i++)
                 {
                     try
@@ -67,6 +68,7 @@ namespace H3Control.Controllers
                             {
                                 Thread.Sleep(2000); // doesnt work
                                 File.WriteAllText(pathMin, "408" + "000");
+                                NiceTrace.Message("Written 408000 to {0}", pathMin);
                             };
                             drunk.TryAndForget();
                         });
