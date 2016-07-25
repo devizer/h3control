@@ -220,7 +220,7 @@
                                     <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
                                     <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
                                     <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
-                                    <th class="process">top memory usage</th>
+                                    <th class="process">top processes</th>
                                 </tr>
                                 <tr ng-repeat="pr in Processes">
                                     <td class="pid" ng-bind="pr.Pid"></td>
