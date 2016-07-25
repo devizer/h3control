@@ -61,8 +61,15 @@ namespace H3Control.Controllers
                         File.WriteAllText(pathMin, freq + "000");
                         File.WriteAllText(pathMax, freq + "000");
                         File.WriteAllText(pathCur, freq + "000");
-                        Thread.Sleep(1); // doesnt work
-                        File.WriteAllText(pathMin, "408" + "000");
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            Action drunk = () =>
+                            {
+                                Thread.Sleep(2000); // doesnt work
+                                File.WriteAllText(pathMin, "408" + "000");
+                            };
+                            drunk.TryAndForget();
+                        });
 
                         return new ControlStatus() {IsOk = true};
                     }
