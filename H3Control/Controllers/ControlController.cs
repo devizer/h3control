@@ -58,9 +58,10 @@ namespace H3Control.Controllers
                         const string pathCur = "/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/cur_freq";
                         string pathMin = string.Format(format, "min");
                         string pathMax = string.Format(format, "max");
-                        File.WriteAllText(pathMin, 408 + "000");
+                        File.WriteAllText(pathMin, freq + "000");
                         File.WriteAllText(pathMax, freq + "000");
                         File.WriteAllText(pathCur, freq + "000");
+                        File.WriteAllText(pathMin, 408 + "000");
 
                         return new ControlStatus() {IsOk = true};
                     }
