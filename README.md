@@ -6,7 +6,7 @@ Short answer:
 ```bash
 wget -q -nv -O - https://github.com/devizer/h3control-bin/raw/master/public/h3control.sh | bash
 ```
-This installer also suitable for upgrade.  More installation options, for example h3control-daemon which starts during boot, are described on ![h3control-bin repository](https://github.com/devizer/h3control-bin/blob/master/README.md)
+This installer also suitable for upgrade.  More installation options, for example h3control-daemon which starts during boot, are described on [h3control-bin repository](https://github.com/devizer/h3control-bin/blob/master/README.md)
 
 ### what does **build passed** mean
 - Latest source push compiled
