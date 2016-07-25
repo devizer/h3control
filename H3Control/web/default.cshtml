@@ -196,13 +196,6 @@
                 </tr>
                 <tr>
                     <td style="padding-top: 10px; vertical-align: top">
-                        <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none">
-                            <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
-                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
-                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
-                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
-                            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
-                        </div>
                     </td>
                     <td colspan="3" style='padding-top: 10px; text-align: center;'>
                         <div id="memUsagePlaceholder">
@@ -256,11 +249,22 @@
             </div>
 
             <div style="position: absolute; left: 535px; top: 375px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px;">
-                <button id="newVersionInfo" style="display:none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
-                <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor:pointer"  class="glyphicon glyphicon-info-sign"></span>
+                <button id="newVersionInfo" style="display: none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
+                <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor: pointer"  class="glyphicon glyphicon-info-sign"></span>
             </div>
 
-        </div>
+            <div style="position: absolute; left: 5px; top: 5px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px; background: transparent">
+                <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none">
+                    <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
+                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
+                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
+                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
+                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
+                </div>
+            </div>
+
+
+            </div>
 
 
 
