@@ -49,15 +49,18 @@ namespace H3Control.Controllers
             Exception error = null;
             if (side == "ddr")
             {
+                // api/control/ddr/{freq}
                 for (int i = 0; i < 5; i++)
                 {
                     try
                     {
                         const string format = "/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/scaling_{0}_freq";
+                        const string pathCur = "/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/cur_freq";
                         string pathMin = string.Format(format, "min");
                         string pathMax = string.Format(format, "max");
-                        File.WriteAllText(pathMin, freq + "000");
+                        File.WriteAllText(pathMin, 408 + "000");
                         File.WriteAllText(pathMax, freq + "000");
+                        File.WriteAllText(pathCur, freq + "000");
 
                         return new ControlStatus() {IsOk = true};
                     }
