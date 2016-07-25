@@ -61,12 +61,11 @@ namespace H3Control.Controllers
                         string pathMax = string.Format(format, "max");
                         File.WriteAllText(pathMin, freq + "000");
                         File.WriteAllText(pathMax, freq + "000");
-                        File.WriteAllText(pathCur, freq + "000");
                         ThreadPool.QueueUserWorkItem(state =>
                         {
                             Action drunk = () =>
                             {
-                                Thread.Sleep(2000); // doesnt work
+                                Thread.Sleep(1); // doesnt work
                                 File.WriteAllText(pathMin, "408" + "000");
                                 NiceTrace.Message("Written 408000 to {0}", pathMin);
                             };
