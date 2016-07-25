@@ -97,7 +97,7 @@ namespace H3Control
                     delta.Cores.Add(GetDelta1(prev.Cores[i], next.Cores[i]));
 
                 PrevModel = next;
-                NiceTrace.Message("CpuUsageListener_OnLinux.GetNextDelta() takes {0:n0} msec", sw.ElapsedMilliseconds);
+                // NiceTrace.Message("CpuUsageListener_OnLinux.GetNextDelta() takes {0:n0} msec", sw.ElapsedMilliseconds);
                 return delta;
             }
         }

@@ -378,8 +378,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 670px;
-    max-width: 670px;
+    width: 590px;
+    max-width: 590px;
 }
 
 .PList td.cpu, .PList td.rss, .PList td.size, .PList td.pid, .PList td.swapped {
