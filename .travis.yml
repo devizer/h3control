@@ -4,6 +4,7 @@ mono:
   - latest
 install:
   - sudo apt-get install -y sysbench ffmpeg redis-server memcached
+  - sudo apt-get install -y python-qt4 libqt4-webkit python-pip xvfb
   - ffmpeg -codecs
   - nuget restore H3Control.sln 
   - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
