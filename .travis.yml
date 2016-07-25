@@ -8,6 +8,7 @@ install:
   - ffmpeg -codecs
   - nuget restore H3Control.sln 
   - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+  - printenv
 script:
   - bash travis-plugins/show-nuget.sh
   - echo HOME IS $HOME
