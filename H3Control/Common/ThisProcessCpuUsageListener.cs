@@ -66,6 +66,7 @@ namespace Universe
 
         private static void NextIteration()
         {
+            Stopwatch sw = Stopwatch.StartNew();
             try
             {
                 var nextTime = Watch.Elapsed;
@@ -89,6 +90,8 @@ namespace Universe
                 CpuUsage = null;
                 NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() failed {0}{1}", Environment.NewLine, ex);
             }
+
+            NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() takes {0:n0} msec", sw.ElapsedMilliseconds);
         }
 
         static TimeSpan GetProcessorTime()

@@ -2,10 +2,13 @@ namespace H3Control
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading;
+
+    using Universe;
 
     public class CpuUsageListener_OnLinux
     {
@@ -80,6 +83,7 @@ namespace H3Control
         {
             lock (Sync)
             {
+                Stopwatch sw = Stopwatch.StartNew();
                 var next = GetLocalSnapshot();
                 var prev = PrevModel;
                 CpuUsageModel delta = new CpuUsageModel
@@ -93,7 +97,7 @@ namespace H3Control
                     delta.Cores.Add(GetDelta1(prev.Cores[i], next.Cores[i]));
 
                 PrevModel = next;
-                // Console.WriteLine("DONE: GetNextDelta()");
+                NiceTrace.Message("CpuUsageListener_OnLinux.GetNextDelta() takes {0:n0} msec", sw.ElapsedMilliseconds);
                 return delta;
             }
         }
