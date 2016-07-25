@@ -129,7 +129,11 @@ function bindSuccessDeviceInfo(data) {
 
     if (data.HasChangeAccess !== undefined) {
         BindHasAccess(data.HasChangeAccess);
-    }    
+    }
+
+    if (data.OsName) {
+        $('#osName').text(data.OsName);
+    }
 }
 
 function nextIter(isNeverEnding) {

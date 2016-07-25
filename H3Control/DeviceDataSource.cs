@@ -64,6 +64,7 @@
             }
 
             ret.Host = HostName;
+            new Action(() => { ret.OsName = CrossInfo.OsDisplayName; }).TryAndForget();
 
             ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
             return ret;

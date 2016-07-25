@@ -107,5 +107,16 @@ namespace Universe
             {
             }
         }
+
+        public static void TryAndForget(this Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch
+            {
+            }
+        }
     }
 }

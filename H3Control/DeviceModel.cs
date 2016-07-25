@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace H3Control
 {
+    using Universe;
+
     public class DeviceModel
     {
         public bool IsSuccess { get; set; }
@@ -25,9 +27,12 @@ namespace H3Control
         public NewVerListener.BuildInfo VerInfo { get; set; }
         public MemInfo_OnLinix Mem { get; set; }
         public bool HasChangeAccess { get; set; }
+        public string OsName { get; set; }
 
         public static DeviceModel Sample()
         {
+            string osName = null;
+            DrunkActionExtentions.TryAndForget(() => osName = CrossInfo.OsDisplayName);
             return new DeviceModel()
             {
                 CpuCur = 720,
@@ -41,6 +46,7 @@ namespace H3Control
                 Tempr = 48,
                 IsSuccess = true,
                 IsLimitSuccess = true,
+                OsName = osName,
 
                 Cpu = new CpuUsageModel()
                 {
