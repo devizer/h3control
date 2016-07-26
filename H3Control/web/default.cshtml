@@ -77,7 +77,7 @@
     var UpdateSpeed = 2000; // milliseconds
     var h3context = {
         IsMobile: @Html.GetUserAgent(this).IsMobile.ToString().ToLowerInvariant(),
-        IsRelease: @H3Environment.IsRelease,
+        IsRelease: @H3Environment.IsRelease.ToString().ToLowerInvariant(),
         Processes: @Html.Raw(Model.JSonProcesses),
     };
             
