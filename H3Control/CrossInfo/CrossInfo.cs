@@ -591,10 +591,6 @@ BuildVersion:	14B25
         model_name = StripDoubleWhitespace(model_name.Trim());
         cache = (cache ?? "").Trim();
 
-        NiceTrace.Message(@"
-
-");
-
         return model_name + (cache.Length == 0 ? "" : (", Cache " + cache));
     }
 
