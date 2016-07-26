@@ -35,6 +35,7 @@ namespace H3Control.Tests
                     .GetFiles(directoryName)
                     .Select(x => Path.GetFileName(x))
                     .OrderBy(x => Path.GetFileNameWithoutExtension(x))
+                    .Select(x => x + TryGetVer(x))
                     .ToList();
 
                 var sep = Environment.NewLine + "  * ";
@@ -68,6 +69,19 @@ namespace H3Control.Tests
             }, pollInterval: 333);
 
             NiceTrace.Message("Launch result (during {0}): {1}{2}", swLaunch.Elapsed, isOk ? "SUCCESS" : "FAIL", Environment.NewLine);
+        }
+
+        static string TryGetVer(string file)
+        {
+            try
+            {
+                FileVersionInfo fi = FileVersionInfo.GetVersionInfo(file);
+                return "  " + fi.FileVersion;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
 
         static bool FastCheck(string url)
