@@ -5,50 +5,47 @@ namespace H3Control.Common
 {
     public class FirstRound
     {
-        static Dictionary<object, short> _Cache = new Dictionary<object, short>(EqualityComparer<object>.Default);
+        static readonly Dictionary<string, int> Cache = new Dictionary<string, int>(EqualityComparer<string>.Default);
         static readonly object Sync = new object();
 
         public static void Only(string key, RoundCounter when, Action action)
         {
-            Try(key, when, action);
+            Try(key, (int)when, action);
+        }
+
+        public static void Only(string key, int countNumber, Action action)
+        {
+            Try(key, countNumber, action);
         }
 
         public static void Only(string key, Action action)
         {
-            Try(key, RoundCounter.First, action);
+            Try(key, (int)RoundCounter.First, action);
         }
 
-        public static void Only(Action action)
+        public static void OnlyTwice(string key, Action action)
         {
-            Try(action, RoundCounter.First, action);
+            Try(key, (int)RoundCounter.Twice, action);
         }
 
-        public static void OnlyTwice(Action action)
+        private static void Try(string key, int countNumber, Action action)
         {
-            Try(action, RoundCounter.Twice, action);
-        }
-
-        public static void Try(object key, RoundCounter when, Action action)
-        {
-            short number;
+            int number;
             lock (Sync)
-                if (!_Cache.TryGetValue(key, out number))
+                if (!Cache.TryGetValue(key, out number))
                     number = 0;
 
             if (number > 10) return;
             number++;
-            if (number == 1 && (when == RoundCounter.First || when == RoundCounter.Twice))
-                action();
-
-            if (number == 2 && when == RoundCounter.Twice)
+            if (number <= countNumber)
                 action();
 
             lock (Sync)
             {
-                if (!_Cache.TryGetValue(key, out number))
+                if (!Cache.TryGetValue(key, out number))
                     number = 0;
-                
-                _Cache[key] = ++number;
+
+                Cache[key] = ++number;
             }
         }
 
@@ -56,8 +53,8 @@ namespace H3Control.Common
 
     public enum RoundCounter
     {
-        Never,
-        First,
-        Twice
+        Never = 0,
+        First = 1,
+        Twice = 2
     }
 }

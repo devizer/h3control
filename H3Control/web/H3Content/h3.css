@@ -197,18 +197,18 @@
 /**********************************
              CPU USAGE
 **********************************/
+.CpuUsageDivSize {
+    height: 24px;
+    width: 575px;
+    margin-left: 0px;
+}
+
 .CpuUsageSection {
     height: 22px;
     text-align: center;
     vertical-align: bottom;
     padding-top: 2px;
     float: left;
-}
-
-.CpuUsageDivSize {
-    height: 24px;
-    width: 575px;
-    margin-left: 0px;
 }
 
 .CpuUsageSection-WithLabel {

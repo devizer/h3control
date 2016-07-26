@@ -242,7 +242,11 @@
                 Thread.Sleep(3333);
                 Stopwatch sw = Stopwatch.StartNew();
                 var all = PsParser_OnLinux_or_FreeBSD.Select(order: PsSortOrder.None, top: 99999);
-                NiceTrace.Message("PsParser_OnLinux_or_FreeBSD.Select() takes {0:n0} msec", sw.ElapsedMilliseconds);
+                FirstRound.Only("PsParser_OnLinux_or_FreeBSD.Select()", 20, () =>
+                {
+                    NiceTrace.Message("PsParser_OnLinux_or_FreeBSD.Select() takes {0:n0} msec", sw.ElapsedMilliseconds);
+                });
+                
                 lock (SyncProcesses)
                 {
                     _Processes = all;

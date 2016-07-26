@@ -88,10 +88,13 @@ namespace Universe
             catch (Exception ex)
             {
                 CpuUsage = null;
-                NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() failed {0}{1}", Environment.NewLine, ex);
+                NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() FAILED {0}{1}", Environment.NewLine, ex);
             }
 
-            NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() takes {0:n0} msec", sw.ElapsedMilliseconds);
+            FirstRound.Only("ThisProcessCpuUsageListener.NextIteration()", 20, () =>
+            {
+                NiceTrace.Message("ThisProcessCpuUsageListener.NextIteration() takes {0:n0} msec", sw.ElapsedMilliseconds);
+            });
         }
 
         static TimeSpan GetProcessorTime()
