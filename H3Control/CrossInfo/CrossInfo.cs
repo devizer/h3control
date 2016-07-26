@@ -549,9 +549,9 @@ BuildVersion:	14B25
         return name + (cache.Length == 0 ? "" : (", Cache " + cache));
     }
 
-        private static string Linux_ProcName()
+    private static string Linux_ProcName()
     {
-        String name = null, name2 = null, cache = null, processor = null, hardware = null;
+        String model_name = null, cpu_model = null, cache = null, processor = null, hardware = null;
         string fileName = "/proc/cpuinfo";
         if (!File.Exists(fileName))
             return (ExecUName("-m") ?? "").Trim();
@@ -567,9 +567,9 @@ BuildVersion:	14B25
             {
                 key = key.Trim();
                 if ("model name".Equals(key, comp))
-                    name = value;
+                    model_name = value;
                 else if ("cpu model".Equals(key, comp))
-                    name2 = value;
+                    cpu_model = value;
                 else if ("Processor".Equals(key, StringComparison.InvariantCulture))
                     processor = value;
                 else if ("Hardware".Equals(key, StringComparison.InvariantCulture))
@@ -580,17 +580,22 @@ BuildVersion:	14B25
             }
         }
 
-        name = name ?? name2;
-        if (string.IsNullOrEmpty(name))
-            name = ExecUName("-m");
+        model_name = model_name ?? cpu_model;
 
-        if (string.IsNullOrEmpty(name))
-            name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
+        if (string.IsNullOrEmpty(model_name))
+            model_name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
 
-        name = StripDoubleWhitespace(name.Trim());
+        if (string.IsNullOrEmpty(model_name))
+            model_name = ExecUName("-m");
+
+        model_name = StripDoubleWhitespace(model_name.Trim());
         cache = (cache ?? "").Trim();
 
-        return name + (cache.Length == 0 ? "" : (", Cache " + cache));
+        NiceTrace.Message(@"
+
+");
+
+        return model_name + (cache.Length == 0 ? "" : (", Cache " + cache));
     }
 
         private static string Windows_ProcName()
