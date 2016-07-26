@@ -4,7 +4,7 @@ function refreshRate_OnReady() {
 
     // UPDATE SPEED
     $(".UpdateSpeedButton").jqxButton({ theme: 'fresh', /*width: '70', */ template: 'default' });
-    $(".UpdateSpeedButton[value='" + UpdateSpeed + "']").jqxButton("template", 'success');
+    $(".UpdateSpeedButton[value='" + h3context.UpdateSpeed + "']").jqxButton("template", 'success');
     $('.UpdateSpeedButton').jqxButton().on('click', function (event) {
         var id = this.id;
         var newVal = $(this).val();
@@ -19,7 +19,7 @@ function refreshRate_OnReady() {
         var arr = id.split("_");
         var idPrefix = arr[0];
         var msecs = parseInt(arr[1]);
-        UpdateSpeed = msecs;
+        h3context.UpdateSpeed = msecs;
         $.ajax("api/control/updatespeed/" + msecs, { method: "POST" });
     });
 

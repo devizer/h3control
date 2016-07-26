@@ -202,7 +202,8 @@ $(document).ready(function () {
     });
 
 
-    if (initialDeviceInfo && initialDeviceInfo.IsSuccess) {
+    var dinfo = h3context.DeviceInfo;
+    if (dinfo && dinfo.IsSuccess) {
         window.setTimeout(bindInitialDeviceInfo, 300);
         window.setTimeout(nextNeverendingUpdate, 2000);
     } else {

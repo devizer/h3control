@@ -182,7 +182,7 @@
     <Compile Include="Common\CpuUsageListener_OnLinux.cs" />
     <Compile Include="Common\UserAgentInfo.cs" />
     <Compile Include="Controllers\ControlController.cs" />
-    <Compile Include="Controllers\ProcessController.cs" />
+    <Compile Include="Controllers\ProcessesController.cs" />
     <Compile Include="CrossInfo\CrossInfo.cs" />
     <Compile Include="CrossInfo\SmartyTemp.cs" />
     <Compile Include="CrossInfo\UnitStress.cs" />

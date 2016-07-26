@@ -6,6 +6,8 @@
     using System.IO;
     using Nancy.ViewEngines.Razor;
 
+    using Universe;
+
     public static class LinksHtmlHelpersExtensions
     {
         public static CssLinks Css(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase<dynamic> view)
@@ -175,6 +177,24 @@
             }
 
 
+        }
+    }
+
+    public static class JsonHtmlHelpersExtensions
+    {
+        public static NonEncodedHtmlString ToJs(this HtmlHelpers<dynamic> helpers, string arg)
+        {
+            return JSonExtentions.ToJson(arg);
+        }
+
+        public static NonEncodedHtmlString EnumToJs(this HtmlHelpers<dynamic> helpers, ValueType enumValue)
+        {
+            return '"' + enumValue.ToString() + '"';
+        }
+
+        public static NonEncodedHtmlString ToJs(this HtmlHelpers<dynamic> helpers, DateTime arg)
+        {
+            return JSonExtentions.ToNewtonJSon(arg, false);
         }
     }
 

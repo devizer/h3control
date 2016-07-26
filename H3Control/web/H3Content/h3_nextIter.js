@@ -15,13 +15,14 @@ function nextNeverendingUpdate() {
 }
 
 function bindInitialDeviceInfo() {
-    if (initialDeviceInfo && initialDeviceInfo.IsSuccess) {
-        bindSuccessDeviceInfo(initialDeviceInfo);
+    var dinfo = h3context.DeviceInfo;
+    if (dinfo && dinfo.IsSuccess) {
+        bindSuccessDeviceInfo(dinfo);
     }
 }
 
 /*  called in two cases:
-          - document.onready with initialDeviceInfo argument;
+          - document.onready with h3context.DeviceInfo argument;
           - get(api/json/device/me).Done with data argument                 */
 function bindSuccessDeviceInfo(data) {
     updateGauges(data);
@@ -181,13 +182,13 @@ function nextIter(isNeverEnding) {
                 label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
 
             bindSuccessDeviceInfo(data);
-            if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, UpdateSpeed);
+            if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
 
         } else {
             if (isNeverEnding) {
                 $("#error").text(TimeInfo.Counter + ': internal error' + timeInfo).show();
                 bindFail();
-                window.setTimeout(nextNeverendingUpdate, UpdateSpeed);
+                window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
             }
         }
     });
@@ -196,7 +197,7 @@ function nextIter(isNeverEnding) {
         if (isNeverEnding) {
             $("#error").text(TimeInfo.Counter + ' ' + textStatus + timeInfo).show();
             bindFail();
-            window.setTimeout(nextNeverendingUpdate, UpdateSpeed);
+            window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
         }
     });
 

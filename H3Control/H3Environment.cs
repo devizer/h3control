@@ -10,10 +10,18 @@ namespace H3Control
     using System.Reflection;
     using System.Threading;
 
+    using Common;
+
     using Universe;
 
     public static class H3Environment
     {
+        public static class ProcessesDefaults
+        {
+            public static readonly int TopN = 5;
+            public static readonly PsSortOrder Order = PsSortOrder.Rss;
+        }
+        
         static Lazy<Version> _Ver = new Lazy<Version>(() =>
         {
             return Assembly.GetExecutingAssembly().GetName().Version;
@@ -23,6 +31,20 @@ namespace H3Control
         {
             return Ver.ToString(3);
         });
+
+        static Lazy<DateTime> _BuiltAtUtc = new Lazy<DateTime>(() =>
+        {
+            var ret = AssemblyBuildDateTimeAttribute.CallerUtcBuildDate;
+            if (!ret.HasValue)
+                throw new InvalidOperationException("[AssemblyBuildDateTime] is absent in H3Control assembly");
+
+            return ret.Value;
+        });
+
+        public static DateTime BuiltAtUtc
+        {
+            get { return _BuiltAtUtc.Value; }
+        }
 
         public static string VerAsPublic
         {

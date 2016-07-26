@@ -11,6 +11,7 @@ namespace H3Control.Tests
     using NUnit.Framework;
 
     using Universe;
+    using Universe.NancyCaching;
 
     [TestFixture]
     public class F0_Test_HttpClientExtentions : BaseTest
@@ -74,4 +75,18 @@ namespace H3Control.Tests
         }
 
     }
+
+    [TestFixture]
+    public class F_Test_Json : BaseTest
+    {
+        [Test]
+        public void Test1()
+        {
+            Trace.WriteLine("Hello: " + JSonExtentions.ToNewtonJSon("Hello", true));
+            Trace.WriteLine("CachingScope.Private: " + JSonExtentions.ToNewtonJSon(CachingScope.Private, true));
+            Trace.WriteLine("DateTime.Now: " + JSonExtentions.ToNewtonJSon(DateTime.Now, true));
+            Trace.WriteLine("TimeSpan.FromSeconds(123456789): " + JSonExtentions.ToNewtonJSon(TimeSpan.FromSeconds(123456789), true));
+        }
+    }
+
 }

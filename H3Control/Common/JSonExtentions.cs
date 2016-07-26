@@ -9,6 +9,34 @@ namespace Universe
 
     public static class JSonExtentions
     {
+        public static string ToJson(this bool arg)
+        {
+            return arg ? "true" : "false";
+        }
+
+        public static string ToJson(this DateTime arg)
+        {
+            return ToNewtonJSon(arg, false);
+        }
+
+        public static string ToJson(this string arg)
+        {
+            if (arg == null)
+                return "null";
+
+            StringBuilder ret = new StringBuilder("\"");
+            foreach (var c in arg)
+            {
+                if (c == '\\') ret.Append("\\\\");
+                else if (c == '\"') ret.Append(@"""");
+                else if (c < 32) ret.Append(((int) c).ToString("X4"));
+                else ret.Append(c);
+            }
+
+            ret.Append("\"");
+            return ret.ToString();
+        }
+
         public static void CheckFormat(string candidate, string context = null)
         {
             string suffix = string.IsNullOrWhiteSpace(context) ? "" : (" (" + context + ")");

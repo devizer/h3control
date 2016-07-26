@@ -3,9 +3,6 @@ appH3.filter('unsafe', function ($sce) { return $sce.trustAsHtml; });
 
 
 appH3.controller('processesCtrl', function ($scope, $http) {
-    /* orderColumn values are from enum PsSortOrder */
-    $scope.order = "Rss";
-    $scope.topN = 5;
 
     var fixProcesses = function (procList, maxCount) {
         while (procList.length < maxCount)
@@ -13,8 +10,6 @@ appH3.controller('processesCtrl', function ($scope, $http) {
 
         return procList;
     }
-
-    $scope.Processes = fixProcesses([], $scope.topN);
 
     $scope.getHeaderClass = function (column) {
         return column === $scope.order ? "sorted" : "sortable";
@@ -72,7 +67,21 @@ appH3.controller('processesCtrl', function ($scope, $http) {
 
     };
 
-    // refreshProcesses();
-    $scope.Visible = false; // ONLOAD
-    window.setTimeout($scope.refresh, 42);
+    var zero = h3context.Processes;
+    /* orderColumn values are from enum PsSortOrder */
+    $scope.order = "Rss";
+    $scope.topN = 5;
+    $scope.Processes = [];
+    var hasInitBinding = zero !== undefined;
+    if (hasInitBinding) {
+        $scope.order = zero.order;
+        $scope.topN = zero.topN;
+        $scope.Processes = zero.Processes;
+        console.warn("So, initial processes order=" + $scope.order + ", topN=" + $scope.topN + ", Processes.length=" + $scope.Processes.length);
+    }
+
+    $scope.Processes = fixProcesses($scope.Processes, $scope.topN);
+    $scope.Visible = hasInitBinding;
+    if (hasInitBinding) $("#processesCtrl").show();
+    window.setTimeout($scope.refresh, hasInitBinding ? 3000 : 50);
 });

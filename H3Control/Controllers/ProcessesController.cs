@@ -9,8 +9,9 @@ namespace H3Control.Controllers
 
     using Universe;
 
-    public class ProcessController
+    public class ProcessesController
     {
+
         public static List<PsProcessInfo> Select(PsSortOrder order, int topN, bool isIe8OrBelow)
         {
             Stopwatch sw3 = Stopwatch.StartNew();

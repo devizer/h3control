@@ -72,17 +72,30 @@
 
 
         <script type="text/javascript">
+@*
     var initialDeviceInfo = @Html.Raw(Model.JSonDevice);
-    // DEFAULT Update Speed, should be from one of a .UpdateSpeedButton button
+
     var UpdateSpeed = 2000; // milliseconds
+*@
     var h3context = {
-        IsMobile: @Html.GetUserAgent(this).IsMobile.ToString().ToLowerInvariant(),
-        IsRelease: @H3Environment.IsRelease.ToString().ToLowerInvariant(),
-        Processes: @Html.Raw(Model.JSonProcesses),
+        // DEFAULT Update Speed, should be from one of a .UpdateSpeedButton button
+        UpdateSpeed: 2000, // milliseconds
+        IsMobile: @Html.GetUserAgent(this).IsMobile.ToJson(),
+        IsRelease: @H3Environment.IsRelease.ToJson(),
+        BuiltAt: @Html.ToJs(H3Environment.BuiltAtUtc),
+        DeviceInfo: @Html.Raw(Model.JSonDevice),
+        Processes: {
+            order: @Html.EnumToJs(H3Environment.ProcessesDefaults.Order),
+            topN: @H3Environment.ProcessesDefaults.TopN,
+            Processes: @Html.Raw(Model.JSonProcesses),
+        },
     };
-            
-            h3context.GuageAnimationDuration = h3context.IsMobile ? 100 : 700;
-        </script>
+
+
+
+    h3context.GuageAnimationDuration = h3context.IsMobile ? 100 : 700;
+</script>
+
         @Html.Script(this)["H3Content/h3_main.js"]
         <!-- angular hides loading of another js, so its the last -->
         @Html.Script(this)["H3Content/h3_processesCtrl.js"]

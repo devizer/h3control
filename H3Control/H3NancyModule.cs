@@ -54,7 +54,7 @@ namespace H3Control
                 List<PsProcessInfo> plist;
                 try
                 {
-                    plist = ProcessController.Select(PsSortOrder.Rss, 5, Context.GetUserAgent().Is_IE8_OrBelow);
+                    plist = ProcessesController.Select(H3Environment.ProcessesDefaults.Order, H3Environment.ProcessesDefaults.TopN, Context.GetUserAgent().Is_IE8_OrBelow);
                 }
                 catch
                 {
@@ -96,7 +96,7 @@ namespace H3Control
                     var isIe8OrBelow = browser.Is_IE8_OrBelow;
 
 
-                    var list = ProcessController.Select(order, topN, isIe8OrBelow);
+                    var list = ProcessesController.Select(order, topN, isIe8OrBelow);
 
                     return Response.AsJson(new { Processes = list });
                     return new { Processes = list };
