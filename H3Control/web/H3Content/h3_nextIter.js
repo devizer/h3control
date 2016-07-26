@@ -110,6 +110,7 @@ function bindSuccessDeviceInfo(data) {
 
         BindMemoryUsage(usage2);
 
+/*
         var memUsageSource = [
             { Kind: 'Cache', Mem: data.Mem.BuffersAndCache },
             { Kind: 'Used', Mem: data.Mem.Total - data.Mem.Free },
@@ -125,6 +126,7 @@ function bindSuccessDeviceInfo(data) {
         ];
 
         $('#swapChart').jqxChart("source", swapUsageSource);
+*/
 
     }
 

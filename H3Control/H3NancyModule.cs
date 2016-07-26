@@ -45,6 +45,7 @@ namespace H3Control
             
             Get["/"] = _ =>
             {
+                this.Expires(scope:CachingScope.None);
                 var model = new DeviceController().GetDevice("me");
                 model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
                 var jsonDevice = JSonExtentions.ToNewtonJSon(model, isIntended: !H3Environment.IsRelease);

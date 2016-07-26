@@ -118,6 +118,7 @@ $(document).ready(function () {
         { Kind: 'Free', Mem: 825 },
     ];
 
+/*
     var settings = {
         title: "",
         description: "",
@@ -152,6 +153,7 @@ $(document).ready(function () {
     // setup the chart
     $('#memChart, #swapChart').jqxChart(settings);
     $('#swapChart').jqxChart("source", swapUsageSource);
+*/
 
     BindEmptyMemoryUsage();
 
