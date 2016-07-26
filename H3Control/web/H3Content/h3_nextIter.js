@@ -68,8 +68,8 @@ function bindSuccessDeviceInfo(data) {
 
 
     if (data.IsLimitSuccess) {
-        label_CpuRange.html("<small>RANGE: " + data.CpuMin + " ... " + data.CpuMax + " Mhz");
-        label_DdrRange.html("<small>RANGE: " + data.DdrMin + " ... " + data.DdrMax + " Mhz");
+        label_CpuRange.html("<small>" + data.CpuMin + " ... " + data.CpuMax + " Mhz");
+        label_DdrRange.html("<small>" + data.DdrMin + " ... " + data.DdrMax + " Mhz");
 
         if (isFirstRound) {
             isFirstRound = false;

@@ -1,13 +1,13 @@
 ﻿
 // CACHE of frequently accessed widgets
 
-var gauge_DdrFreq;         // #ddrContainer
-var label_DdrFreq; // #ddrValue
-var gauge_Temperature; // #gauge
-var label_Temperature; // #tempValue
-var buttonList_UpdateSpeed; // .UpdateSpeedButton
-var label_DdrRange; // #ddrLimits
-var label_Error; // #error
+var gauge_DdrFreq;           // #ddrContainer
+var label_DdrFreq;           // #ddrValue
+var gauge_Temperature;       // #gauge
+var label_Temperature;       // #tempValue
+var buttonList_UpdateSpeed;  // .UpdateSpeedButton
+var label_DdrRange;          // #ddrLimits
+var label_Error;             // #error
 
 function updateGauges(values) {
     $('#cpuContainer').jqxGauge('value', values.CpuCur);
@@ -51,7 +51,7 @@ $(document).ready(function () {
         colorScheme: 'scheme05',
         animationDuration: 700,
         labels: {
-            distance: '38%',
+            distance: '43%',
             position: 'none',
             interval: 50,
             offset: [0, -10],
