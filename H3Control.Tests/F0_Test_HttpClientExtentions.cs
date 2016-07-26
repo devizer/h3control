@@ -25,7 +25,7 @@ namespace H3Control.Tests
         {
             using (HttpClient client = new HttpClient())
             {
-                var t = client.GetAsStringAsync("https://google.com");
+                var t = client.GetAsStringAsync("https://github.com");
                 string result = t.Result;
                 Assert.IsTrue(result.IndexOf("google", StringComparison.InvariantCulture) >= 0);
             }
