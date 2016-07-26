@@ -197,11 +197,12 @@
 /**********************************
              CPU USAGE
 **********************************/
-.CpuUsageBarHeight {
+.CpuUsageSection {
     height: 22px;
     text-align: center;
     vertical-align: bottom;
     padding-top: 2px;
+    float: left;
 }
 
 .CpuUsageDivSize {
@@ -210,13 +211,17 @@
     margin-left: 0px;
 }
 
-.CpuUsageLabel {
+.CpuUsageSection-WithLabel {
     font-family: Helvetica, Arial, Verdana, Georgia;
     font-size: 14px;
 }
 
-.CpuUsageNoLabel {
+.CpuUsageSection-WithoutLabel {
     font-size: 1px;
+}
+
+.CpuUsageSection-Last {
+    border-right: 1px solid #DDDDDD
 }
 
 .UserTimeStyleForeground {
