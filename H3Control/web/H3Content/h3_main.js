@@ -203,11 +203,11 @@ $(document).ready(function () {
 
 
     var dinfo = h3context.DeviceInfo;
-    if (dinfo && dinfo.IsSuccess) {
-        window.setTimeout(bindInitialDeviceInfo, 300);
-        window.setTimeout(nextNeverendingUpdate, 2000);
+    if (dinfo !== undefined && dinfo.IsSuccess) {
+        window.setTimeout(bindInitialDeviceInfo, 150);
+        window.setTimeout(nextNeverendingUpdate, 1000);
     } else {
-        window.setTimeout(nextNeverendingUpdate, 444);
+        window.setTimeout(nextNeverendingUpdate, 500);
     }
 
 });
