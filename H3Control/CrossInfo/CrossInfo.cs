@@ -582,7 +582,7 @@ BuildVersion:	14B25
 
         model_name = model_name ?? cpu_model;
 
-        if (string.IsNullOrEmpty(model_name))
+        if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
             model_name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
 
         if (string.IsNullOrEmpty(model_name))
