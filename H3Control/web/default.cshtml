@@ -84,14 +84,15 @@
     <body>
 
 
-        <div class="container theme-showcase" role="main" style='position: relative; text-align: center'>
-            <br />
 
-            <div class="Restricted Restricted-1" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
-            <div class="Restricted Restricted-2" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
+    <div class="container theme-showcase" role="main" style='position: relative; text-align: center'>
+        @*<br/>*@
+
+        <div class="Restricted Restricted-1" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
+        <div class="Restricted Restricted-2" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
 
 
-            <!-- Main jumbotron for a primary marketing message or call to action
+        <!-- Main jumbotron for a primary marketing message or call to action
         <div class="jumbotron">
             <h1>Orange Pi plus h3control</h1>
             <p>Here is a single weekend prototype of the web access to tempereture &amp; frequency of an OP+</p>
@@ -104,167 +105,172 @@
         </div>
         -->
 
-            <div id="newVersionNotification" style='position: absolute; left: 440px; top: 480px; visibility: hidden'>
-                <b>New version X.Y.ZZZ is available!</b>
-            </div>
+        <div id="newVersionNotification" style='position: absolute; left: 440px; top: 480px; visibility: hidden'>
+            <b>New version X.Y.ZZZ is available!</b>
+        </div>
 
-            <table border="0" cellspacing="0" cellpadding="0" id="PageContainer">
-                <tr>
-                    <td colspan="4" style="padding-bottom: 9px">
-                        <div style="position: relative;">
-                            <div id="gauge" style="margin-left: 0px; float: left;"></div>
-                            <div id="tempValu_" style="position: absolute; top: 60px; left: 376px; width: 240px;">&nbsp;</div>
-                            <div id="tempValue" style="position: absolute; top: 60px; left: 376px; width: 240px;">TEMPERATURE: ..... ° </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <!--CPU MIN MENU-->
-                                <td>
-                                    <div id='cpuMinExpander' class="cpuExpanderHeader">
-                                        <div style='text-align: center'>
-                                            CPU<sub> MIN</sub> (Mhz)
-                                        </div>
-                                        <div style='background-color: #F0F0F0; overflow: hidden'>
-                                            <div id='jqxWidget'>
-                                                <div id='cpuMinMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
-                                                </div>
+        <table border="0" cellspacing="0" cellpadding="0" id="PageContainer" style="margin-top: 20px">
+            <tr>
+                <td colspan="4" style="padding-bottom: 9px">
+                    <div style="position: relative;">
+                        <div id="gauge" style="margin-left: 0px; float: left;"></div>
+                        <div id="tempValu_" style="position: absolute; top: 60px; left: 344px; width: 240px;">&nbsp;</div>
+                        <div id="tempValue" style="position: absolute; top: 60px; left: 344px; width: 240px;">TEMPERATURE: ..... ° </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <!--CPU MIN MENU-->
+                            <td>
+                                <div id='cpuMinExpander' class="cpuExpanderHeader">
+                                    <div style='text-align: center'>
+                                        CPU<sub> MIN</sub> (Mhz)
+                                    </div>
+                                    <div style='background-color: #F0F0F0; overflow: hidden'>
+                                        <div id='jqxWidget'>
+                                            <div id='cpuMinMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </div>
+                            </td>
 
-                                <!--CPU MAX MENU-->
-                                <td style='padding-left: 10px'>
-                                    <div id='cpuMaxExpander' class="cpuExpanderHeader">
-                                        <div style='text-align: center'>
-                                            CPU<sub> MAX</sub> (Mhz)
-                                        </div>
-                                        <div style='background-color: #F0F0F0; overflow: hidden'>
-                                            <div id='jqxWidget'>
-                                                <div id='cpuMaxMenu' style="visibility: hidden; background-color: #F0F0F0; text-align: center" class="cpuMenu">
-                                                </div>
+                            <!--CPU MAX MENU-->
+                            <td style='padding-left: 10px'>
+                                <div id='cpuMaxExpander' class="cpuExpanderHeader">
+                                    <div style='text-align: center'>
+                                        CPU<sub> MAX</sub> (Mhz)
+                                    </div>
+                                    <div style='background-color: #F0F0F0; overflow: hidden'>
+                                        <div id='jqxWidget'>
+                                            <div id='cpuMaxMenu' style="visibility: hidden; background-color: #F0F0F0; text-align: center" class="cpuMenu">
                                             </div>
                                         </div>
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                    </td>
+                </td>
 
-                    <!--CPU GAUGE-->
-                    <td style="padding-left: 10px; vertical-align: top">
-                        <div>
-                            <div id="demoWidget" style="position: relative;">
-                                <div style="float: left;" id="cpuContainer"></div>
-                                <div id="cpuValue" style="position: absolute; top: 232px; left: 87px; font-family: Sans-Serif; text-align: center; font-size: 17px; width: 150px;"></div>
-                                <div id="cpuLimits" style="position: absolute; top: 257px; left: 82px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 160px; border-top: 1px dotted gray; color: gray"></div>
-                            </div>
+                <!--CPU GAUGE-->
+                <td style="padding-left: 10px; vertical-align: top">
+                    <div>
+                        <div id="demoWidget" style="position: relative;">
+                            <div style="float: left;" id="cpuContainer"></div>
+                            <div id="cpuValue" style="position: absolute; top: 177px; left: 56px; width: 144px; font-family: Sans-Serif; text-align: center; font-size: 17px; "></div>
+                            <div id="cpuLimits" style="position: absolute; top: 202px; left: 48px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 160px; border-top: 1px dotted gray; color: gray"></div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <!--DDR GAUGE-->
-                    <td style='padding-left: 10px; vertical-align: top'>
-                        <div>
-                            <div id="demoWidget" style="position: relative;">
-                                <div style="float: left;" id="ddrContainer"></div>
-                                <div id="ddrValue" style="position: absolute; top: 232px; left: 87px; font-family: Sans-Serif; text-align: center; font-size: 17px; width: 150px;"></div>
-                                <div id="ddrLimits" style="position: absolute; top: 257px; left: 82px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 160px; border-top: 1px dotted gray; color: gray"></div>
-                            </div>
+                <!--DDR GAUGE-->
+                <td style='padding-left: 10px; vertical-align: top'>
+                    <div>
+                        <div id="demoWidget" style="position: relative;">
+                            <div style="float: left;" id="ddrContainer"></div>
+                            <div id="ddrValue" style="position: absolute; top: 177px; left: 56px; width: 144px; font-family: Sans-Serif; text-align: center; font-size: 17px; "></div>
+                            <div id="ddrLimits" style="position: absolute; top: 202px; left: 48px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 160px; border-top: 1px dotted gray; color: gray"></div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                    <td>
-                        <!--- DDR CONTROL -->
-                        <div style="position: relative;" @*style="position: absolute; left: 1030px; top: 136px"*@>
-                            <div id='ddrExpander' class="cpuExpanderHeader">
-                                <div style='text-align: center'>DDR (Mhz)</div>
-                                <div style='background-color: #F0F0F0; overflow: hidden'>
-                                    <div id='jqxWidget'>
-                                        <div id='ddrMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
-                                        </div>
+                <td>
+                    <!--- DDR CONTROL -->
+                    <div style="position: relative;" @*style="position: absolute; left: 1030px; top: 136px"*@>
+                        <div id='ddrExpander' class="cpuExpanderHeader">
+                            <div style='text-align: center'>DDR (Mhz)</div>
+                            <div style='background-color: #F0F0F0; overflow: hidden'>
+                                <div id='jqxWidget'>
+                                    <div id='ddrMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </td>
+                    </div>
+                </td>
 
-                </tr>
-                <tr>
-                    <td style="padding-top: 10px; vertical-align: top">
-                    </td>
-                    <td colspan="3" style='padding-top: 10px; text-align: center;'>
-                        <div id="memUsagePlaceholder">
-                            <div id="memUsage"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <div ng-controller="processesCtrl" id="processesCtrl" ng-show="Visible" style="display:none">
-                            <table class="PList">
-                                <tr>
-                                    <th class="pid">pid</th>
-                                    <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
-                                    <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
-                                    <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
-                                    <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
-                                    <th class="process">top processes</th>
-                                </tr>
-                                <tr ng-repeat="pr in Processes">
-                                    <td class="pid" ng-bind="pr.Pid"></td>
-                                    <td class="cpu" ng-bind="pr.CpuUsage | number:1"></td>
-                                    <td class="rss" ><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
-                                    <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
-                                    <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
-                                    <td class="process" ng-bind="pr.Args"></td>
-                                </tr>
-                            </table>
-                        </div>
+            </tr>
+            <tr>
+                <td style="padding-top: 10px; vertical-align: top">
+                </td>
+                <td colspan="3" style='padding-top: 10px; text-align: center;'>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div ng-controller="processesCtrl" id="processesCtrl" ng-show="Visible" style="display: none">
+                        <table class="PList">
+                            <tr>
+                                <th class="pid">pid</th>
+                                <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
+                                <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
+                                <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
+                                <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
+                                <th class="process">top processes</th>
+                            </tr>
+                            <tr ng-repeat="pr in Processes">
+                                <td class="pid" ng-bind="pr.Pid"></td>
+                                <td class="cpu" ng-bind="pr.CpuUsage | number:1"></td>
+                                <td class="rss"><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
+                                <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
+                                <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
+                                <td class="process" ng-bind="pr.Args"></td>
+                            </tr>
+                        </table>
+                    </div>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" >
-                        <div style="position: relative; width: 100%">
-                            <div id="error" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: left; text-align: left'></div>
-                            <div id="BrowserInfo" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: right; text-align: right'></div>
-                            <div id="osName" style="position: absolute; width: 100%; left: 0; top: 0; color: #DDD; text-align: center"></div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div style="position: relative; width: 100%">
+                        <div id="error" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: left; text-align: left'></div>
+                        <div id="BrowserInfo" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: right; text-align: right'></div>
+                        <div id="osName" style="position: absolute; width: 100%; left: 0; top: 0; color: #DDD; text-align: center"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-            <div id="cpuUsageContainer" class="CpuUsageDivSize" style="border: 1px solid #DDDDDD; left: 230px; position: absolute; top: 461px; z-index: 999">
-                <div id="cpuUsageSample"></div>
+
+        <div id="rating_panel" style="position: absolute; top: 130px; left: 421px; z-index: 999; display: none">
+            <div id="rating"></div>
+            <div id="rating_footer">VER <span id="version">@H3Environment.VerAsPublic</span></div>
+        </div>
+
+        <div style="position: absolute; left: 500px; top: 330px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px;">
+            <button id="newVersionInfo" style="display: none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
+            <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor: pointer"  class="glyphicon glyphicon-info-sign"></span>
+        </div>
+
+        <div style="position: absolute; left: 0px; top: -15px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px; background: transparent; width: 925px; text-align: center">
+            <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none; text-align: center; width: 100%">
+                <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
+                &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
+                &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
+                &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
+                &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
             </div>
+        </div>
 
-            <div id="rating_panel" style="position: absolute; top: 130px; left: 457px; z-index: 999; display: none">
-                <div id="rating"></div>
-                <div id="rating_footer">VER <span id="version">@H3Environment.VerAsPublic</span></div>
-            </div>
+        <div id="memUsagePlaceholder" style="position: absolute; z-index: 999; left: 194px; top: 444px">
+            <div id="memUsage"></div>
+        </div>
 
-            <div style="position: absolute; left: 535px; top: 375px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px;">
-                <button id="newVersionInfo" style="display: none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
-                <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor: pointer"  class="glyphicon glyphicon-info-sign"></span>
-            </div>
-
-            <div style="position: absolute; left: 5px; top: 5px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px; background: transparent">
-                <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none">
-                    <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
-                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
-                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
-                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
-                    &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
-                </div>
-            </div>
+        <div id="cpuUsageContainer" class="CpuUsageDivSize" style="border: 1px solid #DDDDDD; left: 242px; position: absolute; top: 404px; z-index: 7999">
+            <div id="cpuUsageSample"></div>
+        </div>
 
 
-            </div>
+
+
+    </div>
+
 
 
 
@@ -278,34 +284,35 @@
 
 
 
-        <div id="feedback_popup" style="display: none" class="well">
-            <div id="feedback_content">
-                <div id="feedback_reply" style="float: left">
-                    What the hell
+    <div id="feedback_popup" style="display: none" class="well">
+        <div id="feedback_content">
+            <div id="feedback_reply" style="float: left">
+                What the hell
+            </div>
+            <button id="feedback_close" class="btn btn-default" style="float: right; height: 40px"><span id="feedback_close_text">Close</span></button>
+        </div>
+    </div>
+
+    <div id="whatsnew_popup" style="display: none" class="well_whatsnew">
+        <div id="whatsnew_content">
+            <div id="whatsnew_header" style="text-align: center; padding-bottom: 5px; border-bottom: 1px solid gray; margin-bottom: 10px">
+                <div style="float: left">this ver: @H3Environment.VerAsPublic</div>
+                <div style="float: right">new ver: <span id="labelNewVersion">X.YY.ZZZ</span></div>
+                <span class="glyphicon glyphicon-star-empty"></span>&nbsp;&nbsp;&nbsp;h3control: history&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-star-empty"></span>
+            </div>
+            <div id="whatsnew_markdown" class="markdown" style="height: 420px; overflow-y: scroll; padding-right: 10px">
+                <pre id="whatsnew_there_are_new_version" style="text-align: center"><code style="text-align: center; line-height: 1.8em"><span style="font-size: 1.8em" class="glyphicon glyphicon-cloud-download"></span>&#10;wget -q -nv -O - https://github.com/devizer/h3control-bin/raw/master/public/h3control.sh | bash</code></pre>
+                <pre id="whatsnew_its_latest_version" style="text-align: center"><code style="text-align: center">newer <strong>public</strong> version isn't known <span class="glyphicon glyphicon-thumbs-up"></span></code></pre>
+                <div id="whatsnew_loading" style="padding-top: 110px; text-align: center">loading...</div>
+                <div id="whatsnew_html" style="display: none">
+                    <h4>So,</h4>
+                    <p>Something new will ...</p>
                 </div>
-                <button id="feedback_close" class="btn btn-default" style="float: right; height: 40px"><span id="feedback_close_text">Close</span></button>
             </div>
         </div>
+    </div>
 
-        <div id="whatsnew_popup" style="display: none" class="well_whatsnew">
-            <div id="whatsnew_content">
-                <div id="whatsnew_header" style="text-align: center; padding-bottom: 5px; border-bottom: 1px solid gray; margin-bottom: 10px">
-                    <div style="float: left">this ver: @H3Environment.VerAsPublic</div>
-                    <div style="float: right">new ver: <span id="labelNewVersion">X.YY.ZZZ</span></div>
-                    <span class="glyphicon glyphicon-star-empty"></span>&nbsp;&nbsp;&nbsp;h3control: history&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-star-empty"></span>
-                </div>
-                <div id="whatsnew_markdown" class="markdown" style="height: 420px; overflow-y: scroll; padding-right: 10px">
-                    <pre id="whatsnew_there_are_new_version" style="text-align: center"><code style="text-align: center; line-height: 1.8em"><span style="font-size: 1.8em" class="glyphicon glyphicon-cloud-download"></span>&#10;wget -q -nv -O - https://github.com/devizer/h3control-bin/raw/master/public/h3control.sh | bash</code></pre>
-                    <pre id="whatsnew_its_latest_version" style="text-align: center"><code style="text-align: center">newer <strong>public</strong> version isn't known <span class="glyphicon glyphicon-thumbs-up"></span></code></pre>
-                    <div id="whatsnew_loading" style="padding-top: 110px; text-align: center">loading...</div>
-                    <div id="whatsnew_html" style="display: none">
-                        <h4>So,</h4>
-                        <p>Something new will ...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    
+
     </body>
 </html>

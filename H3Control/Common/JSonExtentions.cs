@@ -55,6 +55,7 @@ namespace Universe
 
         public static string ToNewtonJSon(object arg, bool isIntended = false)
         {
+            if (arg == null) return "<null>";
             StringBuilder b = new StringBuilder();
             StringWriter wr = new StringWriter(b);
             JsonTextWriter jwr = new JsonTextWriter(wr);

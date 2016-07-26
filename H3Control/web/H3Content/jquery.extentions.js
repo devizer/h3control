@@ -40,9 +40,15 @@ if (window) {
         window.console.log = function() {
         }
     }
+    if (!window.console.warn) {
+        window.console.warn = function() {
+        }
+    }
 } else {
     console = {
-        log: function () {
+        log: function() {
+        },
+        warn: function() {
         }
     }
 }

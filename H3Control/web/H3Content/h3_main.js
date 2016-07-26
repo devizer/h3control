@@ -43,8 +43,8 @@ $(document).ready(function () {
         ],
         ticksMinor: { interval: 10, size: '5%' },
         ticksMajor: { interval: 50, size: '9%' },
-        width: 324,
-        height: 324,
+        width: 259,
+        height: 259,
         min: 400,
         max: 700,
         value: 380,
@@ -80,7 +80,7 @@ $(document).ready(function () {
         value: 20,
         pointer: { size: '10%' },
         colorScheme: 'scheme05',
-        width: 992,
+        width: 930,
         height: 100,
         orientation: 'horizontal',
         rangeSize: '2%',
@@ -173,7 +173,7 @@ $(document).ready(function () {
 
             $('#feedback_popup').popup({
                 transition: 'all 0.3s',
-                pagecontainer: "#PageContainer"
+                pagecontainer: ".container"
             });
             $('#feedback_popup').popup("show");
             if (v != 5) $("#rating").jqxRating("setValue", 0);
@@ -192,7 +192,7 @@ $(document).ready(function () {
         LaunchWatsNewLoader();
         $('#whatsnew_popup').popup({
             transition: 'all 0.3s',
-            pagecontainer: "#PageContainer"
+            pagecontainer: ".container"
         });
         $('#whatsnew_popup').popup("show");
         // alert('#newVersionInfo');

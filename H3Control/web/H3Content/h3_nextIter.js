@@ -92,6 +92,7 @@ function bindSuccessDeviceInfo(data) {
         panel_CpuUsage.show();
     } else {
         panel_CpuUsage.hide();
+        console.warn("Warning: data.Cpu && data.Cpu.Total are absent");
     }
 
     if (data.Mem) {

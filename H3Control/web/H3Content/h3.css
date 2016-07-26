@@ -207,7 +207,7 @@
 .CpuUsageDivSize {
     height: 24px;
     width: 575px;
-    margin-left: 50px;
+    margin-left: 0px;
 }
 
 .CpuUsageLabel {
@@ -332,7 +332,7 @@
 .PList {
     border-collapse: collapse;
     border: 1px dotted #909090;
-    width: 990px;
+    width: 925px;
 }
 
 .PList td, .PList th{
@@ -378,8 +378,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 590px;
-    max-width: 590px;
+    width: 525px;
+    max-width: 525px;
 }
 
 .PList td.cpu, .PList td.rss, .PList td.size, .PList td.pid, .PList td.swapped {

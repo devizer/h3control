@@ -36,7 +36,11 @@ namespace H3Control.Controllers
                     try
                     {
                         // Linux :)
-                        Action drunkCpuInfo = () => { ret.Cpu = CpuUsageListener_OnLinux.CpuUsage; };
+                        Action drunkCpuInfo = () =>
+                        {
+                            if (CpuUsageListener_OnLinux.CpuUsage != null)
+                                ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
+                        };
                         drunkCpuInfo.TryAndForget();
                         MemInfo_OnLinix info;
                         if (MemInfoParser_OnLinux.TryParse(out info))

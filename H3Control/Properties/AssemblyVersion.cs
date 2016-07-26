@@ -1,4 +1,4 @@
 
-   [assembly: System.Reflection.AssemblyVersion("1.13.495.0")]
-   [assembly: Universe.AssemblyBuildDateTime("Sat, 23 Jul 2016 20:05:36 GMT")]
+   [assembly: System.Reflection.AssemblyVersion("0.13.499.0")]
+   [assembly: Universe.AssemblyBuildDateTime("Mon, 25 Jul 2016 23:30:19 GMT")]
 
