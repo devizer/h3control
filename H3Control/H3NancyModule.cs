@@ -1,6 +1,7 @@
 namespace H3Control
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Net.Http;
@@ -49,15 +50,18 @@ namespace H3Control
                 var model = new DeviceController().GetDevice("me");
                 model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
                 var jsonDevice = JSonExtentions.ToNewtonJSon(model, isIntended: !H3Environment.IsRelease);
-                return View["default", new {JSonDevice = jsonDevice}];
-            };
 
-            Get["/a/b/c/d"] = _ =>
-            {
-                var model = new DeviceController().GetDevice("me");
-                model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
-                var jsonDevice = JSonExtentions.ToNewtonJSon(model, isIntended: !H3Environment.IsRelease);
-                return View["default", new { JSonDevice = jsonDevice }];
+                List<PsProcessInfo> plist;
+                try
+                {
+                    plist = ProcessController.Select(PsSortOrder.Rss, 5, Context.GetUserAgent().Is_IE8_OrBelow);
+                }
+                catch
+                {
+                    plist = new List<PsProcessInfo>();
+                }
+                var jsonProcesses = JSonExtentions.ToNewtonJSon(plist, isIntended: !H3Environment.IsRelease);
+                return View["default", new {JSonDevice = jsonDevice, JSonProcesses = jsonProcesses}];
             };
 
 
@@ -88,21 +92,11 @@ namespace H3Control
                     if (!Enum.TryParse((string)parameters.column, true, out order))
                         return asBadRequest("Invalid parameter. {column} argument is invalid or absent");
 
-                    Stopwatch sw3 = Stopwatch.StartNew();
-                    var list = PsListener_OnLinux.Select(order, topN);
-                    var time = sw3.Elapsed;
-                    FirstRound.Only("Select Processes", RoundCounter.Twice, () =>
-                    {
-                        NiceTrace.Message("Processes ({0} msec):{1}{2}",
-                            time, Environment.NewLine,
-                            string.Join(Environment.NewLine, list.Select(x => "           " + x.ToString())));
-                    });
-
-                    // Trim command with args for IE8
                     var browser = this.Context.GetUserAgent();
-                    if (browser.Is_IE8_OrBelow)
-                        foreach (var pi in list)
-                            pi.Args = pi.Args != null && pi.Args.Length > 80 ? (pi.Args.Substring(0, 77) + "...") : pi.Args;
+                    var isIe8OrBelow = browser.Is_IE8_OrBelow;
+
+
+                    var list = ProcessController.Select(order, topN, isIe8OrBelow);
 
                     return Response.AsJson(new { Processes = list });
                     return new { Processes = list };
@@ -192,6 +186,7 @@ namespace H3Control
 
             // NiceTrace.Message("Routing convigured by " + this.GetType().Name);
         }
+
 
         private dynamic AsMarkdown(string content)
         {
