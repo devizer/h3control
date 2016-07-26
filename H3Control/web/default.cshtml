@@ -83,6 +83,7 @@
         IsMobile: @Html.GetUserAgent(this).IsMobile.ToJson(),
         IsRelease: @H3Environment.IsRelease.ToJson(),
         BuiltAt: @Html.ToJs(H3Environment.BuiltAtUtc),
+        Version: @Html.ToJs(H3Environment.VerAsPublic),
         DeviceInfo: @Html.Raw(Model.JSonDevice),
         Processes: {
             order: @Html.EnumToJs(H3Environment.ProcessesDefaults.Order),
