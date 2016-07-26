@@ -37,9 +37,9 @@ $(document).ready(function () {
     // DDR
     gauge_DdrFreq.jqxGauge({
         ranges: [
-            { startValue: 400, endValue: 500, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
-            { startValue: 500, endValue: 600, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
-            { startValue: 600, endValue: 700, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 }
+            { startValue: 400, endValue: 500, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 4, startWidth: 2 },
+            { startValue: 500, endValue: 600, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 7, startWidth: 4 },
+            { startValue: 600, endValue: 700, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 10, startWidth: 7 }
         ],
         ticksMinor: { interval: 10, size: '5%' },
         ticksMajor: { interval: 50, size: '9%' },

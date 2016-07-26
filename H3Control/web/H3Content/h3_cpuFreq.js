@@ -16,8 +16,8 @@ function cpuFreq_OnReady() {
             { startValue: 1000, endValue: 1300, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 8, startWidth: 6 },
             { startValue: 1300, endValue: 1600, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 10, startWidth: 8 }
         ],
-        ticksMinor: { interval: 100, size: '4%' },
-        ticksMajor: { interval: 300, size: '8%' },
+        ticksMinor: { interval: 125/2, size: '4%' },
+        ticksMajor: { interval: 250, size: '8%' },
         width: 259,
         height: 259,
         min: 100,
@@ -28,7 +28,7 @@ function cpuFreq_OnReady() {
         labels: {
             distance: '43%',
             position: 'none',
-            interval: 300,
+            interval: 250,
             offset: [0, -10],
             visible: true,
             formatValue: function (value) { return value + ""; }
