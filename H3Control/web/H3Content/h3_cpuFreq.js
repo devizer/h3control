@@ -11,13 +11,13 @@ function cpuFreq_OnReady() {
 
     gauge_CpuFreq.jqxGauge({
         ranges: [
-            { startValue: 100, endValue: 700, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
-            { startValue: 700, endValue: 1000, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
-            { startValue: 1000, endValue: 1300, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 13, startWidth: 10 },
-            { startValue: 1300, endValue: 1600, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13 }
+            { startValue: 100, endValue: 700, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 4, startWidth: 2 },
+            { startValue: 700, endValue: 1000, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 6, startWidth: 4 },
+            { startValue: 1000, endValue: 1300, style: { fill: '#ff8000', stroke: '#ff8000' }, endWidth: 8, startWidth: 6 },
+            { startValue: 1300, endValue: 1600, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 10, startWidth: 8 }
         ],
         ticksMinor: { interval: 100, size: '4%' },
-        ticksMajor: { interval: 200, size: '8%' },
+        ticksMajor: { interval: 300, size: '8%' },
         width: 259,
         height: 259,
         min: 100,
@@ -28,7 +28,7 @@ function cpuFreq_OnReady() {
         labels: {
             distance: '43%',
             position: 'none',
-            interval: 200,
+            interval: 300,
             offset: [0, -10],
             visible: true,
             formatValue: function (value) { return value + ""; }
