@@ -21,7 +21,7 @@ namespace H3Control.Tests
         }
 
         [Test]
-        public void T01_Get_Google_Returns_200()
+        public void T01_Get_GitHub_Returns_200()
         {
             using (HttpClient client = new HttpClient())
             {
