@@ -1,4 +1,4 @@
-taskkill /f /im h3control.exe
+rem taskkill /f /im h3control.exe
 rd /q /s H3Control\bin
 rd /q /s H3Control\obj
 rd /q /s H3Control.Tests\bin
