@@ -20,7 +20,7 @@ function cpuFreq_OnReady() {
         ticksMajor: { interval: 250, size: '8%' },
         width: 259,
         height: 259,
-        min: 100,
+        min: 60,
         max: 1600,
         value: 10,
         colorScheme: 'scheme05',
