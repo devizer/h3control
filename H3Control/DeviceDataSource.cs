@@ -67,7 +67,7 @@
             new Action(() => { ret.OsName = CrossInfo.OsDisplayName; }).TryAndForget();
 
             ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
-            NiceTrace.Message("Device.Cpu is {0}", JSonExtentions.ToNewtonJSon(ret.Cpu, true));
+            // NiceTrace.Message("Device.Cpu is {0}", JSonExtentions.ToNewtonJSon(ret.Cpu, true));
             return ret;
         }
 
