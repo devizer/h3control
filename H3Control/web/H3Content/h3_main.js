@@ -49,7 +49,7 @@ $(document).ready(function () {
         max: 700,
         value: 380,
         colorScheme: 'scheme05',
-        animationDuration: 700,
+        animationDuration: h3context.GuageAnimationDuration,
         labels: {
             distance: '43%',
             position: 'none',
@@ -80,6 +80,7 @@ $(document).ready(function () {
         value: 20,
         pointer: { size: '10%' },
         colorScheme: 'scheme05',
+        animationDuration: h3context.GuageAnimationDuration,
         width: 930,
         height: 100,
         orientation: 'horizontal',

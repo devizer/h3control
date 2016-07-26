@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Universe
 {
+    using System.Runtime.InteropServices.WindowsRuntime;
     using System.Threading;
 
     using H3Control.Common;
 
     using Nancy;
     using Nancy.Bootstrapper;
+    using Nancy.ViewEngines.Razor;
 
     public class UserAgentInfo
     {
@@ -50,6 +52,8 @@ namespace Universe
                 Major = Minor = 0;
                 NiceTrace.Message("Failed to parse User-Agent '{0}'{1}{2}", UserAgent, Environment.NewLine, ex);
             }
+
+            _IsMobile = new Lazy<bool>(GetIsMobile);
         }
 
         public bool Is_IE8_OrBelow
@@ -68,6 +72,26 @@ namespace Universe
             }
             
             return ret.ToString();
+        }
+
+        public bool IsMobile
+        {
+            get { return _IsMobile.Value; }
+        }
+
+        private readonly Lazy<bool> _IsMobile;
+        
+        bool GetIsMobile()
+        {
+            Func<string, bool> hasString = (arg) => UserAgent.IndexOf(arg, StringComparison.InvariantCultureIgnoreCase) >= 0;
+
+            bool isAndroid = hasString(" Android ");
+            bool isMobileAndroid = hasString("Mobile") && isAndroid;
+            bool is_iOS = hasString("(iPad") || hasString("(iPod") || hasString("(iPhone");
+            bool isWindowsPhone = hasString("Windows Phone");
+            bool isOperaMobile = hasString("Opera Mobi");
+            bool isMobileFirefox = hasString("Firefox") && (hasString("Mobile") || hasString("Tablet"));
+            return isWindowsPhone || isMobileAndroid || is_iOS || isAndroid || isOperaMobile || isMobileFirefox;
         }
 
         private void Parse()
@@ -218,6 +242,13 @@ namespace Universe
             
         }
 
+        // Html Helper
+        public static UserAgentInfo GetUserAgent(this HtmlHelpers<dynamic> helpers, NancyRazorViewBase<dynamic> view)
+        {
+            return view.Context.GetUserAgent();
+        }
+
+        // Module
         // [Paranoja]
         public static UserAgentInfo GetUserAgent(this NancyContext nancyContext)
         {

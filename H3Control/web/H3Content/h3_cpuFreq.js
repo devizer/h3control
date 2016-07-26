@@ -24,7 +24,7 @@ function cpuFreq_OnReady() {
         max: 1550,
         value: 10,
         colorScheme: 'scheme05',
-        animationDuration: 700,
+        animationDuration: h3context.GuageAnimationDuration,
         labels: {
             distance: '43%',
             position: 'none',

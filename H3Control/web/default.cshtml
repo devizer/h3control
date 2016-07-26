@@ -1,4 +1,5 @@
 ﻿@using H3Control
+@using Universe
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 
 @{
@@ -74,6 +75,8 @@
             var initialDeviceInfo = @Html.Raw(Model.JSonDevice);
             // DEFAULT Update Speed, should be from one of a .UpdateSpeedButton button
             var UpdateSpeed = 2000; // milliseconds
+            var h3context = { IsMobile: @Html.GetUserAgent(this).IsMobile.ToString().ToLowerInvariant() };
+            h3context.GuageAnimationDuration = h3context.IsMobile ? 100 : 700;
         </script>
         @Html.Script(this)["H3Content/h3_main.js"]
         <!-- angular hides loading of another js, so its the last -->
