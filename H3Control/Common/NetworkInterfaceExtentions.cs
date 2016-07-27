@@ -37,8 +37,10 @@ namespace Universe
                     .Select(x => x.Address)
                     .ToList();
 
+                var d = adapter.Description;
+                if (string.IsNullOrEmpty(d)) d = "unknown #" + (ret.Count + 1);
                 if (uniList.Count > 0)
-                    ret[adapter.Description] = uniList
+                    ret[d] = uniList
                         .Select(x => x.ToString())
                         .Where(x => !string.IsNullOrEmpty(x))
                         .ToList();
