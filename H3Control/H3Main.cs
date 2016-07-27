@@ -102,35 +102,35 @@ namespace H3Control
             string baseUrl = "http://" + binding;
 
             StringBuilder cfg = new StringBuilder("Configuration by command line:").AppendLine();
-            cfg.AppendLine("  Url is " + baseUrl);
+            cfg.AppendLine("   * Url is " + baseUrl);
 
             if (H3WhiteListConfig.HasWhiteList)
-                cfg.AppendFormat("  WHITE-list restriction(s) are activated: {0}", string.Join("; ", H3WhiteListConfig.WhiteList)).AppendLine();
+                cfg.AppendFormat("   * WHITE-list restriction(s) are activated: {0}", string.Join("; ", H3WhiteListConfig.WhiteList)).AppendLine();
             else
-                cfg.AppendLine("  Warning: white-list isn't specified, so ip restrictions are absent");
+                cfg.AppendLine("   * Warning: white-list isn't specified, so ip restrictions are absent");
 
             if (H3PasswordConfig.IsStricted)
-                cfg.AppendLine("  Access to change a frequency IS RESTRICTED by a password");
+                cfg.AppendLine("   * Access to change a frequency IS RESTRICTED by a password");
 
             if (DebugTraceListener.LogFolder != null)
-                cfg.AppendLine("  Logs are located in " + DebugTraceListener.LogFolder);
+                cfg.AppendLine("   * Logs are located in " + DebugTraceListener.LogFolder);
 
             DrunkActionExtentions.TryAndForget(() =>
             {
                 var info = NetworkInterfaceExtentions.GetDescription();
                 var needAll = binding.StartsWith("*");
                 var hasAny = info.SelectMany(x => x.Value).Any();
-                const string notFoundMessage = "  Warning: None network adapters are known. http-server may be unavailable";
+                const string notFoundMessage = "   * Warning: None network adapters are known. http-server may be unavailable";
                 if (needAll)
                 {
                     if (!hasAny)
                         cfg.AppendLine(notFoundMessage);
                     else
                     {
-                        cfg.AppendLine("  h3control http-server is binding to all these network adapters:");
+                        cfg.AppendLine("   * h3control http-server is binding to all these network adapters:");
                         foreach (var k in info.Keys.OrderBy(x => x))
                         {
-                            cfg.AppendFormat("     - network '{0}': {1}", k, string.Join(", ", info[k]));
+                            cfg.AppendFormat("      - network '{0}': {1}", k, string.Join(", ", info[k]));
                             cfg.AppendLine();
                         }
                     }
@@ -144,7 +144,7 @@ namespace H3Control
 
 
             Console.WriteLine(cfg);
-            NiceTrace.Message(cfg.ToString());
+            NiceTrace.Message(cfg);
 
             try
             {
@@ -152,7 +152,7 @@ namespace H3Control
                 using (var server = Launch_H3Server(baseUrl))
                 {
                     PsListener_OnLinux.Bind();
-                    Console.WriteLine(Environment.NewLine + "HTTP server successefully has been started.");
+                    Console.WriteLine("HTTP server successefully has been started.");
                     Console.WriteLine("Press Ctlr-C to quit.");
                     ThreadPool.QueueUserWorkItem(state => Preload(baseUrl));
 

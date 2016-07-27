@@ -10,51 +10,56 @@ namespace Universe
     {
         public static Dictionary<string, List<string>>  GetDescription()
         {
+            
             TextWriter err = null;
-            try
-            {
-                err = Console.Out;
-            }
-            catch (Exception)
-            {
-            }
+            TryOnMono(() => err = Console.Out);
+            TryOnMono(() => Console.SetError(TextWriter.Null));
 
             try
             {
-                Console.SetError(TextWriter.Null);
-            }
-            catch (Exception)
-            {
-            }
+                Dictionary<string, List<string>> ret = new Dictionary<string, List<string>>();
+                NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+                foreach (NetworkInterface adapter in adapters)
+                {
+                    var d = adapter.Description;
+                    if (string.IsNullOrEmpty(d)) d = "unknown #" + (ret.Count + 1);
 
-            Dictionary<string, List<string>> ret = new Dictionary<string, List<string>>();
-            NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
-            foreach (NetworkInterface adapter in adapters)
-            {
-                var uniList = adapter
-                    .GetIPProperties()
-                    .UnicastAddresses
-                    .Select(x => x.Address)
-                    .ToList();
-
-                var d = adapter.Description;
-                if (string.IsNullOrEmpty(d)) d = "unknown #" + (ret.Count + 1);
-                if (uniList.Count > 0)
-                    ret[d] = uniList
+                    var uniList = adapter
+                        .GetIPProperties()
+                        .UnicastAddresses
+                        .Select(x => x.Address)
                         .Select(x => x.ToString())
                         .Where(x => !string.IsNullOrEmpty(x))
                         .ToList();
+
+                    if (uniList.Count > 0)
+                        ret[d] = uniList;
+                }
+
+                return ret;
             }
+            finally
+            {
+                if (err != null)
+                    TryOnMono(() => Console.SetError(err));
+            }
+
+
+        }
+
+        static void TryOnMono(Action action)
+        {
+            bool isMono = Type.GetType("Mono.Runtime", false) != null;
+            if (!isMono)
+                return;
 
             try
             {
-                if (err != null) Console.SetError(err);
+                action();
             }
             catch (Exception)
             {
             }
-
-            return ret;
         }
     }
 }
