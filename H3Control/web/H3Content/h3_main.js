@@ -20,6 +20,26 @@ $(document).ready(function () {
 
     $("#BrowserInfo").text(BrowserDetect.browser + ' v:' + BrowserDetect.version);
 
+    $("#labelNewVersion").text("n/a");
+    $("#feedback_close").on('click', function (event) {
+        $('#feedback_popup').popup("hide");
+    });
+
+    $(".Restricted").hide();
+    BindEmptyMemoryUsage();
+
+    $("#newVersionInfo, #oldVersionInfo").on('click', function (event) {
+        LaunchWatsNewLoader();
+        $('#whatsnew_popup').popup({
+            transition: 'all 0.3s',
+            pagecontainer: ".container"
+        });
+        $('#whatsnew_popup').popup("show");
+        // alert('#newVersionInfo');
+    });
+
+
+
     cpuMenu_OnReady();
     cpuFreq_OnReady();
     cpuUsage_OnReady();
@@ -155,8 +175,6 @@ $(document).ready(function () {
     $('#swapChart').jqxChart("source", swapUsageSource);
 */
 
-    BindEmptyMemoryUsage();
-
     // INIT RATE ME
     $("#rating").jqxRating({
         width: 85,
@@ -183,23 +201,7 @@ $(document).ready(function () {
         }
     });
     $("#rating_panel").show();
-    $("#labelNewVersion").text("n/a");
-    $("#feedback_close").on('click', function (event) {
-        $('#feedback_popup').popup("hide");
-    });
 
-    $(".Restricted").hide();
-
-
-    $("#newVersionInfo, #oldVersionInfo").on('click', function (event) {
-        LaunchWatsNewLoader();
-        $('#whatsnew_popup').popup({
-            transition: 'all 0.3s',
-            pagecontainer: ".container"
-        });
-        $('#whatsnew_popup').popup("show");
-        // alert('#newVersionInfo');
-    });
 
 
     var dinfo = h3context.DeviceInfo;
