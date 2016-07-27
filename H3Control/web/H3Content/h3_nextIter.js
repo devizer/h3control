@@ -172,7 +172,8 @@ function nextIter(isNeverEnding) {
         $("#ddrMenu").jqxMenu('disabled', true);
         BindEmptyMemoryUsage();
         $(".UpdateSpeedButton").jqxButton('disabled', true);
-        $("#cpuUsageContainer").hide();
+        $("#cpuUsageContainer").show();
+        BindCpuUsage_Disconnected(div_CpuUsage);
         $("#rating_panel").hide();
     };
 

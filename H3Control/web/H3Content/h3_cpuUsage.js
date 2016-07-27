@@ -7,10 +7,30 @@ var UsageStyles = ['UserTimeStyle', 'SystemTimeStyle', 'IdleTimeStyle'];
 
 function cpuUsage_OnReady() {
 
-    div_CpuUsage = $("#cpuUsageSample");
     panel_CpuUsage = $("#cpuUsageContainer");
-    panel_CpuUsage.hide();
+    div_CpuUsage = $("#cpuUsageSample");
 
+
+    // panel_CpuUsage.hide();
+    panel_CpuUsage.show();
+    BindCpuUsage_Disconnected(div_CpuUsage, "Looking forward for ...");
+
+}
+
+function BindCpuUsage_Disconnected(el, label) {
+    var parentWidth = $(el).parent().width();
+    var w = parentWidth;
+    var sectionLabel = label || "H3-board is disconnected";
+    var allClasses = "CpuUsageSection CpuUsageSection-WithLabel CpuUsageSection-Disconnected";
+    var htm = "<div style='width: " + w + "px;' "
+        + "class='" + allClasses + "'>"
+        + sectionLabel
+        + "</div>";
+
+    el.html(htm);
+    el.width(parentWidth);
+    el.show();
+    // alert(htm);
 }
 
 function BindCpuUsage(usage, el) {
@@ -28,9 +48,10 @@ function BindCpuUsage(usage, el) {
         wTotal += w;
         var minWidth = 60;
         var sectionClass = (w >= minWidth) ? "CpuUsageSection-WithLabel" : "CpuUsageSection-WithoutLabel";
+        if (!isLast) sectionClass += " CpuUsageSection-NonLast";
         var sectionLabel = (w < minWidth) ? "&nbsp;" : ((Math.round(item.Value * 10) / 10) + "%");
-        var allClasses = "CpuUsageSection " + UsageStyles[i] + " " + sectionClass + " " + UsageStyles[i] + "Foreground " + sectionClass;
-        htm += "<div style='width: " + w + "px;' "
+        var allClasses = "CpuUsageSection " + UsageStyles[i] + " " + UsageStyles[i] + "Foreground " + sectionClass;
+        htm += "<div style='width: " + (w + (isLast ? 0 : 0)) + "px;' "
             + "class='" + allClasses + "'>"
             + sectionLabel
             + "</div>";

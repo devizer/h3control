@@ -201,14 +201,19 @@
     height: 24px;
     width: 575px;
     margin-left: 0px;
+    padding: 0px;
+    border: 1px solid #DDDDDD;
+    overflow: hidden;
 }
 
 .CpuUsageSection {
-    height: 22px;
+    height: 23px;
+    line-height: 23px;
     text-align: center;
     vertical-align: bottom;
-    padding-top: 2px;
+    /*padding: 1px 0 0 0;*/
     float: left;
+    margin: 0px;
 }
 
 .CpuUsageSection-WithLabel {
@@ -220,12 +225,19 @@
     font-size: 1px;
 }
 
-.CpuUsageSection-Last {
+.CpuUsageSection-NonLast {
     border-right: 1px solid #DDDDDD
 }
 
 .UserTimeStyleForeground {
     color: lemonchiffon;
+}
+
+.CpuUsageSection-Disconnected {
+    background-color: #EBEFF2;
+    color: gray;
+    font-weight: normal;
+    font-size: 13px;
 }
 
 .UserTimeStyle {
