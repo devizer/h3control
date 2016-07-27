@@ -18,6 +18,7 @@ function updateGauges(values) {
 
 $(document).ready(function () {
 
+    // First, initializing non-jqwidgets
     $("#BrowserInfo").text(BrowserDetect.browser + ' v:' + BrowserDetect.version);
 
     $("#labelNewVersion").text("n/a");
@@ -38,11 +39,13 @@ $(document).ready(function () {
         // alert('#newVersionInfo');
     });
 
+    cpuUsage_OnReady();
 
 
+
+    // Finally, initialize jq-widgets
     cpuMenu_OnReady();
     cpuFreq_OnReady();
-    cpuUsage_OnReady();
     refreshRate_OnReady();
 
     gauge_DdrFreq = $("#ddrContainer");
