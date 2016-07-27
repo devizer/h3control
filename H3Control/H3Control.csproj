@@ -176,6 +176,7 @@
     <Compile Include="Common\JSonExtentions.cs" />
     <Compile Include="Common\LinuxKernelCache.cs" />
     <Compile Include="Common\NancyExpirationExtentions.cs" />
+    <Compile Include="Common\NetworkInterfaceExtentions.cs" />
     <Compile Include="Common\ThisProcessCpuUsageListener.cs" />
     <Compile Include="Common\PsParser_OnLinux_or_FreeBSD.cs" />
     <Compile Include="Common\StopwatchTracer.cs" />
