@@ -145,7 +145,7 @@
     -moz-box-shadow: 1px 1px 1px 0px #c9c3c9;
     box-shadow: 1px 1px 1px 0px #c9c3c9;
 */
-    border: 0.2px solid #A0A0A0;
+    border: 1px solid #A0A0A0;
     /*background-color: #e7a61a;*/
     color: black;
     font-size: 8px;
@@ -159,9 +159,9 @@
     /* display: table-cell; */
     text-align: center;
     vertical-align: middle;
-    border-right: 0.2px solid #A0A0A0;
-    border-left: 0.2px solid #A0A0A0;
-    border-bottom: 0.2px solid #A0A0A0;
+    border-right: 1px solid #A0A0A0;
+    border-left: 1px solid #A0A0A0;
+    border-bottom: 1px solid #A0A0A0;
     border-radius: 0px 0px 14px 14px;
     -moz-border-radius: 0px 0px 14px 14px;
     -webkit-border-radius: 0px 0px 14px 14px;
