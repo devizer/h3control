@@ -37,9 +37,9 @@ appH3.controller('processesCtrl', function ($scope, $http) {
     $scope.reSize = function(delta) {
         var prev = $scope.topN;
         var next = prev;
-        if (isNumeric(delta))
-            next = toInt(delta);
-        else if (delta === 'inc')
+        if (isNumeric(delta)) {
+            next = parseInt(delta);
+        } else if (delta === 'inc')
             next = prev + 1;
         else if (delta === 'dec')
             next = prev - 1;
