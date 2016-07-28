@@ -8,6 +8,9 @@ appH3.controller('processesCtrl', function ($scope, $http) {
         while (procList.length < maxCount)
             procList.push({ Pid: null, CpuUsage: null, Rss: null, Size: null, Swapped: null, Args: null });
 
+        while (procList.length > maxCount)
+            procList.pop();
+
         return procList;
     }
 
@@ -23,6 +26,46 @@ appH3.controller('processesCtrl', function ($scope, $http) {
         return column === $scope.order ? sign : "";
     }
 
+    var isNumeric = function (n) {
+        if ((typeof n) === "undefined" || n === null) return false;
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+
+
+
+    $scope.reSize = function(delta) {
+        var prev = $scope.topN;
+        var next = prev;
+        if (isNumeric(delta))
+            next = toInt(delta);
+        else if (delta === 'inc')
+            next = prev + 1;
+        else if (delta === 'dec')
+            next = prev - 1;
+
+        if (next > 999) next = 999;
+        if (next < 3) next = 3;
+        if (next < prev) {
+            $scope.topN = next;
+            $scope.Processes = fixProcesses($scope.Processes, $scope.topN);
+        }
+        else if (next > prev) {
+            $scope.topN = next;
+            $scope.Processes = fixProcesses($scope.Processes, $scope.topN);
+            // TODO: roundtrip to 
+            $http.get("api/json/processes/by-" + $scope.order + "/top-" + $scope.topN)
+                .then(function(response) {
+                    var processes = response.data.Processes === null ? [] : response.data.Processes;
+                    $scope.Processes = fixProcesses(processes, $scope.topN);
+                });
+
+        }
+    }
+
+    var launchRefresh = function() {
+        
+    }
 
     $scope.changeOrder = function (newOrder) {
         $scope.order = newOrder;
@@ -31,11 +74,6 @@ appH3.controller('processesCtrl', function ($scope, $http) {
                 var processes = response.data.Processes === null ? [] : response.data.Processes;
                 $scope.Processes = fixProcesses(processes, $scope.topN);
             });
-    }
-
-    var isNumeric = function (n) {
-        if ((typeof n) === "undefined" || n === null) return false;
-        return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
     $scope.formatKb = function (num) {

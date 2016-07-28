@@ -13,7 +13,7 @@ function cpuUsage_OnReady() {
 
     // panel_CpuUsage.hide();
     panel_CpuUsage.show();
-    BindCpuUsage_Disconnected(div_CpuUsage, "Looking forward for ...");
+    BindCpuUsage_Disconnected(div_CpuUsage, "looking forward for ...");
 
 }
 

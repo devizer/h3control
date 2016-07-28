@@ -346,6 +346,18 @@
     margin: 8px 0px 0px 1px;
 }
 
+.PList-resize {
+    
+}
+
+.PList-resize button {
+    font-size: 13px;
+    padding: 2px 7px 0px 7px;
+/*
+    height: 16px;
+*/
+}
+
 .PList {
     border-collapse: collapse;
     border: 1px dotted #909090;
@@ -357,18 +369,29 @@
 }
 
 .PList th{
-    background-color: #B0B0B0;
+    vertical-align: text-bottom;
+    background-color: #E6E6E6;
     color: white;
     padding: 2px 5px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+
+    letter-spacing: 1px;
+    text-shadow:
+               1px -1px 0px #BBBBBB, -1px -1px 0px #BBBBBB, 0px -1px 0px #BBBBBB,
+               1px 0px 0px #888, -1px 0px 0px #888, 0px 0px 0px #888,
+               1px 1px 0px rgba(0, 0, 0, 1), -1px 1px 0px rgba(0, 0, 0, 1), 0px 1px 0px rgba(0, 0, 0, 1);
+
     -webkit-text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
     -moz-text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
     -o-text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
     -ms-text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
-    border-left: 1px dotted white;
-    border-right: 1px dotted white;
-    border-top: 1px dotted #909090;
-    border-bottom: 1px dotted #909090;
+    border-left: 1px dotted #808080;
+    border-right: 1px dotted #808080;
+    /*border-top: 1px dotted #909090;*/
+    /*border-bottom: 1px dotted #909090;*/
+    border-bottom: 1px solid #808080;
+    border-top: 1px solid #808080;
+
+    /*font-family: Calibri,"Arial Narrow","Segoe UI",Thonburi,Verdana,Helvetica,Arial,sans-serif,"Mongolian Baiti","Microsoft Yi Baiti","Javanese Text";*/
 }
 
 
