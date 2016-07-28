@@ -64,7 +64,6 @@ appH3.controller('processesCtrl', function ($scope, $http) {
     }
 
     var launchRefresh = function() {
-        
     }
 
     $scope.changeOrder = function (newOrder) {
