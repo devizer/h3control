@@ -35,6 +35,11 @@ appH3.controller('processesCtrl', function ($scope, $http) {
 
 
     $scope.reSize = function(delta) {
+
+        $(".PList-resize button").each(function(index) {
+            $(this).blur();
+        });
+
         var prev = $scope.topN;
         var next = prev;
         if (isNumeric(delta)) {
@@ -61,6 +66,8 @@ appH3.controller('processesCtrl', function ($scope, $http) {
                 });
 
         }
+
+        // this.blur();
     }
 
     var launchRefresh = function() {
