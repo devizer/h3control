@@ -119,6 +119,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="A0_Test_GZip.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="F0_Test_HttpClientExtentions.cs" />
     <Compile Include="H3LauncherForTests.cs" />
