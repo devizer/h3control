@@ -38,7 +38,7 @@ time (wget -q -nv -O - http://download.mono-project.com/sources/mono/mono-$monov
 cd ~/src/mono-$monover
 export CFLAGS="-O2"
 export CPPFLAGS="-O2"
-time (./autogen.sh --with-mcs-docs=no --disable-nls --with-profile2=yes --with-profile4=yes --with-profile4_5=yes --prefix=$HOME/mono-$monover)
+time (./autogen.sh --with-mcs-docs=no --disable-nls --with-profile2=no --with-profile4=no --with-profile4_5=yes --disable-boehm --prefix=$HOME/mono-$monover)
 time ( make )
 echo '##################################### MAKE MONO: DONE ##########################'
 sudo make install
@@ -54,7 +54,7 @@ wget -O nunit-260.7z https://www.dropbox.com/s/sfunn3ypho2nfo0/nunit-260.7z?dl=1
 7za x -y -o$HOME/bin nunit-260.7z || 7z x -y -o$HOME/bin nunit-260.7z
 rm -f nunit-260.7z
 mono --desktop --runtime=v4.0 $HOME/bin/nunit-260/nunit-console.exe
-mono --desktop --runtime=v4.5 $HOME/bin/nunit-260/nunit-console.exe
+# mono --desktop --runtime=v4.5 $HOME/bin/nunit-260/nunit-console.exe
 
 
 cd $old

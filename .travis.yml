@@ -48,7 +48,8 @@ script:
   - # mono --runtime=v4.0 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe          -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
   - # apt-cache search mono | sort
 
-  - bash -e travis-plugins/download-mono-3.2.8 
+  - bash -e travis-plugins/build-mono-3.2.8
+  - # bash -e travis-plugins/download-mono-3.2.8 
   - export PATH="$HOME/mono-3.2.8/bin:$PATH"
   - export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH"
   - bash -e H3Control.tests.sh
