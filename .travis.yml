@@ -29,6 +29,7 @@ script:
   - cat /proc/cpuinfo
   - cat /proc/meminfo
   - sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run > /dev/null
+  - sysbench --test=memory --memory-block-size=60M --memory-total-size=10G run
   - sysbench --test=cpu --cpu-max-prime=20000 --max-time=5 --num-threads=1 run 
   - #du -h -d 4
   - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
