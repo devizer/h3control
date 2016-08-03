@@ -61,5 +61,7 @@ script:
 #  - export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
 #  - bash -e H3Control.tests.sh
 
+   - bash travis-plugins/show-perfomance.sh
+
   
   
