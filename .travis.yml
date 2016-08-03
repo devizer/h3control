@@ -50,6 +50,7 @@ script:
   - # apt-cache search mono | sort
 
   - # bash -e travis-plugins/build-mono-3.2.8
+  - bash travis-plugins/show-perfomance.sh
   - bash -e travis-plugins/download-mono-3.2.8 
   - export PATH="$HOME/mono-3.2.8/bin:$PATH"
   - export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH"
@@ -61,7 +62,6 @@ script:
 #  - export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
 #  - bash -e H3Control.tests.sh
 
-   - bash travis-plugins/show-perfomance.sh
 
   
   
