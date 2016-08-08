@@ -1,5 +1,21 @@
 ﻿if (window && window.jQuery) {
-    (function(jQuery) {
+    (function (jQuery) {
+
+        jQuery.fn.getElementPath = function() {
+
+            var rightArrowParents = [];
+            $(this).parents().addBack().not('html').each(function () {
+                var entry = this.tagName.toLowerCase();
+                if (this.className) {
+                    entry += "." + this.className.replace(/ /g, '.');
+                }
+                rightArrowParents.push(entry);
+            });
+            var path = rightArrowParents.join(" ");
+            return "'" + path + "'";
+
+        }
+
         jQuery.fn.applyDisplay = function(isVisible) {
             // console.log("applyDisplay(isVisible): " + isVisible);
             var log = "";
@@ -24,7 +40,7 @@
             });
 
 
-            console.log("applyDisplay(isVisible=" + isVisible + ") " + (isVisible ? " " : "") + "on: " + log);
+            // console.log("applyDisplay(isVisible=" + isVisible + ") " + (isVisible ? " " : "") + "on: " + log);
             return ret;
         };
     }(jQuery));

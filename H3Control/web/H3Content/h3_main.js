@@ -18,6 +18,45 @@ function updateGauges(values) {
 
 $(document).ready(function () {
 
+    $(".PList")
+        .on("mouseover", function (eventObject) {
+
+            var target = $(eventObject.target);
+            console.log("PList.mouse-over: " + target.getElementPath());
+
+            var td = target.is("td.pid") ? target : target.parents("td.pid");
+            console.log("              td: " + td.getElementPath());
+            // td.css("background-color", "#89E1FF");
+            var idProcess = td.attr("data-process-id");
+            if (idProcess)
+                td.find(".kill-button").show();
+
+        }).on("mouseout", function (eventObject) {
+
+            var target = $(eventObject.target);
+            console.log("PList.mouse-out:  " + target.getElementPath());
+
+            var td = target.is("td.pid") ? target : target.parents("td.pid");
+            console.log("             td:  " + td.getElementPath());
+            // td.css("background-color", "#FFF");
+            td.find(".kill-button").hide();
+
+        });
+
+    $(".kill-button").on("click", function(eventObject) {
+        var target = $(eventObject.target);
+        console.log("PList.kill-click: " + target.getElementPath());
+        var td = target.is("td.pid") ? target : target.parents("td.pid");
+        var idProcess = td.attr("data-process-id");
+        if (idProcess) {
+            // td.find(".kill-button").show();
+            td.parent().find("td").html("&nbsp;");
+        }
+
+    });
+
+    
+
     // First, initializing non-jqwidgets
     $("#BrowserInfo").text(BrowserDetect.browser + ' v:' + BrowserDetect.version);
 

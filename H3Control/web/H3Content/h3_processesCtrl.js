@@ -4,6 +4,8 @@ appH3.filter('unsafe', function ($sce) { return $sce.trustAsHtml; });
 
 appH3.controller('processesCtrl', function ($scope, $http) {
 
+    var ProcessesRefreshRate = 3000;
+
     var fixProcesses = function (procList, maxCount) {
         while (procList.length < maxCount)
             procList.push({ Pid: null, CpuUsage: null, Rss: null, Size: null, Swapped: null, Args: null });
@@ -101,12 +103,12 @@ appH3.controller('processesCtrl', function ($scope, $http) {
                 $scope.Processes = fixProcesses(processes, $scope.topN);
                 $scope.Visible = true || (processes.length > 0);
                 $("#processesCtrl").show();
-                window.setTimeout($scope.refresh, 3000);
+                window.setTimeout($scope.refresh, ProcessesRefreshRate);
             }, function (response) {
                 $scope.Visible = true;
                 $scope.Processes = fixProcesses([], $scope.topN);
                 $("#processesCtrl").show();
-                window.setTimeout($scope.refresh, 3000);
+                window.setTimeout($scope.refresh, ProcessesRefreshRate);
             });
 
     };
@@ -127,5 +129,5 @@ appH3.controller('processesCtrl', function ($scope, $http) {
     $scope.Processes = fixProcesses($scope.Processes, $scope.topN);
     $scope.Visible = hasInitBinding;
     if (hasInitBinding) $("#processesCtrl").show();
-    window.setTimeout($scope.refresh, hasInitBinding ? 3000 : 50);
+    window.setTimeout($scope.refresh, hasInitBinding ? ProcessesRefreshRate : 50);
 });

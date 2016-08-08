@@ -239,7 +239,7 @@
                                     </th>
                                 </tr>
                                 <tr ng-repeat="pr in Processes">
-                                    <td class="pid" ng-bind="pr.Pid"></td>
+                                    <td data-process-id="{{pr.Pid}}" class="pid entity_{{pr.Pid}}"><span ng-bind="pr.Pid"></span><span style="float: right"><span class="kill-button glyphicon glyphicon-off" style="display: none; cursor:pointer" title="kill the process"></span></span></td>
                                     <td class="cpu" ng-bind="pr.CpuUsage | number:1"></td>
                                     <td class="rss"><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
                                     <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
