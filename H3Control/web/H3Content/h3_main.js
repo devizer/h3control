@@ -43,14 +43,16 @@ $(document).ready(function () {
 
         });
 
-    $(".kill-button").on("click", function(eventObject) {
+    $(".PList").on("click", function (eventObject) {
         var target = $(eventObject.target);
+        if (!target.hasClass("kill-button")) return;
         console.log("PList.kill-click: " + target.getElementPath());
         var td = target.is("td.pid") ? target : target.parents("td.pid");
         var idProcess = td.attr("data-process-id");
         if (idProcess) {
             // td.find(".kill-button").show();
-            td.parent().find("td").html("&nbsp;");
+            console.log("Killing process: " + idProcess);
+            td.parent().find("td").css("color", "#DDDDDD").html("&nbsp;");
         }
 
     });
