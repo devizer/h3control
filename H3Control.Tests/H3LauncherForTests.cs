@@ -61,7 +61,9 @@ namespace H3Control.Tests
 
             int counter = 0;
             var swLaunch = Stopwatch.StartNew();
-            bool isOk = PollWithTimeout.Run(WaitForLaunch, () =>
+            bool isPPC = "ppc".Equals(CrossInfo.ProcessorName, StringComparison.InvariantCultureIgnoreCase);
+            var waitForLaunch = WaitForLaunch*(isPPC ? 2 : 1);
+            bool isOk = PollWithTimeout.Run(waitForLaunch, () =>
             {
                 var url = "http://localhost:" + port + "/Ver";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);

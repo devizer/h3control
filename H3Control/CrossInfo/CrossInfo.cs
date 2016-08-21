@@ -967,7 +967,7 @@ BuildVersion:	14B25
                     _UnitTraceAttached = true;
                     IsLinuxOnArm.ToString();
                     Trace.WriteLine("");
-                    Trace.WriteLine("Platform .......... " + CrossInfo.ThePlatform);
+                    Trace.WriteLine("Platform .......... " + CrossInfo.ThePlatform + ", " + (BitConverter.IsLittleEndian ? "little-endian" : "big-endian"));
                     Trace.WriteLine("Is Linux on Arm ... " + CrossInfo.IsLinuxOnArm);
                     Trace.WriteLine("Runtime ........... " + CrossInfo.RuntimeDisplayName);
                     Trace.WriteLine("OS ................ " + CrossInfo.OsDisplayName);

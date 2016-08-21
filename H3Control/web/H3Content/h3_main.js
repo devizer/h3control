@@ -82,8 +82,6 @@ $(document).ready(function () {
 
     cpuUsage_OnReady();
 
-
-
     // Finally, initialize jq-widgets
     cpuMenu_OnReady();
     cpuFreq_OnReady();
