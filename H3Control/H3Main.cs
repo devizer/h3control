@@ -101,19 +101,19 @@ namespace H3Control
 
             string baseUrl = "http://" + binding;
 
-            StringBuilder cfg = new StringBuilder("Configuration by command line:").AppendLine();
-            cfg.AppendLine("   * Url is " + baseUrl);
+            StringBuilder cfgInfo = new StringBuilder("Configuration by command line:").AppendLine();
+            cfgInfo.AppendLine("   * Url is " + baseUrl);
 
             if (H3WhiteListConfig.HasWhiteList)
-                cfg.AppendFormat("   * WHITE-list restriction(s) are activated: {0}", string.Join("; ", H3WhiteListConfig.WhiteList)).AppendLine();
+                cfgInfo.AppendFormat("   * WHITE-list restriction(s) are activated: {0}", string.Join("; ", H3WhiteListConfig.WhiteList)).AppendLine();
             else
-                cfg.AppendLine("   * Warning: white-list isn't specified, so ip restrictions are absent");
+                cfgInfo.AppendLine("   * WHITE-list isn't specified, so ip restrictions are absent");
 
             if (H3PasswordConfig.IsStricted)
-                cfg.AppendLine("   * Access to change a frequency IS RESTRICTED by a password");
+                cfgInfo.AppendLine("   * Access to change a frequency IS RESTRICTED by a password");
 
             if (DebugTraceListener.LogFolder != null)
-                cfg.AppendLine("   * Logs are located in " + DebugTraceListener.LogFolder);
+                cfgInfo.AppendLine("   * Logs are located in " + DebugTraceListener.LogFolder);
 
             DrunkActionExtentions.TryAndForget(() =>
             {
@@ -124,27 +124,27 @@ namespace H3Control
                 if (needAll)
                 {
                     if (!hasAny)
-                        cfg.AppendLine(notFoundMessage);
+                        cfgInfo.AppendLine(notFoundMessage);
                     else
                     {
-                        cfg.AppendLine("   * h3control http-server is binding to all these network adapters:");
+                        cfgInfo.AppendLine("   * h3control http-server is binding to all these network adapters:");
                         foreach (var k in info.Keys.OrderBy(x => x))
                         {
-                            cfg.AppendFormat("      - network '{0}': {1}", k, string.Join(", ", info[k]));
-                            cfg.AppendLine();
+                            cfgInfo.AppendFormat("      - network '{0}': {1}", k, string.Join(", ", info[k]));
+                            cfgInfo.AppendLine();
                         }
                     }
                 }
                 else
                 {
                     if (!hasAny)
-                        cfg.AppendLine(notFoundMessage);
+                        cfgInfo.AppendLine(notFoundMessage);
                 }
             });
 
 
-            Console.WriteLine(cfg);
-            NiceTrace.Message(cfg);
+            Console.WriteLine(cfgInfo);
+            NiceTrace.Message(cfgInfo);
 
             try
             {
