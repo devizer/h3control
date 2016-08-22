@@ -12,6 +12,8 @@ namespace H3Control.Tests
     public class ResponseDriller
     {
 
+        private static readonly int Timeout_In_Seconds = 300;
+
         public static ResponseDriller CreateGet(string uri)
         {
             return Create(new HttpRequestMessage(HttpMethod.Get, uri));
@@ -20,6 +22,7 @@ namespace H3Control.Tests
         public static ResponseDriller CreateGetJson(string uri)
         {
             HttpClient client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(Timeout_In_Seconds);
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, uri);
             req.Headers.Add("User-Agent", "h3control tests");
             req.Headers.Add("Accept", "application/json");
@@ -30,6 +33,7 @@ namespace H3Control.Tests
         public static ResponseDriller Create(HttpRequestMessage req)
         {
             HttpClient client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(Timeout_In_Seconds);
             req.Headers.Add("User-Agent", "h3control tests");
             var ret = new ResponseDriller(client.SendAsync(req)) {Req = req};
             return ret;

@@ -59,7 +59,7 @@ namespace H3Control
                             hasErrors = true;
                             lock (report)
                                 report
-                                    .AppendFormat("   {0}: FAIL in {1:n0} msec. {2}", url, sw1.ElapsedMilliseconds, ex.Get())
+                                    .AppendFormat("   {0}: in {1:n0} msec. {2}", url, sw1.ElapsedMilliseconds, ex.Get())
                                     .AppendLine();
                         }
 
