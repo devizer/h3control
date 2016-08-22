@@ -189,6 +189,7 @@
     <Compile Include="CrossInfo\UnitStress.cs" />
     <Compile Include="H3NancyModule.cs" />
     <Compile Include="H3PasswordConfig.cs" />
+    <Compile Include="H3PreCompiler.cs" />
     <Compile Include="H3WhiteListConfig.cs" />
     <Compile Include="Common\HttpClientExtentions.cs" />
     <Compile Include="Links\ExMessage.cs" />

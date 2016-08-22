@@ -268,7 +268,7 @@
             return b;
         }
 
-        static void HiddenExec(string command, string args, out string output, out int exitCode)
+        public static void HiddenExec(string command, string args, out string output, out int exitCode)
         {
                         
             ProcessStartInfo si = new ProcessStartInfo(command, args)

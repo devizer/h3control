@@ -14,11 +14,8 @@
             try
             {
                 string output;
-                Exception exception;
-                string error;
-                Exception errorException;
                 int code;
-                CrossInfo.HiddenExec("sync", "", out output, out exception, out error, out errorException, out code);
+                CrossInfo.HiddenExec("sync", "", out output, out code);
             }
             catch (Exception ex)
             {

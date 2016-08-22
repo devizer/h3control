@@ -7,8 +7,6 @@ namespace H3Control
 {
     using System.Diagnostics;
     using System.Linq;
-    using System.Net;
-    using System.Reflection;
     using System.Threading;
 
     using Common;
@@ -154,7 +152,7 @@ namespace H3Control
                     PsListener_OnLinux.Bind();
                     Console.WriteLine("HTTP server successefully has been started.");
                     Console.WriteLine("Press Ctlr-C to quit.");
-                    ThreadPool.QueueUserWorkItem(state => Preload(baseUrl));
+                    ThreadPool.QueueUserWorkItem(state => H3PreCompiler.Compile(baseUrl));
 
                     var exitEvent = new ManualResetEvent(false);
                     UnixExitSignal.Bind(s =>
@@ -185,69 +183,6 @@ namespace H3Control
         public static IDisposable Launch_H3Server(string baseUrl)
         {
                 return WebApp.Start<H3ControlNancyStartup>(baseUrl);
-        }
-
-        private static void Preload(string baseUrl)
-        {
-            if (baseUrl.StartsWith("http://*:") && baseUrl.Length > 9)
-                baseUrl = "http://localhost:" + baseUrl.Substring(9);
-
-            Stopwatch sw = Stopwatch.StartNew();
-            string[] list = new[]
-            {
-                baseUrl + "/api/json/device/me", 
-                baseUrl + "/H3Content/h3.css",
-                baseUrl + "/favicon.ico",
-                baseUrl + "/api/json/processes/by-Rss/top-1",
-                baseUrl + "/whatsnew/html",
-                baseUrl + "/whatsnew/markdown",
-                baseUrl + "/whatsnew/html-include",
-                baseUrl + "", 
-            };
-
-            bool hasErrors = false;
-            CountdownEvent done = new CountdownEvent(list.Length);
-            foreach (var s in list)
-            {
-                var url = s;
-                ThreadPool.QueueUserWorkItem(_ => 
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        client.Headers["User-Agent"] = "h3control-bootstrapper/" + Assembly.GetExecutingAssembly().GetName().Version;
-                        Stopwatch sw1 = Stopwatch.StartNew();
-                        try
-                        {
-                            var data = client.DownloadData(url);
-                            // Console.WriteLine(s + ": OK, data is " + data.Length);
-                        }
-                        catch (Exception ex)
-                        {
-                            // Console.WriteLine(s + ": Fail" + ex);
-                            hasErrors = true;
-                        }
-                        
-                        NiceTrace.Message("Pre-jitted in {0:0.00} secs: {1}", sw1.ElapsedMilliseconds/1000m, url);
-                        done.Signal();
-                    }
-                });
-            }
-
-            done.Wait();
-            if (true || !hasErrors)
-            {
-                var msg = list.Length + " routes pre-jitted during " + sw.ElapsedMilliseconds / 1000m + " secs";
-                NiceTrace.Message(msg);
-                ThreadPool.QueueUserWorkItem(state =>
-                {
-                    Thread.Sleep(5555);
-                    LinuxKernelCache.Flush("after startup");
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                });
-            }
         }
 
         static void TraceEnvironment()
@@ -284,7 +219,6 @@ namespace H3Control
             {
             }
         }
-
     }
 }
 
