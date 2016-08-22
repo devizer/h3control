@@ -62,13 +62,13 @@ namespace H3Control.Tests
             int counter = 0;
             var swLaunch = Stopwatch.StartNew();
             bool isPPC = "ppc".Equals(CrossInfo.ProcessorName, StringComparison.InvariantCultureIgnoreCase);
-            var waitForLaunch = WaitForLaunch*(isPPC ? 5 : 1);
-            bool isOk = PollWithTimeout.Run(waitForLaunch, () =>
+            var timeoutScale = isPPC ? 5 : 1;
+            bool isOk = PollWithTimeout.Run(WaitForLaunch * timeoutScale, () =>
             {
                 var url = "http://localhost:" + port + "/Ver";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);
                 return FastCheck(url);
-            }, pollInterval: 333);
+            }, pollInterval: 333 * timeoutScale);
 
             NiceTrace.Message("Launch result (during {0}): {1}{2}", swLaunch.Elapsed, isOk ? "SUCCESS" : "FAIL", Environment.NewLine);
         }

@@ -253,13 +253,13 @@ namespace H3Control
         static void TraceEnvironment()
         {
             long workingSet64 = Process.GetCurrentProcess().WorkingSet64;
-            StringBuilder b = new StringBuilder();
-            Try(b, () => "  Platform .......... " + CrossInfo.ThePlatform);
-            Try(b, () => "  Is Linux on Arm ... " + CrossInfo.IsLinuxOnArm);
-            Try(b, () => "  Runtime ........... " + CrossInfo.RuntimeDisplayName);
-            Try(b, () => "  OS ................ " + CrossInfo.OsDisplayName);
-            Try(b, () => "  CPU ............... " + CrossInfo.ProcessorName);
-            Try(b, () =>
+            StringBuilder archInfo = new StringBuilder();
+            Try(archInfo, () => "  Platform .......... " + CrossInfo.ThePlatform + ", " + (BitConverter.IsLittleEndian ? "little-endian" : "big-endian"));
+            Try(archInfo, () => "  Is Linux on Arm ... " + CrossInfo.IsLinuxOnArm);
+            Try(archInfo, () => "  Runtime ........... " + CrossInfo.RuntimeDisplayName);
+            Try(archInfo, () => "  OS ................ " + CrossInfo.OsDisplayName);
+            Try(archInfo, () => "  CPU ............... " + CrossInfo.ProcessorName);
+            Try(archInfo, () =>
             {
                 var totalMem = CrossInfo.TotalMemory == null ? "n/a" : string.Format("{0:n0} Mb", CrossInfo.TotalMemory / 1024);
                 return "  Memory ............ " + totalMem + "; Working Set: " + (workingSet64/1024L/1024).ToString("n0") + " Mb";
@@ -271,7 +271,7 @@ namespace H3Control
                 H3Environment.VerAsPublic, 
                 built.HasValue ? built.Value.ToString("R") : "N/A",
                 Environment.NewLine, 
-                b));
+                archInfo));
         }
 
         static void Try(StringBuilder b, Func<string> action)
