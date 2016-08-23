@@ -14,7 +14,7 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            if (Environment.OSVersion.Platform == PlatformID.Unix || CrossInfo.IsMono)
             {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
                 {

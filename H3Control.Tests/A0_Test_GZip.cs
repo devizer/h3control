@@ -15,11 +15,18 @@ namespace H3Control.Tests
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
+            Console.WriteLine("Process: '" + Process.GetCurrentProcess().ProcessName + "'");
         }
 
         [Test]
         public void T01_GZip_Doesnt_Fail()
         {
+            if (!CrossInfo.IsSystemGZipSupported)
+            {
+                Trace.WriteLine("System GZip isnt supported at the runtime");
+                return;
+            }
+
             try
             {
                 byte[] plain = {(byte) 5, 4, 3, 2, 1};
