@@ -53,7 +53,8 @@
                             catch (Exception ex)
                             {
                                 _isSupported = false;
-                                Trace.WriteLine(_GZipNotSupportedMessage + ". [" + ex.GetType().Name + "] " + ex.Message);
+                                // on mono without additional dlls exception is 'System.EntryPointNotFoundException: CreateZStream'
+                                Trace.WriteLine(_GZipNotSupportedMessage + " [" + ex.GetType().Name + "] " + ex.Message);
                             }
                         }
 

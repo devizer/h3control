@@ -1,0 +1,583 @@
+
+V:\_GIT\h3control>rem mono packages\NUnit.ConsoleRunner.3.4.1\tools\nunit3-console.exe --labels=On --workers=1 --work=H3Control.Tests\bin\Debug H3Control.Tests\bin\Debug\H3Control.Tests.dll 
+
+V:\_GIT\h3control>cd H3Control.Tests\bin\Debug 
+
+V:\_GIT\h3control\H3Control.Tests\bin\Debug>nunit-console4 --labels=On H3Control.Tests.dll 
+NUnit version 2.4.8
+Copyright (C) 2002-2007 Charlie Poole.
+Copyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.
+Copyright (C) 2000-2002 Philip Craig.
+All Rights Reserved.
+
+Runtime Environment - 
+   OS Version: Microsoft Windows NT 6.1.7601.65536 Service Pack 1
+  CLR Version: 4.0.30319.42000 ( 4.4.2 (Visual Studio built mono) )
+
+Process: 'mono'
+***** H3Control.Tests.A0_Test_GZip.T01_GZip_Doesnt_Fail
+
+Platform .......... Windows, little-endian
+Is Linux on Arm ... False
+Runtime ........... CLR 4.0.30319.42000; Mono 4.4.2 (Visual Studio built mono)
+OS ................ Microsoft Windows NT 6.1.7601.65536 Service Pack 1
+CPU ............... x86, 2 Cores
+Memory ............ n/a; Working Set: 0 Mb
+GDI Plus .......... Available; supported features are jpeg, png, gif, tiff, exif
+
+System.IO.Compression.GZipStream is not supported.. [EntryPointNotFoundException] CreateZStream
+System GZip isnt supported at the runtime
+***** 00:00:00.1226711, Working Set: 0 Mb
+
+Total time: 00:00:00.1485892
+***** H3Control.Tests.F_Test_Json.Test1
+Hello: "Hello"
+CachingScope.Private: 2
+DateTime.Now: "2016-08-23T19:23:28.4889206+03:00"
+TimeSpan.FromSeconds(123456789): "1428.21:33:09"
+***** 00:00:00.1338345, Working Set: 0 Mb
+
+Total time: 00:00:00.1356680
+***** H3Control.Tests.F0_Test_HttpClientExtentions.T01_Get_GitHub_Returns_200
+***** 00:00:01.2094271, Working Set: 0 Mb
+
+***** H3Control.Tests.F0_Test_HttpClientExtentions.T02_Get_Nyan_Schema_Fails_into_ArgumentException
+Expected exception has been catched:
+[ArgumentException] Only http or https scheme is allowed <--- [ArgumentException] URL 'nyan://google.com' is not suitable with HttpClient
+Parameter name: url
+***** 00:00:00.0099723, Working Set: 0 Mb
+
+***** H3Control.Tests.F0_Test_HttpClientExtentions.T03_Get_404_Schema_Fails_into_404
+Exception has been catched: 
+[HttpRequestException] Status of 'https://google.com/404-billiard' response isn't OK(200). Status is NotFound. Phrase is 'Not Found' <--- [AggregateException] One or more errors occurred.
+***** 00:00:00.1880401, Working Set: 0 Mb
+
+Total time: 00:00:01.5545309
+***** H3Control.Tests.F1_Integration_Tests.T01_ThePlatform_Doesnt_Fail
+Platform:Windows
+***** 00:00:00.0071213, Working Set: 0 Mb
+
+***** H3Control.Tests.F1_Integration_Tests.T02_ProcessorName_Doesnt_Fail
+CPU: x86, 2 Cores
+***** 00:00:00.0097763, Working Set: 0 Mb
+
+***** H3Control.Tests.F1_Integration_Tests.T03_PsListener_OnLinux_Returns_At_Least_One_Process
+Fetched 1 processes info using 00:00:00.0610525 secs
+Fetch swapped memory by all processes by 00:00:00.0012367 secs
+Total processes: 1
+     Pid:   5976, CpuUsage:     1, Rss:     5976, Swapped:       -1, Size:     5976, Args: con 500 16:23:30 /bin/ps
+
+***** 00:00:00.0950419, Working Set: 0 Mb
+
+***** H3Control.Tests.F1_Integration_Tests.T03_Total_Memory_Doesnt_Fail
+Memory: 
+***** 00:00:00.0098754, Working Set: 0 Mb
+
+***** H3Control.Tests.F1_Integration_Tests.T04_Hostname_Isnt_Empty
+Hostname: MONSTER64
+***** 00:00:00.0109935, Working Set: 0 Mb
+
+Total time: 00:00:01.7025880
+Working port is: 29553
+Test assembly Path: C:\Users\73B5~1\AppData\Local\Temp\nunit20\ShadowCopyCache\10928_636075770071768300\Tests\assembly\shadow\5499167b\3d99e9d7_6900ffac_00000001\H3Control.Tests.dll
+Current directory: V:\_GIT\h3control\H3Control.Tests\bin\Debug
+Files in folder C:\Users\73B5~1\AppData\Local\Temp\nunit20\ShadowCopyCache\10928_636075770071768300\Tests\assembly\shadow\5499167b\3d99e9d7_6900ffac_00000001\H3Control.exe assembly: 
+  * __AssemblyInfo__.ini
+  * H3Control.Tests.dll  1.0.0.0
+  * H3Control.Tests.dll.config  
+Files in folder V:\_GIT\h3control\H3Control.Tests\bin\Debug\H3Control.exe assembly: 
+  * CommonMark.dll  0.1.0.0
+  * CommonMark.pdb  
+  * CommonMark.xml  
+  * H3Control.exe  1.25.8.0
+  * H3Control.pdb  
+  * H3Control.exe.config  
+  * H3Control.Tests.dll  1.0.0.0
+  * H3Control.Tests.pdb  
+  * H3Control.Tests.dll.config  
+  * Microsoft.Owin.dll  3.0.40213.64
+  * Microsoft.Owin.xml  
+  * Microsoft.Owin.Diagnostics.dll  3.0.40213.64
+  * Microsoft.Owin.Diagnostics.xml  
+  * Microsoft.Owin.FileSystems.dll  3.0.40213.64
+  * Microsoft.Owin.FileSystems.xml  
+  * Microsoft.Owin.Host.HttpListener.dll  3.0.40213.64
+  * Microsoft.Owin.Host.HttpListener.xml  
+  * Microsoft.Owin.Host.SystemWeb.dll  3.0.40213.64
+  * Microsoft.Owin.Host.SystemWeb.xml  
+  * Microsoft.Owin.Hosting.dll  3.0.40213.64
+  * Microsoft.Owin.Hosting.xml  
+  * Microsoft.Owin.StaticFiles.dll  3.0.40213.64
+  * Microsoft.Owin.StaticFiles.xml  
+  * Mono.Posix.dll  4.0.0.0
+  * Nancy.dll  1.4.2.0
+  * Nancy.xml  
+  * Nancy.Owin.dll  1.4.1.0
+  * Nancy.Owin.xml  
+  * Nancy.RouteHelpers.dll  1.0.6
+  * Nancy.RouteHelpers.xml  
+  * Nancy.Serialization.JsonNet.dll  1.4.1.0
+  * Nancy.ViewEngines.Razor.dll  1.4.2.0
+  * Nancy.ViewEngines.Razor.xml  
+  * Newtonsoft.Json.dll  6.0.4.17603
+  * Newtonsoft.Json.xml  
+  * nlog.config  
+  * nunit.framework.dll  2.4.6.0
+  * Owin.dll  1.0
+  * System.Net.Http.Formatting.dll  5.2.30128.0
+  * System.Net.Http.Formatting.xml  
+  * System.Web.Http.dll  5.2.30128.0
+  * System.Web.Http.xml  
+  * System.Web.Http.Owin.dll  5.2.30128.0
+  * System.Web.Http.Owin.xml  
+  * System.Web.Razor.dll  2.0.20715.0
+  * System.Web.Razor.xml  
+  * TestResult.xml  
+Launch: V:\_GIT\h3control\H3Control.Tests\bin\Debug\H3Control.exe --binding=*:29553
+PID: 3960
+Try #1 http://localhost:29553/Ver
+H3Control 1.25.8 is a console/daemon which 
+   * "Displays" temperature, frequency and usage via built-in http server.
+   * Allows to control CPU & DDR frequency
+
+Fetched 1 processes info using 00:00:00.2673561 secs
+Fetch swapped memory by all processes by 00:00:00.0000648 secs
+PsParser_OnLinux_or_FreeBSD.Select() takes 268 msec
+Configuration by command line:
+   * Url is http://*:29553
+   * WHITE-list isn't specified, so ip restrictions are absent
+   * Logs are located in C:\Users\Пользователь\AppData\Local\h3control.logs
+   * h3control http-server is binding to all these network adapters:
+      - network 'Intel(R) WiFi Link 5100 AGN': fe80::dd6f:db75:f1fd:2137%29, 169.254.33.55
+      - network 'Microsoft Virtual WiFi Miniport Adapter #3': fe80::b1bf:b14e:6b60:f82e%30, 169.254.248.46
+      - network 'Realtek PCIe GBE Family Controller': 192.168.0.10
+      - network 'Software Loopback Interface 1': ::1, 127.0.0.1
+      - network 'TAP-Windows Adapter V9': fe80::a5c1:4f8f:bf47:6532%17, 169.254.101.50
+      - network 'Teredo Tunneling Pseudo-Interface': fe80::100:7f:fffe%11
+      - network 'VMware Virtual Ethernet Adapter for VMnet1': fe80::2180:ada:5c70:f2c6%34, 169.254.242.198
+      - network 'VMware Virtual Ethernet Adapter for VMnet8': fe80::fd36:2f0:e573:9d38%35, 192.168.241.1
+      - network 'Адаптер Microsoft ISATAP #2': fe80::5efe:169.254.242.198%33
+      - network 'Адаптер Microsoft ISATAP #7': fe80::5efe:192.168.0.10%28
+      - network 'Адаптер Microsoft ISATAP #8': fe80::5efe:192.168.241.1%31
+
+PsParser_OnLinux_or_FreeBSD.Select() takes 529 msec
+HTTP server successefully has been started.
+Press Ctlr-C to quit.
+PsParser_OnLinux_or_FreeBSD.Select() takes 1,254 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 233 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 90 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 651 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 153 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 205 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 498 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 99 msec
+PsParser_OnLinux_or_FreeBSD.Select() takes 140 msec
+Launch result (during 00:01:40.1696963): FAIL
+
+***** H3Control.Tests.F2_HttpServer_Tests.T01_Get_Favicon_Doesnt_Fail_And_HasBytes
+http://localhost:29553/favicon.ico response details:
+  status recieved in| 34 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 35 msec
+      content length| 78,997
+             HEADERS| 3 rows
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+                ETag: "8d2f184e9cbf510"
+              Server: Microsoft-HTTPAPI/2.0
+
+http://localhost:29553/favicon.ico: length is 78997 bytes
+***** 00:00:00.0869936, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T02_Get_Ver_Via_Http_Doesnt_Fail_And_Ver_EndEquals_Assembly_Version
+http://localhost:29553/Ver response details:
+  status recieved in| 13 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 13 msec
+      content length| 6
+             HEADERS| 3 rows
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+/Ver response: '1.25.8'
+***** 00:00:00.0345304, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T03_Get_Default_cshtml_Doesnt_Fail_And_Returns_200
+http://localhost:29553/ response details:
+  status recieved in| 54 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 54 msec
+      content length| 22,887
+             HEADERS| 6 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+                Vary: Accept
+
+'
+
+
+<!DOCTYPE HTML>
+
+<html lang="en" xmlns="ht'
+***** 00:00:00.0681983, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T04_Select_Processes_Doesnt_Fail_And_Returns_200
+http://localhost:29553/api/json/processes/by-Rss/top-3 response details:
+  status recieved in| 23 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 23 msec
+      content length| 214
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+{
+      "Processes": [
+            {
+                  "Pid": 12976,
+                  "CpuUsage": 1.0,
+                  "Rss": 12976,
+                  "Size": 12976,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            },
+            {
+                  "Pid": 5516,
+                  "CpuUsage": 1.0,
+                  "Rss": 5516,
+                  "Size": 5516,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            }
+      ]
+}
+http://localhost:29553/api/json/processes/by-Cpu/top-3 response details:
+  status recieved in| 7 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 7 msec
+      content length| 214
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+{
+      "Processes": [
+            {
+                  "Pid": 12976,
+                  "CpuUsage": 1.0,
+                  "Rss": 12976,
+                  "Size": 12976,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            },
+            {
+                  "Pid": 5516,
+                  "CpuUsage": 1.0,
+                  "Rss": 5516,
+                  "Size": 5516,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            }
+      ]
+}
+http://localhost:29553/api/json/processes/by-Swapped/top-3 response details:
+  status recieved in| 6 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 6 msec
+      content length| 214
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+{
+      "Processes": [
+            {
+                  "Pid": 12976,
+                  "CpuUsage": 1.0,
+                  "Rss": 12976,
+                  "Size": 12976,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            },
+            {
+                  "Pid": 5516,
+                  "CpuUsage": 1.0,
+                  "Rss": 5516,
+                  "Size": 5516,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            }
+      ]
+}
+http://localhost:29553/api/json/processes/by-Size/top-3 response details:
+  status recieved in| 5 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 5 msec
+      content length| 214
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+{
+      "Processes": [
+            {
+                  "Pid": 12976,
+                  "CpuUsage": 1.0,
+                  "Rss": 12976,
+                  "Size": 12976,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            },
+            {
+                  "Pid": 5516,
+                  "CpuUsage": 1.0,
+                  "Rss": 5516,
+                  "Size": 5516,
+                  "Swapped": -1,
+                  "Args": "con 500 16:25:10 /bin/ps"
+            }
+      ]
+}
+***** 00:00:00.1057148, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T05_Select_Processes_by_Nianyty_Fails_and_Return_400
+http://localhost:29553/api/json/processes/by-Nianyty/top-3 response details:
+  status recieved in| 24 msec
+        (int) status| BadRequest 
+       (enum) status| 400
+     (phrase) status| Bad Request. Invalid parameter. {column} argument is invalid or absent
+ content recieved in| 24 msec
+      content length| 70
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+***** 00:00:00.0341469, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T06_Get_Device_Doesnt_Fail_And_Returns_200
+http://localhost:29553/api/json/device/me response details:
+  status recieved in| 16 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 16 msec
+      content length| 945
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+{
+      "IsSuccess": true,
+      "IsLimitSuccess": true,
+      "Host": "OrangePI",
+      "Ip": "192.168.0.15",
+      "CpuCur": 720.0,
+      "CpuMin": 480.0,
+      "CpuMax": 1728.0,
+      "Tempr": 48.0,
+      "DdrCur": 672.0,
+      "DdrMin": 408.0,
+      "DdrMax": 672.0,
+      "ErrorInfo": null,
+      "Cpu": {
+            "Total": {
+                  "User": 35.2,
+                  "Nice": 0.0,
+                  "System": 34.14,
+                  "Idle": 30.66
+            },
+            "Cores": [
+                  {
+                        "User": 20.1,
+                        "Nice": 0.0,
+                        "System": 49.9,
+                        "Idle": 30.0
+                  },
+                  {
+                        "User": 10.2,
+                        "Nice": 0.0,
+                        "System": 50.0,
+                        "Idle": 66.0
+                  },
+                  {
+                        "User": 12.3,
+                        "Nice": 0.0,
+                        "System": 50.0,
+                        "Idle": 44.0
+                  },
+                  {
+                        "User": 24.4,
+                        "Nice": 0.0,
+                        "System": 50.0,
+                        "Idle": 77.0
+                  }
+            ]
+      },
+      "VerInfo": {
+            "CurVer": {
+                  "Major": 1,
+                  "Minor": 25,
+                  "Build": 8,
+                  "Revision": 0,
+                  "MajorRevision": 0,
+                  "MinorRevision": 0
+            },
+            "NewVer": {
+                  "Major": 1,
+                  "Minor": 26,
+                  "Build": 744,
+                  "Revision": 0,
+                  "MajorRevision": 0,
+                  "MinorRevision": 0
+            },
+            "Date": "2016-07-30T06:03:21+03:00",
+            "IsNew": true
+      },
+      "Mem": {
+            "Total": 1263616,
+            "Free": 328704,
+            "BuffersAndCache": 807936,
+            "SwapTotal": 580608,
+            "SwapFree": 580608,
+            "Buffers": 74752
+      },
+      "HasChangeAccess": true,
+      "OsName": "Microsoft Windows 7 Максимальная, Service Pack 1, 64-bit"
+}
+***** 00:00:00.0320223, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T07_Get_WhatsNew_Doesnt_Fail_And_Returns_200
+http://localhost:29553/whatsnew/html response details:
+  status recieved in| 4 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 4 msec
+      content length| 7,491
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+http://localhost:29553/whatsnew/markdown response details:
+  status recieved in| 4 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 4 msec
+      content length| 6,079
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+http://localhost:29553/whatsnew/html-include response details:
+  status recieved in| 4 msec
+        (int) status| OK 
+       (enum) status| 200
+     (phrase) status| OK
+ content recieved in| 4 msec
+      content length| 7,212
+             HEADERS| 5 rows
+       Cache-Control: no-store
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Pragma: no-cache
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+***** 00:00:00.0247851, Working Set: 0 Mb
+
+***** H3Control.Tests.F2_HttpServer_Tests.T08_404
+http://localhost:29553/Content/no-such-pAgE response details:
+  status recieved in| 7 msec
+        (int) status| NotFound 
+       (enum) status| 404
+     (phrase) status| Not Found
+ content recieved in| 7 msec
+      content length| 30,058
+             HEADERS| 3 rows
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+http://localhost:29553/Content/no-such-pAgE.css response details:
+  status recieved in| 9 msec
+        (int) status| NotFound 
+       (enum) status| 404
+     (phrase) status| Not Found
+ content recieved in| 9 msec
+      content length| 30,058
+             HEADERS| 3 rows
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+http://localhost:29553/Content/no-such-pAgE response details:
+  status recieved in| 8 msec
+        (int) status| NotFound 
+       (enum) status| 404
+     (phrase) status| Not Found
+ content recieved in| 8 msec
+      content length| 30,058
+             HEADERS| 3 rows
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+http://localhost:29553/Content/no-such-pAgE.css response details:
+  status recieved in| 4 msec
+        (int) status| NotFound 
+       (enum) status| 404
+     (phrase) status| Not Found
+ content recieved in| 4 msec
+      content length| 30,058
+             HEADERS| 3 rows
+                Date: Tue, 23 Aug 2016 16:25:10 GMT
+              Server: Microsoft-HTTPAPI/2.0
+   Transfer-Encoding: chunked
+
+***** 00:00:00.0431561, Working Set: 0 Mb
+
+
+Tests run: 18, Failures: 0, Not run: 0, Time: 102.579 seconds
+
+
