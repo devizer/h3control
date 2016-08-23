@@ -89,8 +89,8 @@ namespace H3Control.Tests
  content recieved in| {5} msec
       content length| {6}
              HEADERS| {7} rows",
-                descr, elaplsed.ToString("n0"), 
-                result.StatusCode, (int) result.StatusCode, result.ReasonPhrase,
+                descr, elaplsed.ToString("n0"),
+                (int)result.StatusCode, result.StatusCode, result.ReasonPhrase,
                 elapsed2.ToString("n0"), Bytes.Length.ToString("n0"),
                 numHeaders).AppendLine();
 
