@@ -9,22 +9,59 @@
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using SysGZip = System.IO.Compression;
 
     public class CrossInfo
     {
 
-        private static bool? _isSupported = null;
+        public static String HumanReadableEnvironment(int intend)
+        {
+            string pre = intend > 0 ? new string(' ', intend) : string.Empty;
+            long workingSet64 = Process.GetCurrentProcess().WorkingSet64;
+            StringBuilder ret = new StringBuilder();
+            var endianless = (BitConverter.IsLittleEndian ? "little-endian" : "big-endian");
+            Try(ret, delegate { return pre + "Platform .......... " + CrossInfo.ThePlatform + ", " + endianless; });
+            Try(ret, delegate { return pre + "Runtime ........... " + CrossInfo.RuntimeDisplayName; });
+            Try(ret, delegate { return pre + "OS ................ " + CrossInfo.OsDisplayName; });
+            Try(ret, delegate { return pre + "CPU ............... " + CrossInfo.ProcessorName; });
+            Try(ret, delegate
+            {
+                var ws = workingSet64 == 0 ? "n/a" : ((workingSet64/1024L/1024).ToString("n0") + " Mb");
+                var totalMem = CrossInfo.TotalMemory == null ? "n/a" : string.Format("{0:n0} Mb", CrossInfo.TotalMemory/1024);
+                return pre + "Memory ............ " + totalMem + "; Working Set: " + ws;
+            });
+
+            return ret.ToString();
+        }
+
+        private delegate T Func<T>();
+        static void Try(StringBuilder b, Func<string> action)
+        {
+            try
+            {
+                b.Append(action() + Environment.NewLine);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+
+        private static bool? _isSystemGZipSupported = null;
         static readonly object SyncGZipInfo = new object();
         static readonly string _GZipNotSupportedMessage = "System.IO.Compression.GZipStream is not supported.";
+
+        static readonly StringComparison IgnoreCaseComparision = StringComparison.OrdinalIgnoreCase;
+
         public static bool IsSystemGZipSupported
         {
             get
             {
-                if (!_isSupported.HasValue)
+                if (!_isSystemGZipSupported.HasValue)
                     lock (SyncGZipInfo)
-                        if (!_isSupported.HasValue)
+                        if (!_isSystemGZipSupported.HasValue)
                         {
                             // plain is {5,4,3,2,1}
                             byte[] gzipped = {
@@ -47,18 +84,18 @@
                                         throw new NotSupportedException(_GZipNotSupportedMessage);
                                     }
 
-                                    _isSupported = true;
+                                    _isSystemGZipSupported = true;
                                 }
                             }
                             catch (Exception ex)
                             {
-                                _isSupported = false;
+                                _isSystemGZipSupported = false;
                                 // on mono without additional dlls exception is 'System.EntryPointNotFoundException: CreateZStream'
-                                Trace.WriteLine(_GZipNotSupportedMessage + " [" + ex.GetType().Name + "] " + ex.Message);
+                                Trace_WriteLine(_GZipNotSupportedMessage + " [" + ex.GetType().Name + "] " + ex.Message);
                             }
                         }
 
-                return _isSupported.Value;
+                return _isSystemGZipSupported.Value;
             }
         }
 
@@ -66,8 +103,7 @@
         {
             get
             {
-                return Environment.OSVersion.Platform == PlatformID.Unix
-                       && ThePlatform == Platform.Linux;
+                return ThePlatform == Platform.Linux;
             }
         }
 
@@ -79,7 +115,7 @@
             GetLinuxCpuInfo(out model);
             bool ret = model != null && model.ToUpper().Contains("ARM");
             if (ret)
-                Trace.WriteLine("Workaround activated: Math.Round(decimal...) on ARM");
+                Trace_WriteLine("Workaround activated: Math.Round(decimal...) on ARM");
 
             return ret;
         });
@@ -94,13 +130,25 @@
         {
             get { return sizeof (IntPtr); }
         }
+
+#elif NETCORE
+        static int SizeOfPtr
+        {
+            get
+            {
+                var pa = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+                return (pa == System.Runtime.InteropServices.Architecture.Arm64
+                        || pa == System.Runtime.InteropServices.Architecture.X64)
+                    ? 8 : 4;
+            }
+        }
 #else
         static int SizeOfPtr
         {
             get { return Environment.Is64BitOperatingSystem ? 8 : 4; }
         }
 #endif
-        
+
         static Lazy<string> _ProcessorName = new Lazy<string>(() =>
         {
             var ret = SizeOfPtr == 4 ? "32-bit" : "64-bit";
@@ -195,6 +243,7 @@
             model = Linux_ProcName();
             return;
 
+#if !NETCORE
             model = null;
             string procCpuinfo = "/proc/cpuinfo";
             if (!File.Exists(procCpuinfo)) return;
@@ -212,6 +261,7 @@
                     }
                 }
             }
+#endif
         }
 
         public static void HiddenExec
@@ -229,7 +279,7 @@
                 RedirectStandardOutput = true,
                 StandardErrorEncoding = Encoding.UTF8,
                 StandardOutputEncoding = Encoding.UTF8,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                // WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
             };
 
@@ -262,7 +312,11 @@
                 {
                     errorDone.Set();
                 }
-            }, 64*1024) { IsBackground = true };
+            }
+#if !NETCORE
+            , 64 * 1024
+#endif
+            ) { IsBackground = true };
 
             Thread t2 = new Thread(() =>
             {
@@ -279,7 +333,12 @@
                 {
                     outputDone.Set();
                 }
-            }, 64*1024) { IsBackground = true };
+            }
+#if !NETCORE
+            , 64 * 1024
+#endif
+            )
+            { IsBackground = true };
 
             using (p)
             {
@@ -324,7 +383,7 @@
                 RedirectStandardOutput = true,
                 StandardErrorEncoding = Encoding.UTF8,
                 StandardOutputEncoding = Encoding.UTF8,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                // WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
             };
 
@@ -338,6 +397,69 @@
                 exitCode = p.ExitCode;
             }
         }
+
+        public static void HiddenExec(string command, string args, string input, out string output, out int exitCode)
+        {
+
+            ProcessStartInfo si = new ProcessStartInfo(command, args)
+            {
+                CreateNoWindow = true,
+                RedirectStandardError = false,
+                RedirectStandardOutput = true,
+                RedirectStandardInput = true,
+                // StandardErrorEncoding = Encoding.UTF8,
+#if NETCORE
+                StandardOutputEncoding = Encoding.UTF8,
+#endif
+                // WindowStyle = ProcessWindowStyle.Hidden,
+                UseShellExecute = false,
+            };
+
+
+            Process p = new Process() { StartInfo = si };
+            using (p)
+            {
+                p.Start();
+                ManualResetEvent written = new ManualResetEvent(false);
+                Exception ex1 = null;
+                ThreadPool.QueueUserWorkItem(state =>
+                {
+                    try
+                    {
+                        p.StandardInput.Write(input);
+                        p.StandardInput.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        ex1 = ex;
+                    }
+                    written.Set();
+                });
+
+                string o = null;
+                ManualResetEvent readed = new ManualResetEvent(false);
+                Exception ex2 = null;
+                ThreadPool.QueueUserWorkItem(state =>
+                {
+                    try
+                    {
+                        o = p.StandardOutput.ReadToEnd();
+                    }
+                    catch (Exception ex)
+                    {
+                        ex2 = ex;
+                    }
+                    readed.Set();
+                });
+                WaitHandle.WaitAll(new WaitHandle[] {readed, written,});
+                output = o;
+                if (ex1 != null) throw new InvalidOperationException("Unable to write into pipe of a " + command);
+                if (ex2 != null) throw new InvalidOperationException("Unable to read output of a " + command);
+                p.WaitForExit();
+                exitCode = p.ExitCode;
+            }
+        }
+
 
         // -s: Linux | Darwin
         static string ExecUName(string arg)
@@ -362,6 +484,7 @@
             return exitCode == 0 ? ret : ret;
         }
 
+#if !NETCORE
         static List<T> ExecWmi<T>(string query, string propertyName)
         {
             List<T> ret = new List<T>();
@@ -391,7 +514,7 @@
 
             return ret;
         }
-
+#endif
 
 
         public enum Platform
@@ -405,6 +528,17 @@
 
         static Lazy<Platform> _Platform = new Lazy<Platform>(() =>
         {
+#if NETCORE
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return Platform.MacOSX;
+
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return Platform.Windows;
+
+            // Community ports Core to FreeBSD
+            else
+                return GetPlatform_OnLinux_OSX_BSD();
+#else
             if (Environment.OSVersion.Platform == PlatformID.MacOSX)
                 return Platform.MacOSX;
 
@@ -412,18 +546,23 @@
                 return Platform.Windows;
 
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                var sName = ExecUName("-s");
-                if ("Darwin".Equals(sName, StringComparison.InvariantCultureIgnoreCase))
-                    return Platform.MacOSX;
-                else if ("FreeBSD".Equals(sName, StringComparison.InvariantCultureIgnoreCase))
-                    return Platform.FreeBSD;
-                else
-                    return Platform.Linux;
-            }
+                return GetPlatform_OnLinux_OSX_BSD();
 
-            return Platform.Unknown;
+            else
+                return Platform.Unknown;
+#endif
         });
+
+        private static Platform GetPlatform_OnLinux_OSX_BSD()
+        {
+            var sName = ExecUName("-s");
+            if ("Darwin".Equals(sName, IgnoreCaseComparision))
+                return Platform.MacOSX;
+            else if ("FreeBSD".Equals(sName, IgnoreCaseComparision))
+                return Platform.FreeBSD;
+            else
+                return Platform.Linux;
+        }
 
         public static Platform ThePlatform
         {
@@ -504,7 +643,7 @@
                 if (key != null)
                 {
                     key = key.Trim();
-                    if ("memtotal".Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                    if ("memtotal".Equals(key, IgnoreCaseComparision))
                         if (raw == null && value != null)
                             raw = value.ToLower().Trim();
                 }
@@ -528,7 +667,7 @@ BuildVersion:	14B25
 */
     private static Dictionary<string,string> Exec_Sw_Vers()
         {
-            Dictionary<string,string> ret = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            Dictionary<string,string> ret = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
             string output;
             int exitCode;
             HiddenExec("sw_vers", string.Empty, out output, out exitCode);
@@ -560,21 +699,20 @@ BuildVersion:	14B25
         if (!File.Exists(fileName))
             return (ExecUName("-m") ?? "").Trim();
 
-        var comp = StringComparison.InvariantCultureIgnoreCase;
+        StringComparison comp = IgnoreCaseComparision;
         foreach (var line in EnumLines(fileName, Encoding.ASCII))
         {
             string key, value;
             TrySplit(line, ':', out key, out value);
             if (key != null)
             {
-                key = key.Trim();
                 if ("model name".Equals(key, comp))
                     name = value;
                 else if ("cpu model".Equals(key, comp))
                     name2 = value;
-                else if ("Processor".Equals(key, StringComparison.InvariantCulture))
+                else if ("Processor".Equals(key, comp))
                     processor = value;
-                else if ("Hardware".Equals(key, StringComparison.InvariantCulture))
+                else if ("Hardware".Equals(key, comp))
                     hardware = value;
 
                 else if ("cache size".Equals(key, comp))
@@ -602,7 +740,7 @@ BuildVersion:	14B25
         if (!File.Exists(fileName))
             return (ExecUName("-m") ?? "").Trim();
 
-        var comp = StringComparison.InvariantCultureIgnoreCase;
+        var comp = IgnoreCaseComparision;
         var procCpuInfo = File.ReadAllText("/proc/cpuinfo");
             
         foreach (var line in EnumLines(new StringReader(procCpuInfo)))
@@ -616,9 +754,9 @@ BuildVersion:	14B25
                     model_name = value;
                 else if ("cpu model".Equals(key, comp))
                     cpu_model = value;
-                else if ("Processor".Equals(key, StringComparison.InvariantCulture))
+                else if ("Processor".Equals(key, comp))
                     processor = value;
-                else if ("Hardware".Equals(key, StringComparison.InvariantCulture))
+                else if ("Hardware".Equals(key, comp))
                     hardware = value;
 
                 else if ("cache size".Equals(key, comp))
@@ -642,8 +780,12 @@ BuildVersion:	14B25
 
         private static string Windows_ProcName()
         {
+#if NETCORE
+            return WindowsSystemInfo.Default.ProcName;
+#else
+            // var d = WindowsSystemInfo.Default.AsStringDictionary;
             if (IsMono && ThePlatform == Platform.Windows)
-                return SizeOfPtr == 4 ? "x86" : "x64";
+                return SizeOfPtr == 4 ? "32-bit" : "64-bit";
 
             List<string> names = ExecWmi<string>("SELECT * FROM Win32_Processor", "Name");
             if (names.Count > 0)
@@ -658,12 +800,16 @@ BuildVersion:	14B25
             }
 
             return SizeOfPtr == 4 ? "x86" : "x64";
+#endif
         }
 
         static int? Windows_TotalMemory()
         {
+#if NETCORE
+            return WindowsSystemInfo.Default.TotalMemory;
+#else
             if (IsMono && ThePlatform == Platform.Windows)
-                return null;
+                return WindowsSystemInfo.Default.TotalMemory;
 
             List<long> mems = ExecWmi<long>("SELECT * FROM Win32_ComputerSystem", "TotalPhysicalMemory");
             foreach (var mem in mems)
@@ -671,12 +817,26 @@ BuildVersion:	14B25
                     return (int?) (mem/1024L);
 
             return null;
+#endif
         }
 
         static string Windows_OsVersion()
         {
+#if NETCORE
+            var retCore = WindowsSystemInfo.Default.OsDescription;
+            if (string.IsNullOrEmpty(retCore))
+                retCore = RuntimeInformation.OSDescription;
+
+            return retCore;
+#else
             if (IsMono && ThePlatform == Platform.Windows)
-                return Environment.OSVersion.ToString();
+            {
+                var retMono = WindowsSystemInfo.Default.OsDescription;
+                if (string.IsNullOrEmpty(retMono))
+                    retMono = Environment.OSVersion.ToString();
+
+                return retMono;
+            }
 
             // OSArchitecture is unavailable on XP
             string[] names = new[] {"Caption", "CSDVersion", "OSArchitecture"};
@@ -695,18 +855,21 @@ BuildVersion:	14B25
             }
 
             return ret.ToString();
+#endif
         }
 
         private static string MacOs_OsName()
         {
 
-            string ver;
+            string ver = "MAC OS X";
             var sw = Exec_Sw_Vers();
             string osxVersion;
             if (sw.TryGetValue("ProductVersion", out osxVersion) && !string.IsNullOrEmpty(osxVersion))
                 ver = "MAC OS X " + osxVersion;
+#if !NETCORE
             else
                 ver = "MAC OS X v10." + (Environment.OSVersion.Version.Major - 4);
+#endif
 
             string build;
             if (!sw.TryGetValue("BuildVersion", out build) || string.IsNullOrEmpty(build))
@@ -744,7 +907,7 @@ BuildVersion:	14B25
                     {
                         string key, value;
                         TrySplit(line, '=', out key, out value);
-                        if ("pretty_name".Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                        if ("pretty_name".Equals(key, IgnoreCaseComparision))
                         {
                             string pretty = value.Trim().Trim(new[] {'"'});
                             if (pretty.Length > 0)
@@ -798,9 +961,16 @@ BuildVersion:	14B25
             else
             {
                 var ret = Windows_OsVersion();
+                string genericOsName =
+#if !NETCORE
+                    Environment.OSVersion.VersionString;
+#else
+                    RuntimeInformation.OSDescription;
+#endif
+
                 return
                     string.IsNullOrEmpty(ret)
-                        ? Environment.OSVersion.VersionString
+                        ? genericOsName
                         : ret;
             }
 
@@ -824,6 +994,9 @@ BuildVersion:	14B25
 
         static Lazy<string> _RuntimeDisplayName = new Lazy<string>(() =>
         {
+#if NETCORE
+            return RuntimeInformation.FrameworkDescription;
+#else
             if (IsMono)
             {
                 MethodInfo method = Type.GetType("Mono.Runtime", false).GetMethod("GetDisplayName", BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.ExactBinding);
@@ -834,6 +1007,7 @@ BuildVersion:	14B25
             }
 
             return "Net " + Environment.Version;
+#endif
         });
 
         public static string RuntimeDisplayName
@@ -842,7 +1016,7 @@ BuildVersion:	14B25
         }
 
 
-        #region Iterator of lines by fileName, Stream, StreamReader or TextReader
+#region Iterator of lines by fileName, Stream, StreamReader or TextReader
 
         static readonly Encoding EnumLines_UTF8 = new UTF8Encoding(false);
 
@@ -887,9 +1061,7 @@ BuildVersion:	14B25
                 yield return line;
         }
 
-        #endregion
-
-
+#endregion
 
 
         private class Lazy<T>
@@ -937,6 +1109,7 @@ BuildVersion:	14B25
                     _OriginalConsoleTitle = Console.Title;
 
                 Console.Title = consoleCaption;
+#if !NETCORE
                 if (isFirst)
                     AppDomain.CurrentDomain.DomainUnload += (sender, args) =>
                     {
@@ -948,7 +1121,7 @@ BuildVersion:	14B25
                         {
                         }
                     };
-
+#endif
             }
             catch (Exception)
             {
@@ -978,6 +1151,7 @@ BuildVersion:	14B25
 
         public static void AttachUnitTrace()
         {
+#if !NETCORE
             long workingSet64 = Process.GetCurrentProcess().WorkingSet64;
             lock (SyncAttachUnitTrace)
             {
@@ -1027,19 +1201,22 @@ BuildVersion:	14B25
 
                 }
             }
+#endif
         }
 
         static bool HasDefaultTraceListener()
         {
+#if !NETCORE
             foreach (var listener in Trace.Listeners)
                 if (listener is DefaultTraceListener)
                     return true;
-
+#endif
             return false;
         }
 
         private static void ConfigConsoleOnUnixTraceListener()
         {
+#if !NETCORE
             string consoleUnix = "Console@Unix";
             bool isPresent = false;
             foreach (var listener in Trace.Listeners)
@@ -1054,18 +1231,22 @@ BuildVersion:	14B25
                 TextWriterTraceListener tl = new TextWriterTraceListener(Console.Out, consoleUnix);
                 Trace.Listeners.Add(tl);
             }
+#endif
         }
 
         public static List<ProcessInfo> GetProcessInfoByName(string name)
         {
-            var c = StringComparer.InvariantCultureIgnoreCase;
+            if (name == null)
+                throw new ArgumentNullException("name");
+
+            var c = IgnoreCaseComparision;
             List<ProcessInfo> ret = new List<ProcessInfo>();
             if (ThePlatform == Platform.Windows)
             {
                 var all = Process.GetProcesses();
                 foreach (var process in all)
                 {
-                    if (c.Equals(name, process.ProcessName))
+                    if (name.Equals(process.ProcessName, c))
                         ret.Add(new ProcessInfo()
                         {
                             Id = process.Id,
@@ -1104,7 +1285,7 @@ BuildVersion:	14B25
                 List<int> pids = new List<int>();
                 foreach (var proc1Info in all)
                 {
-                    if (c.Equals(name, proc1Info.Name))
+                    if (name.Equals(proc1Info.Name, c))
                         pids.Add(proc1Info.Id);
                 }
 
@@ -1208,6 +1389,9 @@ BuildVersion:	14B25
 
         static Lazy<GdiPlusSupport> _GdiPlus = new Lazy<GdiPlusSupport>(() =>
         {
+#if NETCORE
+            return new GdiPlusSupport() {IsPresent = false};
+#else
             var bitmapTypeName = string.Format(
                 "System.Drawing.Bitmap, System.Drawing, Version={0}.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
                 Environment.Version.Major);
@@ -1254,6 +1438,7 @@ BuildVersion:	14B25
             }
 
             return ret;
+#endif
         });
 
         public static GdiPlusSupport GdiPlus
@@ -1298,6 +1483,7 @@ BuildVersion:	14B25
         }
 
 
+#if !NETCORE
         class ExifDiag
         {
             // 271: Type=2, SAMPLE Camera 42\0
@@ -1543,9 +1729,129 @@ D9DAE2E3E4E5E6E7E8E9EAF2F3F4F5F6F7F8F9FAFFDA000C03010002110311003F00F70A2BE8CF92
 
 
         }
+#endif
 
+
+        public class WindowsSystemInfo
+        {
+            private static readonly string Script = @"
+Write-Host 'group-header: Processor'
+Get-WmiObject -Class Win32_Processor | Format-List Name,L2CacheSize,L3CacheSize,MaxClockSpeed
+Write-Host 'group-header: ComputerSystem'
+Get-WmiObject -Class Win32_ComputerSystem | Format-List Manufacturer,Model,TotalPhysicalMemory,TotalVisibleMemorySize
+Write-Host 'group-header: OperatingSystem'
+Get-WmiObject -Class Win32_OperatingSystem | Format-List Caption,CSDVersion,Version,ServicePackMajorVersion,ServicePackMinorVersion,OSArchitecture,TotalVirtualMemorySize,TotalVisibleMemorySize,FreePhysicalMemory,FreeVirtualMemory,FreeSpaceInPagingFiles,SystemDrive,SystemDirectory
+";
+
+            public static readonly WindowsSystemInfo Default = new WindowsSystemInfo();
+            private readonly object Sync = new object();
+            private Dictionary<string, string> _AsStringDictionary;
+
+            public string OsDescription
+            {
+                get
+                {
+                    var d = AsStringDictionary;
+                    string caption;
+                    string sp;
+                    d.TryGetValue("OperatingSystem.Caption", out caption);
+                    d.TryGetValue("OperatingSystem.CSDVersion", out sp);
+                    return caption + (!string.IsNullOrEmpty(caption) && !string.IsNullOrEmpty(sp) ? ", " : "") + sp;
+                }
+            }
+
+            public Dictionary<string, string> AsStringDictionary
+            {
+                get
+                {
+                    if (_AsStringDictionary == null)
+                        lock (Sync)
+                            if (_AsStringDictionary == null)
+                            {
+                                _AsStringDictionary = GetDictionary();
+                                foreach (var key in _AsStringDictionary.Keys)
+                                {
+                                    // Console.WriteLine("[{0}]: '{1}'", key, _AsStringDictionary[key]);
+                                }
+                            }
+
+                    return _AsStringDictionary;
+                }
+            }
+
+            public int? TotalMemory
+            {
+                get
+                {
+                    string rawBytes;
+                    AsStringDictionary.TryGetValue("OperatingSystem.TotalVisibleMemorySize", out rawBytes);
+                    long ret;
+                    Debugger.Break();
+                    if (long.TryParse(rawBytes, out ret))
+                        return (int?) ret;
+                    else
+                        return null;
+                }
+            }
+
+            public string ProcName
+            {
+                get
+                {
+                    string name;
+                    string l3Cache;
+                    string l2Cache;
+                    AsStringDictionary.TryGetValue("Processor.Name", out name);
+                    name = name == null ? null : CrossInfo.StripDoubleWhitespace(name);
+                    AsStringDictionary.TryGetValue("Processor.L2CacheSize", out l2Cache);
+                    AsStringDictionary.TryGetValue("Processor.L3CacheSize", out l3Cache);
+                    if (l2Cache == "0") l2Cache = "";
+                    if (l3Cache == "0") l3Cache = "";
+                    string cache = l2Cache + (!string.IsNullOrEmpty(l3Cache) && !string.IsNullOrEmpty(l2Cache) ? "+" : "") + l3Cache;
+                    var ret = name + (cache.Length > 0 ? ", Cache " + cache + " Mb" : "");
+                    return ret;
+                }
+            }
+
+
+            private Dictionary<string, string> GetDictionary()
+            {
+                string output;
+                int code;
+                CrossInfo.HiddenExec("powershell.exe", "-OutputFormat Text -Command -", Script, out output, out code);
+                StringReader rdr = new StringReader(output);
+                string line;
+                string group = null;
+                Dictionary<string, string> ret = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+                while ((line = rdr.ReadLine()) != null)
+                {
+                    var p = line.IndexOf(":");
+                    if (p < 0) continue;
+                    string key = p > 0 ? line.Substring(0, p).Trim() : "";
+                    string value = p < line.Length - 1 ? line.Substring(p + 1).Trim() : "";
+                    if (string.IsNullOrEmpty(key)) continue;
+                    if (key == "group-header")
+                        group = value;
+                    else
+                        ret[group + "." + key] = value;
+                }
+
+                return ret;
+            }
+        }
+
+        static void Trace_WriteLine(object message)
+        {
+
+#if NETCORE
+            Debug.WriteLine(message);
+#else
+            Trace.WriteLine(message);
+#endif
+        }
 
     }
+
 
 }
 
