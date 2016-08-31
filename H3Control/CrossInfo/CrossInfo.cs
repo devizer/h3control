@@ -754,9 +754,9 @@ BuildVersion:	14B25
                     model_name = value;
                 else if ("cpu model".Equals(key, comp))
                     cpu_model = value;
-                else if ("Processor".Equals(key, comp))
+                else if ("Processor".Equals(key, StringComparison.Ordinal))
                     processor = value;
-                else if ("Hardware".Equals(key, comp))
+                else if ("Hardware".Equals(key, StringComparison.Ordinal))
                     hardware = value;
 
                 else if ("cache size".Equals(key, comp))
@@ -1152,7 +1152,6 @@ BuildVersion:	14B25
         public static void AttachUnitTrace()
         {
 #if !NETCORE
-            long workingSet64 = Process.GetCurrentProcess().WorkingSet64;
             lock (SyncAttachUnitTrace)
             {
                 if (!HasDefaultTraceListener())
@@ -1188,17 +1187,7 @@ BuildVersion:	14B25
                 {
                     _UnitTraceAttached = true;
                     IsLinuxOnArm.ToString();
-                    Trace.WriteLine("");
-                    Trace.WriteLine("Platform .......... " + CrossInfo.ThePlatform + ", " + (BitConverter.IsLittleEndian ? "little-endian" : "big-endian"));
-                    Trace.WriteLine("Is Linux on Arm ... " + CrossInfo.IsLinuxOnArm);
-                    Trace.WriteLine("Runtime ........... " + CrossInfo.RuntimeDisplayName);
-                    Trace.WriteLine("OS ................ " + CrossInfo.OsDisplayName);
-                    Trace.WriteLine("CPU ............... " + CrossInfo.ProcessorName);
-                    var totalMem = TotalMemory == null ? "n/a" : string.Format("{0:n0} Mb", TotalMemory/1024);
-                    Trace.WriteLine("Memory ............ " + totalMem + "; Working Set: " + (workingSet64 / 1024L / 1024).ToString("n0") + " Mb");
-                    Trace.WriteLine("GDI Plus .......... " + CrossInfo.GdiPlus);
-                    Trace.WriteLine("");
-
+                    Trace.WriteLine(Environment.NewLine + HumanReadableEnvironment(3) + Environment.NewLine);
                 }
             }
 #endif
