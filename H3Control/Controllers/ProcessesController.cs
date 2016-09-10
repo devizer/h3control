@@ -28,6 +28,7 @@ namespace H3Control.Controllers
             if (isIe8OrBelow)
                 foreach (var pi in list)
                     pi.Args = pi.Args != null && pi.Args.Length > 80 ? (pi.Args.Substring(0, 77) + "...") : pi.Args;
+
             return list;
         }
 

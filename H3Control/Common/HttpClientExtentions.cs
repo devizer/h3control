@@ -1,6 +1,7 @@
 namespace Universe
 {
     using System;
+    using System.Collections;
     using System.Diagnostics;
     using System.Net;
     using System.Net.Http;
@@ -12,6 +13,9 @@ namespace Universe
     {
         public static Task<string> GetAsStringAsync(this HttpClient client, string url)
         {
+            if (client == null)
+                throw new ArgumentNullException("client");
+
             Task<HttpResponseMessage> taskGet;
             try
             {
