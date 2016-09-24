@@ -31,6 +31,36 @@
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, .05), 0 1px 0 rgba(255, 255, 255, .1);
 }
 
+#flushing_kernel_popup {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    display: none;
+    margin: 2em 1em 2em 1em;
+    min-width: 666px;
+    max-width: 666px;
+    width: 666px;
+    /* height: 120px; */
+    text-align: center;
+    word-break: break-all;
+
+    border: 1px solid black;
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 4px;
+    padding: 30px 11px;
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .15), 0px 1px 2px rgba(255, 255, 255, .1);
+            box-shadow: inset 0px 1px 2px rgba(0, 0, 0, .15), 0px 1px 2px rgba(255, 255, 255, .1);
+}
+
+#flushing_kernel_popup {
+    transform: scale(0.6) translateY(-50px);
+}
+
+.popup_visible #flushing_kernel_popup {
+    transform: scale(1) translateY(0px);
+}
+
+
+
 #whatsnew_content {
      padding: 0 5px 0 5px
 }

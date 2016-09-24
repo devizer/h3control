@@ -328,8 +328,48 @@ function BindMemoryUsage(mem) {
             method: "POST",
             dataType: "json"
         });
+
+        LaunchFlushBuffers();
     });
 
+}
+
+function LaunchFlushBuffers() {
+
+    var divFlush = $('#flushing_kernel_popup');
+    divFlush.popup({
+        transition: 'all 0.3s',
+        pagecontainer: ".container"
+    });
+    divFlush.popup("show");
+    console.log("flushing cache animation: " + divFlush.getElementPath());
+
+    var content = $("#flushing_kernel_popup_content");
+    var content0 = content[0];
+    var anchor = {};
+    jQuery.data(content0, "anchor", anchor);
+    var text = "flushing kernel buffers ";
+    var n = 0;
+    var callBack;
+    var startAt = +new Date();
+    callBack = function () {
+        if (anchor === jQuery.data(content0, "anchor")) {
+            n++;
+            text += "<span style='font-size:1px;'> </span>.";
+
+            content.html(text);
+            // console.log(text);
+            var now = +new Date();
+            var itsTime = now - startAt > 7000;
+            if (n === 500 || itsTime) {
+                divFlush.popup("hide");
+            } else {
+                window.setTimeout(callBack, 1);
+            }
+        }
+    }
+
+    callBack();
 }
 
 function BindHasAccess(hasAccess) {
