@@ -9,11 +9,11 @@ mono:
   - latest
 install:
   - if test "$TRAVIS_OS_NAME" == "linux"; then
-      sudo apt-get install -y zlib1g zlib1g-dev
-      sudo apt-get install -y sysbench ffmpeg redis-server memcached
-      sudo apt-get install -y python-qt4 libqt4-webkit python-pip xvfb
-      ffmpeg -codecs
-      printenv
+      sudo apt-get install -y zlib1g zlib1g-dev;
+      sudo apt-get install -y sysbench ffmpeg redis-server memcached;
+      sudo apt-get install -y python-qt4 libqt4-webkit python-pip xvfb;
+      ffmpeg -codecs;
+      printenv;
     fi
   - nuget restore H3Control.sln 
   - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
