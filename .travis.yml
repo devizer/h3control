@@ -62,7 +62,7 @@ script:
       bash -e travis-plugins/download-mono-3.2.8;
       export PATH="$HOME/mono-3.2.8/bin:$PATH";
       export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH";
-      bash -e H3Control.tests.sh;
+      # bash -e H3Control.tests.sh;
     fi
   
 
