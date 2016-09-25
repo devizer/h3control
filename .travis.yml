@@ -32,7 +32,7 @@ script:
   - mono --version
   - java -version
   
-  - if if test "$TRAVIS_OS_NAME" == "linux"; then
+  - if test "$TRAVIS_OS_NAME" == "linux"; then
       ls -l /usr/bin/cli*;
       cat /etc/*release;
       cat /proc/cpuinfo;
