@@ -57,13 +57,13 @@ script:
   - # apt-cache search mono | sort
 
   - # bash -e travis-plugins/build-mono-3.2.8
-  - if test "$TRAVIS_OS_NAME" == "linux"; then
-      bash travis-plugins/show-perfomance.sh;
-      bash -e travis-plugins/download-mono-3.2.8;
-      export PATH="$HOME/mono-3.2.8/bin:$PATH";
-      export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH";
-      # bash -e H3Control.tests.sh;
-    fi
+  - # if test "$TRAVIS_OS_NAME" == "linux"; then
+    #   bash travis-plugins/show-perfomance.sh;
+    #   bash -e travis-plugins/download-mono-3.2.8;
+    #   export PATH="$HOME/mono-3.2.8/bin:$PATH";
+    #   export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH";
+    #   bash -e H3Control.tests.sh;
+    # fi
   
 
 #  - bash travis-plugins/download-mono-2.11.4
