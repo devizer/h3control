@@ -1,4 +1,9 @@
 language: csharp
+
+os:
+  - linux
+  - osx
+
 solution: H3Control.sln 
 mono:
   - latest
