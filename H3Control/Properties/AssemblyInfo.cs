@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("H3Control")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("h3control is a console/daemon for H3 based PI boards. It displays temperature, frequency and usage via built-in http server. It allows to control min/max cpu and ddr frequency.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Vlad")]
 [assembly: AssemblyProduct("H3Control")]

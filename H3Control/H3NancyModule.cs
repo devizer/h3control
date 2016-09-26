@@ -194,6 +194,7 @@ namespace H3Control
             var ret = Response.AsText(html);
             ret.ContentType = "text/html";
             return ret;
+            
         }
 
 
