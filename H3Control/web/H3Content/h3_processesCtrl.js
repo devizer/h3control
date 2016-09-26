@@ -24,7 +24,7 @@ appH3.controller('processesCtrl', function ($scope, $http) {
         var sign;
         sign = "&#9679;";
         sign = '<span class="glyphicon glyphicon-sort-by-attributes-alt" style="float:right"></span>';
-        sign = '<span class="glyphicon glyphicon-arrow-down" style="float:right"></span>';
+        sign = '<span class="glyphicon glyphicon-arrow-down SelectedSortMark"></span>';
         return column === $scope.order ? sign : "";
     }
 
