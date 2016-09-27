@@ -38,7 +38,6 @@ namespace Sandbox
                 p.UserProcessorTime,
                 p.TotalProcessorTime
                 );
-
         }
     }
 }
