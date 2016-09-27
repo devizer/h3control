@@ -17,8 +17,6 @@ namespace H3Control
     class H3PreCompiler
     {
         
-        I AM Compiler ERROR1
-        
         public static void Compile(string baseUrl)
         {
             if (baseUrl.StartsWith("http://*:") && baseUrl.Length > 9)

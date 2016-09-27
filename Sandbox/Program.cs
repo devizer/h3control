@@ -30,11 +30,6 @@ namespace Sandbox
 
         }
 
-        private static void Perform1()
-        {
-            byte[] mem = new byte[20000];
-        }
-
         static void Dump()
         {
             Process p = Process.GetCurrentProcess();
