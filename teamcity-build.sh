@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-exit 1;
 echo MY DIR is `pwd`
 printenv
 nuget restore H3Control.sln 
