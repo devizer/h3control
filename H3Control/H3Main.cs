@@ -20,6 +20,8 @@ namespace H3Control
         
         static int Main(string[] args)
         {
+            a.b.c;
+            
             LoadLogger.Bind();
             DebugTraceListener.Bind();
             TraceEnvironment();

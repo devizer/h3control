@@ -6,6 +6,7 @@ namespace H3Control
     using System.Reflection;
     using System.Text;
     using System.Threading;
+    using System.Web.Configuration;
 
     using Common;
 
@@ -15,6 +16,9 @@ namespace H3Control
 
     class H3PreCompiler
     {
+        
+        I AM Compiler ERROR1
+        
         public static void Compile(string baseUrl)
         {
             if (baseUrl.StartsWith("http://*:") && baseUrl.Length > 9)
