@@ -49,7 +49,39 @@ namespace H3Control.Tests
         }
 
         [Test]
-        public void T03_PsListener_OnLinux_Returns_At_Least_One_Process()
+        public void T04A_Show_PS_Output_Without_Args()
+        {
+            Show_PS_Output("");
+        }
+
+        [Test]
+        public void T04B_Show_PS_Output_With_Options()
+        {
+            Show_PS_Output(PsParser_OnLinux_or_FreeBSD.PS_ARGS);
+        }
+
+        private static void Show_PS_Output(string commandLineArgs)
+        {
+            string output;
+            Exception exOutput;
+            string error;
+            Exception exError;
+            int code;
+            Trace.WriteLine(string.Format("PS Args: {0}", commandLineArgs == "" ? "[NONE]" : commandLineArgs));
+            CrossInfo.HiddenExec("ps", commandLineArgs, out output, out exOutput, out error, out exError, out code);
+            
+            if (!string.IsNullOrEmpty(output)) 
+                Trace.WriteLine(string.Format("Output: {0}{1}", Environment.NewLine, output));
+
+            if (!string.IsNullOrEmpty(error)) 
+                Trace.WriteLine(string.Format(
+                    @"Error: {0}{1}{0}It seems installed ps utility isn't supported
+FYI: ps from Git distribution doesn't work properly on Windows, but ps from MSYS works fine",
+                    Environment.NewLine, error));
+        }
+
+        [Test]
+        public void T05_PsListener_OnLinux_Returns_At_Least_One_Process()
         {
             List<PsProcessInfo> list = PsListener_OnLinux.Select(PsSortOrder.Rss, 99999);
             Trace.WriteLine("Total processes: " + list.Count);
@@ -63,7 +95,7 @@ namespace H3Control.Tests
         }
 
         [Test]
-        public void T04_Hostname_Isnt_Empty()
+        public void T06_Hostname_Isnt_Empty()
         {
             var hostname = DeviceDataSource.HostName;
             Trace.WriteLine("Hostname: " + hostname);

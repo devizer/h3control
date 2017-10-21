@@ -13,6 +13,7 @@
 
     public class PsParser_OnLinux_or_FreeBSD
     {
+        public static readonly string PS_ARGS = "ax -o pid,pcpu,rss,vsz,args";
         private static readonly string[] ColumnKeys = new[] { "pid", "pcpu", "rss", "vsz", "args" };
 
         public static List<PsProcessInfo> Select(PsSortOrder order = PsSortOrder.Cpu, int top = 5)
@@ -20,7 +21,7 @@
             Stopwatch watch = Stopwatch.StartNew();
             // on FreeBSD `size` should be changed to vsz or vsize
             // https://www.freebsd.org/cgi/man.cgi?ps(1)
-            ProcessStartInfo si = new ProcessStartInfo("ps", "ax -o pid,pcpu,rss,vsz,args");
+            ProcessStartInfo si = new ProcessStartInfo("ps", PS_ARGS);
             si.UseShellExecute = false;
             si.CreateNoWindow = true;
             si.RedirectStandardOutput = true;
