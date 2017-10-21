@@ -9,3 +9,9 @@ done
 echo "[/t]"
 echo ""
 
+echo '
+sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run
+sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=2 run
+'
+
+

@@ -34,8 +34,6 @@ appH3.controller('processesCtrl', function ($scope, $http) {
     }
 
 
-
-
     $scope.reSize = function(delta) {
 
         $(".PList-resize button").each(function(index) {
