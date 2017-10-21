@@ -13,7 +13,7 @@ namespace H3Control.Tests
     public class A0_Test_GZip : BaseTest
     {
         [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        public override void TestFixtureSetUp()
         {
             Console.WriteLine("Process: '" + Process.GetCurrentProcess().ProcessName + "'");
         }

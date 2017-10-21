@@ -61,8 +61,10 @@ namespace H3Control.Tests
 
             int counter = 0;
             var swLaunch = Stopwatch.StartNew();
-            bool isPPC = "ppc".Equals(CrossInfo.ProcessorName, StringComparison.InvariantCultureIgnoreCase);
-            var timeoutScale = isPPC ? 5 : 1;
+            var slowProcList = new[] {"ppc", "aarch64"};
+            bool isSlowPC = slowProcList.Any(x => CrossInfo.ProcessorName.ToLower().IndexOf(x) >= 0);
+            var timeoutScale = isSlowPC ? 5 : 1;
+            if (isSlowPC) Trace.WriteLine("Slow PC: So, wait for server launch is " + WaitForLaunch / 1000 + " sec");
             bool isOk = PollWithTimeout.Run(WaitForLaunch * timeoutScale, () =>
             {
                 var url = "http://localhost:" + port + "/Ver";
@@ -80,7 +82,7 @@ namespace H3Control.Tests
                 FileVersionInfo fi = FileVersionInfo.GetVersionInfo(file);
                 return "  " + fi.FileVersion;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return "";
             }
@@ -93,7 +95,7 @@ namespace H3Control.Tests
                 var ver = new WebClient().DownloadString(url);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

@@ -12,7 +12,7 @@
     {
         private static Stopwatch StartAt = Stopwatch.StartNew();
         [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        public virtual void TestFixtureSetUp()
         {
             if (Environment.OSVersion.Platform == PlatformID.Unix || CrossInfo.IsMono)
             {
@@ -27,14 +27,14 @@
 
         Stopwatch TestAt = Stopwatch.StartNew();
         [SetUp]
-        public void SetUp()
+        public virtual void SetUp()
         {
             TestAt = Stopwatch.StartNew();
             CrossInfo.NextTest();
         }
 
         [TearDown]
-        public void TearDown()
+        public virtual void TearDown()
         {
             // Trace.WriteLine(Environment.StackTrace + Environment.NewLine);
             var ws1 = (Process.GetCurrentProcess().WorkingSet64/1024L/1024).ToString("n0");
@@ -51,7 +51,7 @@
 
 
         [TestFixtureTearDown]
-        public void TestFixtureTearDown()
+        public virtual void TestFixtureTearDown()
         {
             AppDomain.CurrentDomain.DomainUnload += (sender, args) =>
             {

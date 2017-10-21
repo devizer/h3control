@@ -17,7 +17,7 @@ namespace H3Control.Tests
     public class F0_Test_HttpClientExtentions : BaseTest
     {
         [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        public override void TestFixtureSetUp()
         {
         }
 

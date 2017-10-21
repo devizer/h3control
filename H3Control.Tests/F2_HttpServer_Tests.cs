@@ -26,7 +26,7 @@
         }
         
         [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        public override void TestFixtureSetUp()
         {
             CrossInfo.AttachUnitTrace("H3Control unit tests");
             Launcher = new H3LauncherForTests();
@@ -79,7 +79,6 @@
                 "api/json/processes/by-Size/top-3",
             };
 
-            int counter = 0;
             foreach (var path in urls)
             {
                 var url = BaseUrl + "/" + path;
@@ -87,8 +86,7 @@
                 driller.Dump();
                 Assert.AreEqual(HttpStatusCode.OK, driller.Result.StatusCode);
                 JSonExtentions.CheckFormat(driller.String, path);
-                if (true || ++counter == urls.Length)
-                    NiceTrace.Message(JSonExtentions.Format(driller.String));
+                NiceTrace.Message(JSonExtentions.Format(driller.String));
             }
         }
 
@@ -160,7 +158,7 @@
 
 
         [TestFixtureTearDown]
-        public void TestFixtureTearDown()
+        public override void TestFixtureTearDown()
         {
             if (Launcher != null)
             {

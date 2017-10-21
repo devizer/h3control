@@ -19,7 +19,7 @@ namespace H3Control.Tests
     public class F1_Integration_Tests : BaseTest
     {
         [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        public override void TestFixtureSetUp()
         {
             if (CrossInfo.ThePlatform == CrossInfo.Platform.Linux)
             {
