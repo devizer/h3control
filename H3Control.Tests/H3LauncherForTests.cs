@@ -63,7 +63,7 @@ namespace H3Control.Tests
             var swLaunch = Stopwatch.StartNew();
             var slowProcList = new[] {"ppc", "aarch64"};
             bool isSlowPC = slowProcList.Any(x => CrossInfo.ProcessorName.ToLower().IndexOf(x) >= 0);
-            var timeoutScale = isSlowPC ? 5 : 1;
+            var timeoutScale = isSlowPC ? 15 : 1;
             if (isSlowPC) Trace.WriteLine("Slow PC: So, wait for server launch is " + WaitForLaunch / 1000 + " sec");
             bool isOk = PollWithTimeout.Run(WaitForLaunch * timeoutScale, () =>
             {
