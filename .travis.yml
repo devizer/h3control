@@ -2,7 +2,7 @@ language: csharp
 
 os:
   - linux
-#  - osx
+  - osx
 
 solution: H3Control.sln 
 mono:
