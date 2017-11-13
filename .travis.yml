@@ -11,66 +11,66 @@ install:
   - nuget restore H3Control.sln 
   - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-  - if test "$TRAVIS_OS_NAME" == "linux"; then
-      sudo apt-get install -y zlib1g zlib1g-dev;
-      sudo apt-get install -y sysbench ffmpeg redis-server memcached;
-      # sudo apt-get install -y python-qt4 libqt4-webkit python-pip xvfb;
-      ffmpeg -codecs;
-      printenv;
-    fi
-  - bash -c printenv
-  - bash travis-plugins/show-nuget.sh
-  - echo HOME IS $HOME
-  - echo PATH IS $PATH
-  - file /usr/bin/cli
-  - /usr/bin/cli || true
-  - /usr/bin/cli --help || true
-  - /usr/bin/cli /? || true
-  - /usr/bin/cli -h || true
-  - uname -a
-  - apt-cache showpkg libc6 | head -3
-  - gcc --version
-  - mono --version
-  - java -version
-  
-  - if test "$TRAVIS_OS_NAME" == "linux"; then
-      ls -l /usr/bin/cli*;
-      cat /etc/*release;
-      cat /proc/cpuinfo;
-      cat /proc/meminfo;
-      sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run > /dev/null;
-      sysbench --test=memory --memory-block-size=1M --memory-total-size=10G run;
-      sysbench --test=cpu --cpu-max-prime=20000 --max-time=5 --num-threads=1 run;
-    fi
-
-  - #du -h -d 4
-  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
-  - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
-  - bash -e H3Control.tests.sh
-  
-  - ######## THE END ######################## MONO 3.2.8?
-  - # sudo apt-get remove mono-runtime -y
-  - # sudo apt-get remove mono-complete -y
-  - # sudo apt-get remove mono-mcs -y
-  - # bash travis-plugins/build-mono-3.2.8
-  - # echo SO, PATH IS $PATH
-  - # mono --version
-  - # xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
-  - # mono --runtime=v4.0 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - # mono --runtime=v4.0 --debug $HOME/mono-3.2.8/lib/mono/4.5/nunit-console.exe          -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - # mono --runtime=v4.0 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe          -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
-  - # apt-cache search mono | sort
-
-  - # bash -e travis-plugins/build-mono-3.2.8
-  - #  if test "$TRAVIS_OS_NAME" == "linux"; then
-    #    bash travis-plugins/show-perfomance.sh;
-    #    bash travis-plugins/download-mono-3.2.8;
-    #    export PATH="$HOME/mono-3.2.8/bin:$PATH";
-    #    export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH";
-    #    bash H3Control.tests.sh;
-    #  fi
-  -
-
+    - if test "$TRAVIS_OS_NAME" == "linux"; then
+        sudo apt-get install -y zlib1g zlib1g-dev;
+        sudo apt-get install -y sysbench ffmpeg redis-server memcached;
+        # sudo apt-get install -y python-qt4 libqt4-webkit python-pip xvfb;
+        ffmpeg -codecs;
+        printenv;
+      fi
+    - bash -c printenv
+    - bash travis-plugins/show-nuget.sh
+    - echo HOME IS $HOME
+    - echo PATH IS $PATH
+    - file /usr/bin/cli
+    - /usr/bin/cli || true
+    - /usr/bin/cli --help || true
+    - /usr/bin/cli /? || true
+    - /usr/bin/cli -h || true
+    - uname -a
+    - apt-cache showpkg libc6 | head -3
+    - gcc --version
+    - mono --version
+    - java -version
+    
+    - if test "$TRAVIS_OS_NAME" == "linux"; then
+        ls -l /usr/bin/cli*;
+        cat /etc/*release;
+        cat /proc/cpuinfo;
+        cat /proc/meminfo;
+        sysbench --test=cpu --cpu-max-prime=20000 --max-time=1 --num-threads=1 run > /dev/null;
+        sysbench --test=memory --memory-block-size=1M --memory-total-size=10G run;
+        sysbench --test=cpu --cpu-max-prime=20000 --max-time=5 --num-threads=1 run;
+      fi
+   
+    - #du -h -d 4
+    - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
+    - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
+    - bash -e H3Control.tests.sh
+    
+    - ######## THE END ######################## MONO 3.2.8?
+    - # sudo apt-get remove mono-runtime -y
+    - # sudo apt-get remove mono-complete -y
+    - # sudo apt-get remove mono-mcs -y
+    - # bash travis-plugins/build-mono-3.2.8
+    - # echo SO, PATH IS $PATH
+    - # mono --version
+    - # xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
+    - # mono --runtime=v4.0 --debug ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+    - # mono --runtime=v4.0 --debug $HOME/mono-3.2.8/lib/mono/4.5/nunit-console.exe          -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+    - # mono --runtime=v4.0 --debug --desktop $HOME/bin/nunit-260/nunit-console.exe          -labels ./H3Control.Tests/bin/Debug/H3Control.Tests.dll
+    - # apt-cache search mono | sort
+   
+    - # bash -e travis-plugins/build-mono-3.2.8
+    - #  if test "$TRAVIS_OS_NAME" == "linux"; then
+      #    bash travis-plugins/show-perfomance.sh;
+      #    bash travis-plugins/download-mono-3.2.8;
+      #    export PATH="$HOME/mono-3.2.8/bin:$PATH";
+      #    export LD_LIBRARY_PATH="$HOME/mono-3.2.8/lib:$LD_LIBRARY_PATH";
+      #    bash H3Control.tests.sh;
+      #  fi
+    -
+   
 #  - bash travis-plugins/download-mono-2.11.4
 #  - export PATH="$HOME/mono-2.11.4/bin:$PATH"
 #  - export LD_LIBRARY_PATH="$HOME/mono-2.11.4/lib:$LD_LIBRARY_PATH"
