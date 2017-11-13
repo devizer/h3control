@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin.Hosting;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,11 +40,13 @@ namespace H3Control
             string binding = "*:5000";
             bool help = false, nologo = false, isver = false;
             string generatePasswordHash = null;
+            string pidFileFullPath = GetDefaultPidFilePath();
             var p = new OptionSet()
             {
                 {"b|binding=", "Http binding, e.g. ip:port. Default is *:5000 (asterisk means all IPs)", v => binding = v},
                 {"w|white-list=", "Comma separated IPs. Default or empty arg turns restrictions off", v => H3WhiteListConfig.WhiteListArg = v},
                 {"g|generate-pwd=", "Generate password hash (encrypt) and exit", v => generatePasswordHash = v},
+                {"pid-file=", "pid-file path, default is /var/run/h3control.pid", v => pidFileFullPath = v},
                 {"p|password=", "HASH of the desired password", v => H3PasswordConfig.Hash = v},
                 {"v|version", "Show version", v => isver = true},
                 {"h|?|help", "Display this help", v => help = v != null},
@@ -76,6 +79,8 @@ namespace H3Control
                 p.WriteOptionDescriptions(Console.Out);
                 return 0;
             }
+
+            bool isPidCreated = CreatePidFile(pidFileFullPath);
 
             NewVerListener.Listen();
 
@@ -112,6 +117,11 @@ namespace H3Control
 
             if (DebugTraceListener.LogFolder != null)
                 cfgInfo.AppendLine("   * Logs are located in " + DebugTraceListener.LogFolder);
+
+            if (isPidCreated)
+                cfgInfo.AppendLine("   * Pid file location: " + pidFileFullPath);
+            else
+                cfgInfo.AppendLine("   * Warning! pid file " + pidFileFullPath + "did not created");
 
             DrunkActionExtentions.TryAndForget(() =>
             {
@@ -217,6 +227,49 @@ namespace H3Control
             }
             catch (Exception)
             {
+            }
+        }
+
+        static string GetDefaultPidFilePath()
+        {
+            string ret = "/var/run/h3control.pid";
+            try
+            {
+                if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
+                    ret =
+                        Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                            "run\\h3control.pid");
+            }
+            catch 
+            {
+            }
+
+            return ret;
+        }
+
+        static bool CreatePidFile(string fullPath)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                using (FileStream fs = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter wr = new StreamWriter(fs, Encoding.ASCII))
+                {
+                    wr.WriteLine(Process.GetCurrentProcess().Id);
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }
