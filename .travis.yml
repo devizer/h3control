@@ -6,7 +6,7 @@ os:
 solution: H3Control.sln 
 mono:
   - latest
-  - 3.2.8
+  - 3.12.0
 install:
   - nuget restore H3Control.sln 
   - # nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
