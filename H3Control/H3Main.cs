@@ -41,15 +41,15 @@ namespace H3Control
             bool help = false, nologo = false, isver = false;
             string generatePasswordHash = null;
             string pidFileFullPath = GetDefaultPidFilePath();
-            var p = new OptionSet()
+            var p = new OptionSet(StringComparer.InvariantCultureIgnoreCase)
             {
-                {"b|binding=", "Http binding, e.g. ip:port. Default is *:5000 (asterisk means all IPs)", v => binding = v},
-                {"w|white-list=", "Comma separated IPs. Default or empty arg turns restrictions off", v => H3WhiteListConfig.WhiteListArg = v},
-                {"g|generate-pwd=", "Generate password hash (encrypt) and exit", v => generatePasswordHash = v},
-                {"pid-file=", "pid-file path, default is /var/run/h3control.pid", v => pidFileFullPath = v},
-                {"p|password=", "HASH of the desired password", v => H3PasswordConfig.Hash = v},
-                {"v|version", "Show version", v => isver = true},
-                {"h|?|help", "Display this help", v => help = v != null},
+                {"b|Binding=", "Http binding, e.g. ip:port. Default is *:5000 (asterisk means all IPs)", v => binding = v},
+                {"w|White-list=", "Comma separated IPs. Default or empty arg turns restrictions off", v => H3WhiteListConfig.WhiteListArg = v},
+                {"g|Generate-pwd=", "Generate password hash (encrypt) and exit", v => generatePasswordHash = v},
+                {"f|pid-File=", "pid-file path, default is either /var/run/h3control.pid or /tmp/h3control.pid", v => pidFileFullPath = v},
+                {"p|Password=", "HASH of the desired password", v => H3PasswordConfig.Hash = v},
+                {"v|Version", "Show version", v => isver = true},
+                {"h|?|Help", "Display this help", v => help = v != null},
                 {"n|nologo", "Hide logo", v => nologo = v != null}
             };
 
@@ -232,20 +232,23 @@ namespace H3Control
 
         static string GetDefaultPidFilePath()
         {
+            string[] candidates = new[] {"/var/run/h3control.pid", "/tmp/h3control.pid"};
             string ret = "/var/run/h3control.pid";
             try
             {
                 if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
-                    ret =
+                    candidates = new[]
+                    {
                         Path.Combine(
                             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                            "run\\h3control.pid");
+                            "run\\h3control.pid")
+                    };
             }
             catch 
             {
             }
 
-            return ret;
+            return candidates.First();
         }
 
         static bool CreatePidFile(string fullPath)

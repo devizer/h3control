@@ -498,12 +498,16 @@ namespace NDesk.Options {
 		{
 		}
 
-		public OptionSet (Converter<string, string> localizer)
+		public OptionSet (Converter<string, string> localizer) : this(StringComparer.InvariantCulture)
 		{
 			this.localizer = localizer;
 		}
 
-		Converter<string, string> localizer;
+	    public OptionSet(IEqualityComparer<string> comparer) : base(comparer)
+	    {
+	    }
+
+	    Converter<string, string> localizer = delegate (string f) { return f; };
 
 		public Converter<string, string> MessageLocalizer {
 			get {return localizer;}
@@ -740,6 +744,7 @@ namespace NDesk.Options {
 			}
 			if (c.Option != null)
 				c.Option.Invoke (c);
+
 			return unprocessed;
 		}
 #endif
