@@ -1,0 +1,7 @@
+<!-- cruisecontrol integration -->
+<project name="h3control" default="all">
+    <target name="all">
+        <echo message="Building h3control" />
+        <exec command="bash -c 'echo DIRECTORY: $(pwd)'" />
+    </target>
+</project>
