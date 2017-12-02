@@ -67,7 +67,7 @@ namespace H3Control.Tests
             if (isSlowPC) Trace.WriteLine("Slow PC: So, wait for server launch is " + WaitForLaunch / 1000 + " sec");
             bool isOk = PollWithTimeout.Run(WaitForLaunch * timeoutScale, () =>
             {
-                var url = "http://localhost:" + port + "/Ver";
+                var url = "http://localhost:" + port + "/";
                 NiceTrace.Message("Try #{0} {1}", ++counter, url);
                 return FastCheck(url);
             }, pollInterval: 333 * timeoutScale);
