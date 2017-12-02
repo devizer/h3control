@@ -29,14 +29,14 @@ namespace H3Control.Tests
 
             try
             {
-                byte[] plain = {(byte) 5, 4, 3, 2, 1};
+                byte[] plain = {(byte) 6, 5, 4, 3, 2, 1};
                 MemoryStream mem = new MemoryStream();
                 using (GZipStream gzip = new GZipStream(mem, CompressionLevel.Optimal, true))
                 {
                     gzip.Write(plain, 0, plain.Length);
                 }
 
-                Trace.WriteLine("Compressed {5,4,3,2,1} length is " + mem.Length);
+                Trace.WriteLine("Compressed {6,5,4,3,2,1} length is " + mem.Length);
 
                 mem.Position = 0;
                 MemoryStream copy = new MemoryStream();
