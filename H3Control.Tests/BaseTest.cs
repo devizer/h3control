@@ -30,6 +30,12 @@
         public virtual void SetUp()
         {
             TestAt = Stopwatch.StartNew();
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRAVIS")))
+            {
+                Trace.Listeners.Add(new ConsoleTraceListener());
+                return;
+            }
+
             try
             {
                 CrossInfo.NextTest();
