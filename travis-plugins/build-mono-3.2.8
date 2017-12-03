@@ -38,10 +38,11 @@ time (wget -q -nv -O - http://download.mono-project.com/sources/mono/mono-$monov
 cd ~/src/mono-$monover
 export CFLAGS="-O2"
 export CPPFLAGS="-O2"
-time (./autogen.sh --with-static_mono=yes --with-shared_mono=no --with-mcs-docs=no --disable-nls --with-profile2=no --with-profile4=no --with-profile4_5=yes --disable-boehm --prefix=$HOME/mono-$monover)
+time (./autogen.sh --with-static_mono=yes --with-shared_mono=no --with-mcs-docs=no --disable-nls --with-profile2=no --with-profile4=no --with-profile4_5=yes --disable-boehm --with-ikvm-native=no --enable-minimal=profiler,attach,com --prefix=$HOME/mono-$monover)
 time ( make -j3 )
 echo '##################################### MAKE MONO: DONE ##########################'
 sudo make install
+
 
 $HOME/mono-$monover/bin/mono --version
 
