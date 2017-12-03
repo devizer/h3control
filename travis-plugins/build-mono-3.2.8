@@ -36,8 +36,8 @@ cd ~/src
 time (wget -q -nv -O - http://download.mono-project.com/sources/mono/mono-$monover.tar.bz2 | tar xjf -)
 
 cd ~/src/mono-$monover
-export CFLAGS="-O2"
-export CPPFLAGS="-O2"
+export CFLAGS="-O0"
+export CPPFLAGS="-O0"
 time (./autogen.sh --with-static_mono=yes --with-shared_mono=no --with-mcs-docs=no --disable-nls --with-profile2=no --with-profile4=no --with-profile4_5=yes --disable-boehm --with-ikvm-native=no --enable-minimal=profiler,attach,com --prefix=$HOME/mono-$monover)
 time ( make -j4 )
 echo -e "\n\n\n##################################### MAKE MONO: DONE ##########################"
