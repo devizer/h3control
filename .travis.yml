@@ -33,8 +33,11 @@ script:
     - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
     - bash -e H3Control.tests.sh
 
-    - # | grep -E '(CC|MCS|Entering.directory)'
-    - bash travis-plugins/build-mono-3.2.8 
+    - # 
+    - bash travis-plugins/build-mono-3.2.8 2>/dev/null | grep -E '(CC|MCS|Entering.directory)'
+
+    - export PATH="$HOME/mono-3.2.8/bin:$PATH"
+      bash teamcity-build.sh 
     
     - ######## THE END ######################## MONO 3.2.8?
     - # sudo apt-get remove mono-runtime -y
