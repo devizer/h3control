@@ -1,3 +1,5 @@
+using Universe.TinyGZip;
+
 namespace H3Control.Tests
 {
     using System;
@@ -29,18 +31,19 @@ namespace H3Control.Tests
 
             try
             {
+                Trace.WriteLine("Is System GZip supported: " + GZipExtentions.IsSystemGZipSupported);
                 byte[] plain = {(byte) 6, 5, 4, 3, 2, 1};
-                MemoryStream mem = new MemoryStream();
-                using (GZipStream gzip = new GZipStream(mem, CompressionLevel.Optimal, true))
+                MemoryStream memGZipped = new MemoryStream();
+                using (Stream gzip = GZipExtentions.CreateCompressor(memGZipped, true))
                 {
                     gzip.Write(plain, 0, plain.Length);
                 }
 
-                Trace.WriteLine("Compressed {6,5,4,3,2,1} length is " + mem.Length);
+                Trace.WriteLine("Compressed {6,5,4,3,2,1} length is " + memGZipped.Length);
 
-                mem.Position = 0;
+                memGZipped.Position = 0;
                 MemoryStream copy = new MemoryStream();
-                using (GZipStream ungzip = new GZipStream(mem, CompressionMode.Decompress, true))
+                using (Stream ungzip = GZipExtentions.CreateDecompressor(memGZipped, true))
                 {
                     ungzip.CopyTo(copy);
                 }

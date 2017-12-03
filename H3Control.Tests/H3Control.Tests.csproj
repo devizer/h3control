@@ -122,6 +122,7 @@
     <Compile Include="H3LauncherForTests.cs" />
     <Compile Include="F2_HttpServer_Tests.cs" />
     <Compile Include="F1_Integration_Tests.cs" />
+    <Compile Include="Links\Universe.TinyGZip.cs" />
     <Compile Include="PollWithTimeout.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
