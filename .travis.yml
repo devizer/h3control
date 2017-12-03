@@ -6,7 +6,6 @@ os:
 solution: H3Control.sln 
 mono:
   - latest
-  - 3.12.1
 
 install:
   - nuget restore H3Control.sln 
