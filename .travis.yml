@@ -36,8 +36,8 @@ script:
     - # 
     - bash travis-plugins/build-mono-3.2.8 2>/dev/null | grep -E '(CC|MCS|Entering.directory)'
 
-    - sudo apt-get purge mono-runtime -y;
-      export PATH="$HOME/mono-3.2.8/bin:$PATH";
+     
+    - export PATH="$HOME/mono-3.2.8/bin:$PATH";
       mono --version;
       bash teamcity-build.sh
     
