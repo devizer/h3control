@@ -31,6 +31,8 @@ script:
     - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Release /verbosity:minimal
     - xbuild $TRAVIS_SOLUTION /t:Rebuild /p:Configuration=Debug   /verbosity:minimal
     - bash -e H3Control.tests.sh
+
+    - bash travis-plugins/build-mono-3.2.8
     
     - ######## THE END ######################## MONO 3.2.8?
     - # sudo apt-get remove mono-runtime -y
