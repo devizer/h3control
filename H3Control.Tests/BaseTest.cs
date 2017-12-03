@@ -1,4 +1,6 @@
-﻿namespace Universe
+﻿using System.Linq;
+
+namespace Universe
 {
     using System;
     using System.Diagnostics;
@@ -32,7 +34,10 @@
             TestAt = Stopwatch.StartNew();
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRAVIS")))
             {
-                Trace.Listeners.Add(new ConsoleTraceListener());
+                bool has = Trace.Listeners.OfType<ConsoleTraceListener>().Any();
+                if (!has)
+                    Trace.Listeners.Add(new ConsoleTraceListener());
+
                 return;
             }
 
