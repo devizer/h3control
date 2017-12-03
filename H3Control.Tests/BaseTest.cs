@@ -30,7 +30,15 @@
         public virtual void SetUp()
         {
             TestAt = Stopwatch.StartNew();
-            CrossInfo.NextTest();
+            try
+            {
+                CrossInfo.NextTest();
+            }
+            catch (Exception ex)
+            {
+                Trace.Listeners.Add(new ConsoleTraceListener());
+            }
+
         }
 
         [TearDown]
