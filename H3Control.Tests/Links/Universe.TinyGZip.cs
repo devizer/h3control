@@ -1878,7 +1878,7 @@ namespace Universe.TinyGZip.InternalImplementation
     {
         private static bool? _isSupported = null;
         static readonly object Sync = new object();
-        static readonly string _notSupportedMessage = "System.IO.Compression.GZipStream does not support decompression.";
+        static readonly string _notSupportedMessage = "System.IO.Compression.GZipStream does not support compression/decompression.";
 
         public static Stream CreateCompressedFile(string fullPath)
         {
@@ -1949,15 +1949,15 @@ namespace Universe.TinyGZip.InternalImplementation
                 if (!_isSupported.HasValue)
                     lock(Sync)
                         if (!_isSupported.HasValue)
-                            _isSupported = IsSystemGZipSupported_Impl();
+                            _isSupported = IsSystemGZipSupport_Decompress() && IsSystemGZipSupport_Compress();
 
                 return _isSupported.Value;
             }
         }
 
-        static bool IsSystemGZipSupported_Impl()
+        static bool IsSystemGZipSupport_Decompress()
         {
-            byte[] gzipped = {
+            byte[] gzipped = new byte[] {
                 0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x63, 0x65,
                 0x61, 0x66, 0x62, 0x04, 0x00, 0x77, 0x03, 0xd7, 0xc6, 0x05, 0x00, 0x00, 0x00
             };
@@ -1985,6 +1985,30 @@ namespace Universe.TinyGZip.InternalImplementation
                 Trace.WriteLine(_notSupportedMessage + " We are using TinyGZip implementation" + Environment.NewLine + ex);
                 return false;
             }
+        }
+
+        static bool IsSystemGZipSupport_Compress()
+        {
+            byte[] plain = new byte[]{5, 4, 3, 2, 1};
+
+            try
+            {
+                MemoryStream mem = new MemoryStream();
+                using (SysGZip.GZipStream s = new SysGZip.GZipStream(mem, SysGZip.CompressionMode.Compress, false))
+                {
+                    s.Write(plain, 0, plain.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(_notSupportedMessage + " We are using TinyGZip implementation" + Environment.NewLine + ex);
+                return false;
+            }
+
+            if (false)
+                throw new NotSupportedException(_notSupportedMessage);
+
+            return true;
         }
     }
 }
