@@ -16,4 +16,4 @@ echo \ "
 export PATH="/opt/mono/4.4.1.0/bin:$PATH"
 echo MONO VERSION `mono --version | head -1`
 echo _________________________________
-bash teamcity-build.sh
+bash -e teamcity-build.sh
