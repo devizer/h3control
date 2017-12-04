@@ -121,7 +121,7 @@ namespace H3Control
             if (isPidCreated)
                 cfgInfo.AppendLine("   * Pid file location: " + pidFileFullPath);
             else
-                cfgInfo.AppendLine("   * Warning! pid file " + pidFileFullPath + "did not created");
+                cfgInfo.AppendLine("   * Warning! pid file " + pidFileFullPath + " was not created");
 
             DrunkActionExtentions.TryAndForget(() =>
             {
@@ -233,7 +233,6 @@ namespace H3Control
         static string GetDefaultPidFilePath()
         {
             string[] candidates = new[] {"/var/run/h3control.pid", "/tmp/h3control.pid"};
-            string ret = "/var/run/h3control.pid";
             try
             {
                 if (CrossInfo.ThePlatform == CrossInfo.Platform.Windows)
@@ -248,7 +247,9 @@ namespace H3Control
             {
             }
 
-            return candidates.First();
+            string ret = candidates.First();
+            // TODO: Do we need check for access permission?
+            return ret;
         }
 
         static bool CreatePidFile(string fullPath)

@@ -19,7 +19,7 @@ namespace Universe
             {
                 iteration();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
 
