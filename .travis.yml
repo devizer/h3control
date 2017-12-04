@@ -34,11 +34,11 @@ script:
     - bash -e H3Control.tests.sh;
 
       # SKIP Mono 3.2.8 Tests here
-#    -  bash travis-plugins/build-mono-3.2.8 2>/dev/null | grep -E '(CC|MCS|Entering.directory)' ;
-#      export PATH="$HOME/mono-3.2.8/bin:$PATH";
-#      sudo apt-get purge mono-runtime;
-#      mono --version;
-#      (bash -e H3Control.tests.sh) || true
+    - bash travis-plugins/build-mono-3.2.8 2>/dev/null | grep -E '(CC|MCS|Entering.directory)' ;
+      export PATH="$HOME/mono-3.2.8/bin:$PATH";
+      sudo apt-get purge mono-runtime;
+      mono --version;
+      (bash -e H3Control.tests.sh) || true
     
     - ######## THE END ######################## MONO 3.2.8?
     - # sudo apt-get remove mono-runtime -y
