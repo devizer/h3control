@@ -47,7 +47,9 @@ namespace Universe
             }
             catch (Exception)
             {
-                Trace.Listeners.Add(new ConsoleTraceListener());
+                bool has = Trace.Listeners.OfType<ConsoleTraceListener>().Any();
+                if (!has)
+                    Trace.Listeners.Add(new ConsoleTraceListener());
             }
 
         }
