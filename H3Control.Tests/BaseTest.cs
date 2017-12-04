@@ -45,7 +45,7 @@ namespace Universe
             {
                 CrossInfo.NextTest();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Trace.Listeners.Add(new ConsoleTraceListener());
             }
