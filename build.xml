@@ -2,6 +2,6 @@
 <project name="h3control" default="all">
     <target name="all">
         <echo message="Building h3control" />
-        <exec command="bash -c &quot;echo DIRECTORY: $(pwd)&quot;" />
+        <exec command="bash -c &quot;echo DIRECTORY: $(pwd); bash teamcity-build.sh;&quot;" />
     </target>
 </project>
