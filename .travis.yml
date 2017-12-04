@@ -35,6 +35,7 @@ script:
 
     - bash travis-plugins/build-mono-3.2.8 2>/dev/null | grep -E '(CC|MCS|Entering.directory)'
     - export PATH="$HOME/mono-3.2.8/bin:$PATH";
+      sudo apt-get purge mono-runtime;
       mono --version;
       bash -e H3Control.tests.sh
     
