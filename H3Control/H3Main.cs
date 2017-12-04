@@ -40,7 +40,7 @@ namespace H3Control
             string binding = "*:5000";
             bool help = false, nologo = false, isver = false;
             string generatePasswordHash = null;
-            string pidFileFullPath = GetDefaultPidFilePath();
+            string pidFileFullPath = GetDefaultPidFileFullPath();
             var p = new OptionSet(StringComparer.InvariantCultureIgnoreCase)
             {
                 {"b|Binding=", "Http binding, e.g. ip:port. Default is *:5000 (asterisk means all IPs)", v => binding = v},
@@ -230,7 +230,7 @@ namespace H3Control
             }
         }
 
-        static string GetDefaultPidFilePath()
+        static string GetDefaultPidFileFullPath()
         {
             string[] candidates = new[] {"/var/run/h3control.pid", "/tmp/h3control.pid"};
             try
@@ -247,9 +247,9 @@ namespace H3Control
             {
             }
 
-            string ret = candidates.First();
+            string pidFile = candidates.First();
             // TODO: Do we need check for access permission?
-            return ret;
+            return pidFile;
         }
 
         static bool CreatePidFile(string fullPath)
