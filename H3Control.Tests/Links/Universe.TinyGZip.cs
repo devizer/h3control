@@ -517,6 +517,7 @@ namespace Universe.TinyGZip.InternalImplementation
 {
     using System;
 
+    #pragma warning disable 642, 219
     internal sealed class DeflateManager
     {
         private static readonly int MEM_LEVEL_MAX = 9;
@@ -1878,7 +1879,7 @@ namespace Universe.TinyGZip.InternalImplementation
     public class GZipExtentions
     {
         private static bool? _isSupported = null;
-        static readonly object Sync = new object();
+        static readonly object SyncIsSupported = new object();
         static readonly string _notSupportedMessage = "System.IO.Compression.GZipStream does not support compression/decompression.";
 
         public static Stream CreateCompressedFile(string fullPath)
@@ -1948,7 +1949,7 @@ namespace Universe.TinyGZip.InternalImplementation
             get
             {
                 if (!_isSupported.HasValue)
-                    lock(Sync)
+                    lock(SyncIsSupported)
                         if (!_isSupported.HasValue)
                             _isSupported = IsSystemGZipSupport_Decompress() && IsSystemGZipSupport_Compress();
 
@@ -3033,6 +3034,7 @@ namespace Universe.TinyGZip.InternalImplementation
 {
     using System;
 
+    #pragma warning disable 642, 219
     internal sealed class InflateCodes
     {
         private const int START = 0;
@@ -6221,6 +6223,7 @@ namespace Universe.TinyGZip
 
     using InternalImplementation;
 
+    #pragma warning disable 642, 219
     public class ParallelDeflateOutputStream : Stream
     {
         private static readonly int IO_BUFFER_SIZE_DEFAULT = 65536;
@@ -8583,6 +8586,7 @@ namespace Universe.TinyGZip.InternalImplementation
     using System.IO;
     using System.Text;
 
+    #pragma warning disable 642, 219
     internal class ZlibBaseStream : Stream
     {
         protected internal byte[] _buf1 = new byte[1];
