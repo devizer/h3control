@@ -104,7 +104,7 @@ namespace H3Control
 
             string baseUrl = "http://" + binding;
 
-            StringBuilder cfgInfo = new StringBuilder("Configuration by command line:").AppendLine();
+            StringBuilder cfgInfo = new StringBuilder("h3control's configuration by command line:").AppendLine();
             cfgInfo.AppendLine("   * Url is " + baseUrl);
 
             if (H3WhiteListConfig.HasWhiteList)
