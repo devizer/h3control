@@ -44,7 +44,7 @@ namespace H3Control.Tests
                     exe = s;
             }
 
-            string args = "--binding=*:" + port;
+            string args = "--binding=*:" + port + " --pid-file=h3control-test-" + port + ".pid";
             Trace.WriteLine("Launch: " + exe + " " + args);
 
             ProcessStartInfo si;
