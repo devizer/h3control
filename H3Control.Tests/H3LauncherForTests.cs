@@ -14,7 +14,7 @@ namespace H3Control.Tests
     {
         public int H3Pid;
         public Process H3;
-        private static readonly long WaitForLaunch = 30000;
+        private static readonly long WaitForLaunch = 60000;
 
         public void LaunchAndWait(int port)
         {
