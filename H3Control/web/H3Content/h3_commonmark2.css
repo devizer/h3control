@@ -17,25 +17,25 @@
 */
     }
 
-    li code, p code {
-        border: 1px dashed gray;
-        margin-left: 3px;
-        margin-right: 3px;
-        padding-left: 3px;
-        padding-right: 3px;
-        background-color: #F0F0F0;
-        white-space: nowrap;
-    }
+li code, p code {
+    border: 1px dashed gray;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: #F0F0F0;
+    white-space: nowrap;
+}
 
-    .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
-        padding-top: 9px;
-        margin-bottom: 33px;
-        text-transform: none;
-    }
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+    padding-top: 9px;
+    margin-bottom: 33px;
+    text-transform: none;
+}
 
-    .markdown h1 {
-        font-size: 26px;
-    }
+.markdown h1 {
+     font-size: 26px;
+}
 
 .markdown h2 {
   font-size: 24px;
@@ -48,7 +48,7 @@
 
 .markdown h4 {
     font-size: 18px;
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 }
 
 .markdown h5 {
@@ -78,14 +78,14 @@
   padding: 0;
 }
 
-    .markdown ul li, .markdown ol li {
-        margin: 0 0 2px 20px;
-    }
+.markdown ul li, .markdown ol li {
+    margin: 0 0 2px 20px;
+}
 
 .markdown blockquote {
-  border-left: 1px dotted #303030;
-  margin: 40px 0;
-  padding: 5px 30px;
+    border-left: 1px dotted #303030;
+    margin: 40px 0;
+    padding: 5px 30px;
 }
 
 .markdown blockquote p {

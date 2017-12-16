@@ -49,6 +49,8 @@ namespace H3Control
                 this.Expires(scope:CachingScope.None);
                 var model = new DeviceController().GetDevice("me");
                 model.HasChangeAccess = !H3PasswordConfig.IsStricted || Context.CurrentUser.IsAuthenticated();
+                model.Host = Environment.MachineName;
+                model.Ip = this.GetServerIp();
                 var jsonDevice = JSonExtentions.ToNewtonJSon(model, isIntended: !H3Environment.IsRelease);
 
                 List<PsProcessInfo> plist;
@@ -60,6 +62,7 @@ namespace H3Control
                 {
                     plist = new List<PsProcessInfo>();
                 }
+
                 var jsonProcesses = JSonExtentions.ToNewtonJSon(plist, isIntended: !H3Environment.IsRelease);
                 return View["default", new {JSonDevice = jsonDevice, JSonProcesses = jsonProcesses}];
             };
