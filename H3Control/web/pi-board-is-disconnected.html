@@ -4,13 +4,9 @@
     <title>The PI-board is disconnected now</title>
 
         <meta http-equiv="refresh" content="5">
-
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
@@ -20,7 +16,6 @@
         <![endif]-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </head>
   <body>
@@ -30,7 +25,7 @@
        <!-- Jumbotron -->
        <div class="jumbotron2" style='padding: 15px'>
          <h1><i class="fa fa-bolt"></i>&nbsp;&nbsp;The PI-board is disconnected now</h1>
-         <p class="">It happens during upgrade or reboot of the upstream PI-board. 
+         <p class="">
            <span style='background-color: '><script>
              var h=window.location.hostname;
              if (!h) { h='pi-board-live.devizer.xyz'; }
@@ -38,7 +33,7 @@
              if (p=="file:") { p="http:"; }
              document.write(p + "//" + h);
            </script></span> is just a nginx gateway to the PI-board. This error 502 happens during upgrade or reboot of the upstream PI-board. 
-           Usually upgrade/reboot takes <span style='white-space:nowrap'>up to 2-3&nbsp;minutes.</span>
+           <br/>Usually upgrade/reboot takes <span style='white-space:nowrap'>up to 2-3&nbsp;minutes.</span>
          </p>
 
 <!--
@@ -55,7 +50,7 @@
            </ul>
          </p>
 -->         
-         <p class="">If you own a PI-board equipped with H2/H3/H5 CPU, please kindly check up this h3control app on your board: 
+         <p class="">If you own a PI-board equipped with H2/H3/H5 cpu, please kindly check up this h3control app on your board: 
             <a href='https://github.com/devizer/h3control-bin'>install &amp; upgrade one-liners</a>
          </p>
 
