@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Nancy;
+using Nancy.Owin;
 
 namespace Universe
 {
@@ -11,10 +12,10 @@ namespace Universe
         public static string GetServerIp(this NancyModule nancyModule)
         {
             string ret = null;
-            object rawEnv;
-            if (nancyModule.Context.Items.TryGetValue("OWIN_REQUEST_ENVIRONMENT", out rawEnv))
+            object rawOwinEnv;
+            if (nancyModule.Context.Items.TryGetValue(NancyMiddleware.RequestEnvironmentKey, out rawOwinEnv))
             {
-                var d = (IDictionary<string, object>) rawEnv;
+                var d = (IDictionary<string, object>) rawOwinEnv;
                 object serverIp;
                 if (d.TryGetValue("server.LocalIpAddress", out serverIp))
                 {
