@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PI-board is offline</title>
+    <title>The PI-board is disconnected now</title>
 
         <meta http-equiv="refresh" content="5">
 
@@ -30,7 +30,18 @@
        <!-- Jumbotron -->
        <div class="jumbotron2" style='padding: 15px'>
          <h1><i class="fa fa-bolt"></i>&nbsp;&nbsp;The PI-board is disconnected now</h1>
-         <p class="">The web server is just a reverse proxy to my house's PI-board.</p>
+         <p class="">It happens during upgrade or reboot of the upstream PI-board. 
+           <span style='background-color: '><script>
+             var h=window.location.hostname;
+             if (!h) { h='pi-board-live.devizer.xyz'; }
+             var p = window.location.protocol;
+             if (p=="file:") { p="http:"; }
+             document.write(p + "//" + h);
+           </script></span> is just a nginx gateway to the PI-board. This error 502 happens during upgrade or reboot of the upstream PI-board. 
+           Usually upgrade/reboot takes <span style='white-space:nowrap'>up to 2-3&nbsp;minutes.</span>
+         </p>
+
+<!--
          <p class="">It seems right now my PI-board is offline.</p>
          <p class="">With regret, 
            I have to admit h3control http-service is offline on every rebuild during 2 minutes.
@@ -38,17 +49,19 @@
            It just a one of possible offline reasons. 
            In addition, there are more rarely possible reasons that cause this offline message:
            <ul class=''>
-             <li class="">Electricity in my home is off</li>
-             <li class="">Internet connection is offline due to some maintenance by my home broadband provider</li>
+             <li class="">My home is without electricity or internet connection</li>
              <li class="">My Orange PI+ board or home router is not working properly</li>
              <li class="">etc...</li>
            </ul>
          </p>
-         
+-->         
          <p class="">If you own a PI-board equipped with H2/H3/H5 CPU, please kindly check up this h3control app on your board: 
             <a href='https://github.com/devizer/h3control-bin'>install &amp; upgrade one-liners</a>
          </p>
 
+<!--
+         <p>Sincerely, yours devizer</p>
+-->         
          <p>&nbsp;</p>
          <a class="btn btn-lg btn-default" href="javascript:document.location.reload(true);" role="button">Try connection to my PI-board again</a>
        </div>
