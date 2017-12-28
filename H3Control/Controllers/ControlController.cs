@@ -36,7 +36,7 @@ namespace H3Control.Controllers
                     {
                         string file = string.Format(formatName, core);
                         var prevValue = DeviceDataSource.ReadSmallFile(file);
-                        var newValue = core + 1 >= coresCount ? "1" : "0";
+                        var newValue = core + 1 <= coresCount ? "1" : "0";
                         if (prevValue == newValue) continue;
                         using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None))
                         using (StreamWriter wr = new StreamWriter(fs, Encoding.ASCII))
@@ -44,6 +44,7 @@ namespace H3Control.Controllers
                             wr.Write(newValue);
                         }
                     }
+
                     return new ControlStatus() { IsOk = true };
                 }
                 catch (Exception ex)
