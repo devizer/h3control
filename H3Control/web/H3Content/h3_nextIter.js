@@ -138,6 +138,9 @@ function bindSuccessDeviceInfo(data) {
     if (data.OsName) {
         $('#osName').text(data.OsName);
     }
+
+    if (data.DeviceInfo && data.DeviceInfo.OnlineCoresNumber)
+        bind_OnlineCores(data.DeviceInfo.OnlineCoresNumber);
 }
 
 function nextIter(isNeverEnding) {
