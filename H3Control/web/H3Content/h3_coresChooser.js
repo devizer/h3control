@@ -10,7 +10,6 @@ function coresChooser_OnReady() {
         bind_OnlineCores(coresNumber);
 
         var postUri = "api/control/set-cores/" + coresNumber;
-        console.log("POST change cores: " + postUri);
         var req = jQuery.ajax({
             url: postUri,
             method: "POST",
