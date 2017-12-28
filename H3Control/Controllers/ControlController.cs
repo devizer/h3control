@@ -35,7 +35,7 @@ namespace H3Control.Controllers
                     for (int core = 0; core < coresTotal; core++)
                     {
                         string file = string.Format(formatName, core);
-                        using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.Write))
+                        using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None))
                         using (StreamWriter wr = new StreamWriter(fs, Encoding.ASCII))
                         {
                             wr.Write(core + 1 >= coresCount ? "1" : "0");
