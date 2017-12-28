@@ -8,6 +8,19 @@ function coresChooser_OnReady() {
         var coreNumber = button.attr("data-id");
         console.log("CORES CHOOSER: " + coreNumber + " core(s)");
         bind_OnlineCores(coreNumber);
+
+        var req = jQuery.ajax({
+            url: "api/control/set-cores/" + coreNumber,
+            method: "POST",
+            dataType: "json"
+        });
+
+        forceRefreshBySomeClick(req);
+
+        req.fail(function (jqXHR, textStatus) {
+            // nothing to do
+        });
+
     });
 
     if (h3context && h3context.DeviceInfo && h3context.DeviceInfo.OnlineCoresNumber) {

@@ -135,9 +135,26 @@ namespace H3Control
                 if (H3PasswordConfig.IsStricted && !Context.CurrentUser.IsAuthenticated())
                     return 403;
 
-                var side = (string) parameters.side;
-                var freq = (string) parameters.freq;
+                var side = (string)parameters.side;
+                var freq = (string)parameters.freq;
                 var ret = new ControlController().Control(side, freq);
+                return Response.AsJson(ret); ;
+            };
+
+            Post["api/control/set-cores/{cores}"] = parameters =>
+            {
+                if (Context.CurrentUser.IsAuthenticated())
+                    NiceTrace.Message("CONTROL action recieved from by user '{0}': {1}", Context.CurrentUser.UserName, Request.Url.Path);
+
+                if (H3PasswordConfig.IsStricted && !Context.CurrentUser.IsAuthenticated())
+                    return 403;
+
+                var rawCores = (string)parameters.cores;
+                int cores;
+                if (!int.TryParse(rawCores, out cores))
+                    throw new ArgumentException("Value '" + rawCores + "' is invalid {cores} parameter");
+
+                var ret = new ControlController().SetCoreNumbers(cores);
                 return Response.AsJson(ret); ;
             };
 
