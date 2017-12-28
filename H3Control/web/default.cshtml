@@ -82,6 +82,8 @@
         @Html.Script(this)["H3Content/h3_cpuUsage.js"]
         @Html.Script(this)["H3Content/h3_refreshRate.js"]
         @Html.Script(this)["H3Content/h3_nextIter.js"]
+        @Html.Script(this)["H3Content/h3_coresChooser.js"]
+        
 
 
 <script type="text/javascript">
@@ -302,22 +304,22 @@ h3context.GuageAnimationDuration = h3context.IsMobile ? 100 : 700;
 </div>
 
 <div id="cores-chooser" style='left: 710px; top: 10px; z-index: 11111; position: absolute; display: block'>
-    <div class='single-core-container single-core-on' style='left: 0px;' title="Make just 1 core online">
+    <div id='core-1' class='single-core-container single-core-on' data-id="1" style='left: 0px;' title="Make just 1 core online">
         <div class='single-core-back single-core-button' style='position: absolute;'>&nbsp;</div>
         <div class='single-core-fore single-core-button' style='position: absolute;'>1</div>
     </div>
 
-    <div class='single-core-container single-core-on' style='left: 44px;' title="Make 2 cores of 4 online">
+    <div id='core-2' class='single-core-container single-core-off' data-id="2" style='left: 44px;' title="Make 2 cores of 4 online">
         <div class='single-core-back single-core-button' style='position: absolute;'>&nbsp;</div>
         <div class='single-core-fore single-core-button' style='position: absolute;'>2</div>
     </div>
 
-    <div class='single-core-container single-core-on' style='left: 88px;' title="Make 3 cores of 4 online">
+    <div id='core-3' class='single-core-container single-core-off' data-id="3" style='left: 88px;' title="Make 3 cores of 4 online">
         <div class='single-core-back single-core-button' style='position: absolute;'>&nbsp;</div>
         <div class='single-core-fore single-core-button' style='position: absolute;'>3</div>
     </div>
 
-    <div class='single-core-container single-core-off' style='left: 132px;' title="Make all the 4 cores online">
+    <div id='core-4' class='single-core-container single-core-off' data-id="4" style='left: 132px;' title="Make all the 4 cores online">
         <div class='single-core-back single-core-button' style='position: absolute;'>&nbsp;</div>
         <div class='single-core-fore single-core-button' style='position: absolute;'>4</div>
     </div>

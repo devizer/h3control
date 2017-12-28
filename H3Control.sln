@@ -1,16 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3Control", "H3Control\H3Control.csproj", "{7179B98E-685D-46BF-87C7-B28F54B00B8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "H3Control.Tests", "H3Control.Tests\H3Control.Tests.csproj", "{C997BACB-5A65-4126-911A-C4043E891700}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B242ADA5-D519-4392-BB5F-735BC70A41F7}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +28,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {84F727DA-7B11-437F-A1CF-CF2E332B9CAE}
+		        SolutionGuid = {84F727DA-7B11-437F-A1CF-CF2E332B9CAE}
 	EndGlobalSection
 EndGlobal

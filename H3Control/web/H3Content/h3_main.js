@@ -86,6 +86,7 @@ $(document).ready(function () {
     cpuMenu_OnReady();
     cpuFreq_OnReady();
     refreshRate_OnReady();
+    coresChooser_OnReady();
 
     gauge_DdrFreq = $("#ddrContainer");
     label_DdrRange = $("#ddrLimits");
