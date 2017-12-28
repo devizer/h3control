@@ -21,6 +21,39 @@ namespace H3Control.Controllers
             600000, 624000, 648000, 672000
         };
 
+        [HttpPost]
+        public ControlStatus SetCoreNumbers(int coresCount)
+        {
+            const string formatName = "/sys/devices/system/cpu/cpu{0}/online";
+            const int coresTotal = 4;
+
+            Exception error = null;
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    for (int core = 0; core < coresTotal; core++)
+                    {
+                        string file = string.Format(formatName, core);
+                        using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.Write))
+                        using (StreamWriter wr = new StreamWriter(fs, Encoding.ASCII))
+                        {
+                            wr.Write(core + 1 >= coresCount ? "1" : "0");
+                        }
+                    }
+                    return new ControlStatus() { IsOk = true };
+                }
+                catch (Exception ex)
+                {
+                    if (error == null)
+                        error = ex;
+                }
+                Thread.Sleep(1);
+            }
+
+            return new ControlStatus() { IsOk = false, Error = Convert.ToString(error)};
+        }
+
 
         [HttpPost]
         public ControlStatus Control(string side, string freq)

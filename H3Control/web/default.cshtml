@@ -75,241 +75,259 @@
         <!-- H3 Scripts and styles as is -->
         @Html.Css(this)["H3Content/h3.css"]
         @Html.Css(this)["H3Content/h3_commonmark2.css"]
+        <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+        @Html.Css(this)["H3Content/cores-chooser.css"]
         @Html.Script(this)["H3Content/h3_cpuMenu.js"]
         @Html.Script(this)["H3Content/h3_cpuFreq.js"]
         @Html.Script(this)["H3Content/h3_cpuUsage.js"]
         @Html.Script(this)["H3Content/h3_refreshRate.js"]
         @Html.Script(this)["H3Content/h3_nextIter.js"]
-        
 
 
-        <script type="text/javascript">
-@*
-    var initialDeviceInfo = @Html.Raw(Model.JSonDevice);
+<script type="text/javascript">
+var h3context = {
+    // DEFAULT Update Speed, should be one from the .UpdateSpeedButton buttons
+    UpdateSpeed: 2000, // milliseconds
+    IsMobile: @Html.GetUserAgent(this).IsMobile.ToJson(),
+    IsRelease: @H3Environment.IsRelease.ToJson(),
+    BuiltAt: @Html.ToJs(H3Environment.BuiltAtUtc),
+    Version: @Html.ToJs(H3Environment.VerAsPublic),
+    DeviceInfo: @Html.Raw(Model.JSonDevice),
+    Processes: {
+        order: @Html.EnumToJs(H3Environment.ProcessesDefaults.Order),
+        topN: @H3Environment.ProcessesDefaults.TopN,
+        Processes: @Html.Raw(Model.JSonProcesses),
+    },
+};
 
-    var UpdateSpeed = 2000; // milliseconds
-*@
-    var h3context = {
-        // DEFAULT Update Speed, should be one from the .UpdateSpeedButton buttons
-        UpdateSpeed: 2000, // milliseconds
-        IsMobile: @Html.GetUserAgent(this).IsMobile.ToJson(),
-        IsRelease: @H3Environment.IsRelease.ToJson(),
-        BuiltAt: @Html.ToJs(H3Environment.BuiltAtUtc),
-        Version: @Html.ToJs(H3Environment.VerAsPublic),
-        DeviceInfo: @Html.Raw(Model.JSonDevice),
-        Processes: {
-            order: @Html.EnumToJs(H3Environment.ProcessesDefaults.Order),
-            topN: @H3Environment.ProcessesDefaults.TopN,
-            Processes: @Html.Raw(Model.JSonProcesses),
-        },
-    };
-
-
-
-    h3context.GuageAnimationDuration = h3context.IsMobile ? 100 : 700;
+h3context.GuageAnimationDuration = h3context.IsMobile ? 100 : 700;
 </script>
 
         @Html.Script(this)["H3Content/h3_main.js"]
         <!-- angular hides loading of another js, so its the last -->
         @Html.Script(this)["H3Content/h3_processesCtrl.js"]
-        
-
-
-
     </head>
 <body>
 
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-FN7MCTG"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+                  height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <div class="container theme-showcase-outthere" role="main" style='position: relative; text-align: center; /*margin: 0 5px 0 5px;*/width: 925px;'>
-    @*<br/>*@
+@*<br/>*@
 
-    <div class="Restricted Restricted-1" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
-    <div class="Restricted Restricted-2" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
+<div class="Restricted Restricted-1" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
+<div class="Restricted Restricted-2" style="display: none; z-index: 999; position: absolute;">NO ACCESS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO ACCESS</div>
 
 
-    <!-- Main jumbotron for a primary marketing message or call to action
-    <div class="jumbotron">
-        <h1>Orange Pi plus h3control</h1>
-        <p>Here is a single weekend prototype of the web access to tempereture &amp; frequency of an OP+</p>
-        <p>
-            <button type="button" class="btn btn-lg btn-default">Orange Pi 1 (192.168.0.11)</button>
-            <button type="button" class="btn btn-lg btn-primary">Orange Pi 2 (192.168.0.15)</button>
-            <button type="button" class="btn btn-lg btn-default">Orange Pi 3 (192.168.0.99)</button>
-            <button type="button" class="btn btn-lg btn-default">Orange Pi 4 (192.168.0.144)</button>
-        </p>
-    </div>
-    -->
+<!-- Main jumbotron for a primary marketing message or call to action
+<div class="jumbotron">
+    <h1>Orange Pi plus h3control</h1>
+    <p>Here is a single weekend prototype of the web access to tempereture &amp; frequency of an OP+</p>
+    <p>
+        <button type="button" class="btn btn-lg btn-default">Orange Pi 1 (192.168.0.11)</button>
+        <button type="button" class="btn btn-lg btn-primary">Orange Pi 2 (192.168.0.15)</button>
+        <button type="button" class="btn btn-lg btn-default">Orange Pi 3 (192.168.0.99)</button>
+        <button type="button" class="btn btn-lg btn-default">Orange Pi 4 (192.168.0.144)</button>
+    </p>
+</div>
+-->
 
-    <div id="newVersionNotification" style='position: absolute; left: 440px; top: 480px; visibility: hidden'>
-        <b>New version X.Y.ZZZ is available!</b>
-    </div>
+<div id="newVersionNotification" style='position: absolute; left: 440px; top: 480px; visibility: hidden'>
+    <b>New version X.Y.ZZZ is available!</b>
+</div>
 
-    <table border="0" cellspacing="0" cellpadding="0" id="PageContainer" style="margin-top: 20px">
-        <tr>
-            <td colspan="4" style="padding-bottom: 9px">
-                <div style="position: relative;">
-                    <div id="gauge" style="margin-left: 0px; float: left;"></div>
-                    <div id="tempValu_" style="position: absolute; top: 60px; left: 344px; width: 240px;">&nbsp;</div>
-                    <div id="tempValue" style="position: absolute; top: 60px; left: 344px; width: 240px;">TEMPERATURE: ..... ° </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <!--CPU MIN MENU-->
-                        <td>
-                            <div id='cpuMinExpander' class="cpuExpanderHeader">
-                                <div style='text-align: center'>
-                                    CPU<sub> MIN</sub> (Mhz)
-                                </div>
-                                <div style='background-color: #F0F0F0; overflow: hidden'>
-                                    <div id='jqxWidget'>
-                                        <div id='cpuMinMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
-                                        </div>
+<table border="0" cellspacing="0" cellpadding="0" id="PageContainer" style="margin-top: 20px">
+    <tr>
+        <td colspan="4" style="padding-bottom: 9px">
+            <div style="position: relative;">
+                <div id="gauge" style="margin-left: 0px; float: left;"></div>
+                <div id="tempValu_" style="position: absolute; top: 60px; left: 344px; width: 240px;">&nbsp;</div>
+                <div id="tempValue" style="position: absolute; top: 60px; left: 344px; width: 240px;">TEMPERATURE: ..... ° </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <!--CPU MIN MENU-->
+                    <td>
+                        <div id='cpuMinExpander' class="cpuExpanderHeader">
+                            <div style='text-align: center'>
+                                CPU<sub> MIN</sub> (Mhz)
+                            </div>
+                            <div style='background-color: #F0F0F0; overflow: hidden'>
+                                <div id='jqxWidget'>
+                                    <div id='cpuMinMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
                                     </div>
                                 </div>
                             </div>
-                        </td>
+                        </div>
+                    </td>
 
-                        <!--CPU MAX MENU-->
-                        <td style='padding-left: 10px'>
-                            <div id='cpuMaxExpander' class="cpuExpanderHeader">
-                                <div style='text-align: center'>
-                                    CPU<sub> MAX</sub> (Mhz)
-                                </div>
-                                <div style='background-color: #F0F0F0; overflow: hidden'>
-                                    <div id='jqxWidget'>
-                                        <div id='cpuMaxMenu' style="visibility: hidden; background-color: #F0F0F0; text-align: center" class="cpuMenu">
-                                        </div>
+                    <!--CPU MAX MENU-->
+                    <td style='padding-left: 10px'>
+                        <div id='cpuMaxExpander' class="cpuExpanderHeader">
+                            <div style='text-align: center'>
+                                CPU<sub> MAX</sub> (Mhz)
+                            </div>
+                            <div style='background-color: #F0F0F0; overflow: hidden'>
+                                <div id='jqxWidget'>
+                                    <div id='cpuMaxMenu' style="visibility: hidden; background-color: #F0F0F0; text-align: center" class="cpuMenu">
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
-            </td>
+        </td>
 
-            <!--CPU GAUGE-->
-            <td style="padding-left: 10px; vertical-align: top">
-                <div>
-                    <div id="demoWidget" style="position: relative;">
-                        <div style="float: left;" id="cpuContainer"></div>
-                        <div id="cpuValue" style="position: absolute; top: 179px; left: 56px; width: 144px; font-family: Sans-Serif; text-align: center; font-size: 16px;"></div>
-                        <div id="cpuLimits" style="position: absolute; top: 202px; left: 58px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 140px; border-top: 1px dotted gray; color: gray"></div>
-                    </div>
+        <!--CPU GAUGE-->
+        <td style="padding-left: 10px; vertical-align: top">
+            <div>
+                <div id="demoWidget" style="position: relative;">
+                    <div style="float: left;" id="cpuContainer"></div>
+                    <div id="cpuValue" style="position: absolute; top: 179px; left: 56px; width: 144px; font-family: Sans-Serif; text-align: center; font-size: 16px;"></div>
+                    <div id="cpuLimits" style="position: absolute; top: 202px; left: 58px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 140px; border-top: 1px dotted gray; color: gray"></div>
                 </div>
-            </td>
+            </div>
+        </td>
 
-            <!--DDR GAUGE-->
-            <td style='padding-left: 10px; vertical-align: top'>
-                <div>
-                    <div id="demoWidget" style="position: relative;">
-                        <div style="float: left;" id="ddrContainer"></div>
-                        <div id="ddrValue" style="position: absolute; top: 179px; left: 56px; width: 144px; font-family: Sans-Serif; text-align: center; font-size: 16px;"></div>
-                        <div id="ddrLimits" style="position: absolute; top: 202px; left: 58px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 140px; border-top: 1px dotted gray; color: gray"></div>
-                    </div>
+        <!--DDR GAUGE-->
+        <td style='padding-left: 10px; vertical-align: top'>
+            <div>
+                <div id="demoWidget" style="position: relative;">
+                    <div style="float: left;" id="ddrContainer"></div>
+                    <div id="ddrValue" style="position: absolute; top: 179px; left: 56px; width: 144px; font-family: Sans-Serif; text-align: center; font-size: 16px;"></div>
+                    <div id="ddrLimits" style="position: absolute; top: 202px; left: 58px; font-family: Sans-Serif; text-align: center; font-size: 13px; width: 140px; border-top: 1px dotted gray; color: gray"></div>
                 </div>
-            </td>
+            </div>
+        </td>
 
-            <td>
-                <!--- DDR CONTROL -->
-                <div style="position: relative;" @*style="position: absolute; left: 1030px; top: 136px"*@>
-                    <div id='ddrExpander' class="cpuExpanderHeader">
-                        <div style='text-align: center'>DDR (Mhz)</div>
-                        <div style='background-color: #F0F0F0; overflow: hidden'>
-                            <div id='jqxWidget'>
-                                <div id='ddrMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
-                                </div>
+        <td>
+            <!--- DDR CONTROL -->
+            <div style="position: relative;" @*style="position: absolute; left: 1030px; top: 136px"*@>
+                <div id='ddrExpander' class="cpuExpanderHeader">
+                    <div style='text-align: center'>DDR (Mhz)</div>
+                    <div style='background-color: #F0F0F0; overflow: hidden'>
+                        <div id='jqxWidget'>
+                            <div id='ddrMenu' style="visibility: hidden; background-color: transparent; text-align: center" class="cpuMenu">
                             </div>
                         </div>
                     </div>
                 </div>
-            </td>
+            </div>
+        </td>
 
-        </tr>
-        <tr>
-            <td style="padding-top: 10px; vertical-align: top"></td>
-            <td colspan="3" style='padding-top: 10px; text-align: center;'></td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <div ng-controller="processesCtrl" id="processesCtrl" ng-show="Visible" style="display: none">
-                    <table class="PList">
-                        <tr>
-                            <th class="pid">pid</th>
-                            <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
-                            <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
-                            <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
-                            <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
-                            <th class="process">
-                                top processes
-                                <div class="btn-group PList-resize" role="group" style="float: right">
-                                    <button class="btn btn-default btn-xs" type="button" ng-click="reSize('dec')"> <span class="glyphicon glyphicon-menu-up"></span> </button>
-                                    <button class="btn btn-default btn-xs" type="button" ng-click="reSize(5)"> &nbsp;&#8226;&nbsp; </button>
-                                    <button class="btn btn-default btn-xs" type="button" ng-click="reSize('inc')"> <span class="glyphicon glyphicon-menu-down"></span> </button>
-                                </div>
-                            </th>
-                        </tr>
-                        <tr ng-repeat="pr in Processes">
-                            <td data-process-id="{{pr.Pid}}" class="pid entity_{{pr.Pid}}"><span ng-bind="pr.Pid"></span><span style="float: right"><span class="kill-button glyphicon glyphicon-off" style="display: none; cursor: pointer" title="kill the process"></span></span></td>
-                            <td class="cpu" ng-bind="pr.CpuUsage | number:1"></td>
-                            <td class="rss"><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
-                            <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
-                            <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
-                            <td class="process" ng-bind="pr.Args"></td>
-                        </tr>
-                    </table>
-                </div>
+    </tr>
+    <tr>
+        <td style="padding-top: 10px; vertical-align: top"></td>
+        <td colspan="3" style='padding-top: 10px; text-align: center;'></td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <div ng-controller="processesCtrl" id="processesCtrl" ng-show="Visible" style="display: none">
+                <table class="PList">
+                    <tr>
+                        <th class="pid">pid</th>
+                        <th class="cpu" ng-click="changeOrder('Cpu')" ng-class="getHeaderClass('Cpu')">cpu <span ng-bind-html="getSelectedSortMark('Cpu') | unsafe"></span></th>
+                        <th class="rss" ng-click="changeOrder('Rss')" ng-class="getHeaderClass('Rss')">rss <span ng-bind-html="getSelectedSortMark('Rss') | unsafe"></span></th>
+                        <th class="size" ng-click="changeOrder('Size')" ng-class="getHeaderClass('Size')">mem <span ng-bind-html="getSelectedSortMark('Size') | unsafe"></span></th>
+                        <th class="swapped" ng-click="changeOrder('Swapped')" ng-class="getHeaderClass('Swapped')">swap <span ng-bind-html="getSelectedSortMark('Swapped') | unsafe"></span></th>
+                        <th class="process">
+                            top processes
+                            <div class="btn-group PList-resize" role="group" style="float: right">
+                                <button class="btn btn-default btn-xs" type="button" ng-click="reSize('dec')"> <span class="glyphicon glyphicon-menu-up"></span> </button>
+                                <button class="btn btn-default btn-xs" type="button" ng-click="reSize(5)"> &nbsp;&#8226;&nbsp; </button>
+                                <button class="btn btn-default btn-xs" type="button" ng-click="reSize('inc')"> <span class="glyphicon glyphicon-menu-down"></span> </button>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr ng-repeat="pr in Processes">
+                        <td data-process-id="{{pr.Pid}}" class="pid entity_{{pr.Pid}}"><span ng-bind="pr.Pid"></span><span style="float: right"><span class="kill-button glyphicon glyphicon-off" style="display: none; cursor: pointer" title="kill the process"></span></span></td>
+                        <td class="cpu" ng-bind="pr.CpuUsage | number:1"></td>
+                        <td class="rss"><span ng-bind-html="formatKb(pr.Rss) | unsafe"></span></td>
+                        <td class="size"><span ng-bind-html="formatKb(pr.Size) | unsafe"></span></td>
+                        <td class="swapped"><span ng-bind-html="formatSwapped(pr.Swapped) | unsafe"></span></td>
+                        <td class="process" ng-bind="pr.Args"></td>
+                    </tr>
+                </table>
+            </div>
 
-            </td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <div style="position: relative; width: 100%">
-                    <div id="error" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: left; text-align: left'></div>
-                    <div id="BrowserInfo" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: right; text-align: right'></div>
-                    <div id="osName" style="position: absolute; width: 100%; left: 0; top: 0; color: #DDD; text-align: center"></div>
-                </div>
-            </td>
-        </tr>
-    </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <div style="position: relative; width: 100%">
+                <div id="error" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: left; text-align: left'></div>
+                <div id="BrowserInfo" style='position: absolute; width: 100%; left: 0; top: 0; color: #DDD; float: right; text-align: right'></div>
+                <div id="osName" style="position: absolute; width: 100%; left: 0; top: 0; color: #DDD; text-align: center"></div>
+            </div>
+        </td>
+    </tr>
+</table>
 
 
-    <div id="rating_panel" style="position: absolute; top: 130px; left: 421px; z-index: 999; display: none">
-        <div id="rating"></div>
-        <div id="rating_footer">VER <span id="version">@H3Environment.VerAsPublic</span>
+<div id="rating_panel" style="position: absolute; top: 130px; left: 421px; z-index: 999; display: none">
+    <div id="rating"></div>
+    <div id="rating_footer">VER <span id="version">@H3Environment.VerAsPublic</span>
+    </div>
+</div>
+
+<div style="position: absolute; left: 500px; top: 330px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px;">
+    <button id="newVersionInfo" style="display: none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
+    <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor: pointer" class="glyphicon glyphicon-info-sign"></span>
+</div>
+
+<div style="position: absolute; left: 0px; top: -15px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px; background: transparent; width: 925px; text-align: center">
+    <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none; text-align: center; width: 100%">
+        <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
+        &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
+        &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
+        &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
+        &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
+    </div>
+</div>
+
+<div id="memUsagePlaceholder" style="position: absolute; z-index: 999; left: 194px; top: 443px">
+    <div id="memUsage"></div>
+</div>
+
+<div id="cpuUsageContainer" class="CpuUsageDivSize" style="left: 243px; position: absolute; top: 404px; z-index: 7999">
+    <div id="cpuUsageSample"></div>
+</div>
+
+<div id="cores-chooser" style='left: 710px; top: 10px; z-index: 11111; position: absolute; display: block'>
+    <div class='single-core-container single-core-on' style='left: 0px;' title="Set just 1 core online">
+        <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i>
         </div>
+        <div class='single-core-fore single-core-button' style='position: absolute;'>1</div>
     </div>
 
-    <div style="position: absolute; left: 500px; top: 330px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px;">
-        <button id="newVersionInfo" style="display: none" class="btn btn-info btn-lg" type="button"> <span class="glyphicon glyphicon-bell"></span> </button>
-        <span id="oldVersionInfo" style="font-size: 30px; color: #DDD; cursor: pointer" class="glyphicon glyphicon-info-sign"></span>
-    </div>
-
-    <div style="position: absolute; left: 0px; top: -15px; border: none; z-index: 9999; width: 66px; height: 66px; text-align: center; line-height: 66px; background: transparent; width: 925px; text-align: center">
-        <div id="updateSpeedContainer" style="vertical-align: top; text-align: center; width: 230px; display: none; text-align: center; width: 100%">
-            <button class="UpdateSpeedButton" id="updateSpeed_500" value="500">&nbsp;0.5s&nbsp;</button>
-            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_1000" value="1000">&nbsp;1s&nbsp;</button>
-            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_2000" value="2000">&nbsp;2s&nbsp;</button>
-            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_5000" value="5000">&nbsp;5s&nbsp;</button>
-            &nbsp;<button class="UpdateSpeedButton" id="updateSpeed_10000" value="10000">&nbsp;10s&nbsp;</button>
+    <div class='single-core-container single-core-on' style='left: 44px;'>
+        <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i>
         </div>
+        <div class='single-core-fore single-core-button' style='position: absolute;'>2</div>
     </div>
 
-    <div id="memUsagePlaceholder" style="position: absolute; z-index: 999; left: 194px; top: 443px">
-        <div id="memUsage"></div>
+    <div class='single-core-container single-core-on' style='left: 88px;'>
+        <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i>
+        </div>
+        <div class='single-core-fore single-core-button' style='position: absolute;'>3</div>
     </div>
 
-    <div id="cpuUsageContainer" class="CpuUsageDivSize" style="left: 243px; position: absolute; top: 404px; z-index: 7999">
-        <div id="cpuUsageSample"></div>
+    <div class='single-core-container single-core-off' style='left: 132px;'>
+        <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i>
+        </div>
+        <div class='single-core-fore single-core-button' style='position: absolute;'>4</div>
     </div>
+
+</div>
+
 
 
 </div>
@@ -364,6 +382,7 @@
         </div>
     </div>
 </div>
+
 
 
 

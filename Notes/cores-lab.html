@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>The PI-board is disconnected now</title>
+
+        <meta http-equiv="refresh" content="5">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+  </head>
+  <style>
+    .single-core-back {
+      width: 45px; height: 40px; 
+      text-align: center;
+      font-size: 36px;
+      line-height: 40px;
+      
+    }
+    .single-core-fore {
+      width: 45px; height: 40px; 
+      text-align: center;
+      font-size: 36px;
+      line-height: 40px;
+      margin-top: -2px;
+      font-size: 22px;
+      /* font-family: 'Alegreya Sans ExtraBold' */
+      /* font-family: 'Fira Sans ExtraBold'; */
+      font-family: Bungee;
+
+    }
+    .single-core-container {
+      width: 45px; 
+      float: left; 
+      display: inline; 
+      position: relative;
+    }
+
+
+    .single-core-on > .single-core-back {
+      color: green
+    }
+
+    .single-core-on > .single-core-fore {
+      color: yellow
+    }
+
+    .single-core-off > .single-core-back {
+      color: #B6D8AD /* #AEDDA4 */
+      /* text-shadow:0px 0px 1px black; */
+    }
+
+    .single-core-off > .single-core-fore {
+      color: white;
+      /* font-family: 'Fira Sans Light'; */
+      font-family: Bungee;
+    }
+    .single-core-button:hover {
+      cursor: pointer
+    }
+
+  </style>
+  <body>
+
+    <div class="container222">
+    Hello
+
+        <div style='left: 300px; top: 111px;'>
+
+           <div class='single-core-container single-core-on' style='left: 0px; '>
+             <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i></div>
+             <div class='single-core-fore single-core-button' style='position: absolute;'>1</div>
+           </div>
+
+           <div class='single-core-container single-core-off' style='left: 32px; '>
+             <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i></div>
+             <div class='single-core-fore single-core-button' style='position: absolute;'>2</div>
+           </div>
+
+           <div class='single-core-container single-core-on' style='left: 64px; '>
+             <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i></div>
+             <div class='single-core-fore single-core-button' style='position: absolute;'>3</div>
+           </div>
+
+           <div class='single-core-container single-core-off' style='left: 96px; '>
+             <div class='single-core-back single-core-button' style='position: absolute;'><i class="fa fa-circle" aria-hidden="true"></i></div>
+             <div class='single-core-fore single-core-button' style='position: absolute;'>4</div>
+           </div>
+
+        </div>
+    </div>
+
+  </body>
+</html>

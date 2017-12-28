@@ -6,7 +6,6 @@
     using System.Runtime.Caching;
     using System.Text;
     using System.Threading;
-    using System.Web;
 
     using Universe;
 
@@ -67,6 +66,28 @@
             new Action(() => { ret.OsName = CrossInfo.OsDisplayName; }).TryAndForget();
 
             ret.Cpu = CpuUsageListener_OnLinux.CpuUsage;
+
+            // Online Cores Count
+            {
+                const string formatName = "/sys/devices/system/cpu/cpu{0}/online";
+                const int coresTotal = 4;
+                int onlineCount = 0;
+                for (int core = 0; core < coresTotal; core++)
+                {
+                    string file = string.Format(formatName, core);
+                    if (File.Exists(Path.GetDirectoryName(file)))
+                    {
+                        var rawIsOnline = ReadSmallFile(file);
+                        int isOnline;
+                        if (int.TryParse(rawIsOnline, out isOnline))
+                            onlineCount += isOnline > 0 ? 1 : 0;
+                    }
+                }
+
+                ret.OnlineCoresNumber = onlineCount;
+            }
+
+
             // NiceTrace.Message("Device.Cpu is {0}", JSonExtentions.ToNewtonJSon(ret.Cpu, true));
             return ret;
         }
@@ -97,8 +118,8 @@
                 ret = performAction();
                 CacheItemPolicy pol = new CacheItemPolicy()
                 {
-                    // SlidingExpiration = leavingTime,
-                    AbsoluteExpiration = new DateTimeOffset(DateTime.UtcNow + leavingTime, TimeSpan.Zero),
+                    SlidingExpiration = leavingTime,
+                    // AbsoluteExpiration = new DateTimeOffset(DateTime.UtcNow + leavingTime),
                 };
 
                 
@@ -112,10 +133,11 @@
             return ret;
         }
 
+        static readonly UTF8Encoding UTF8 = new UTF8Encoding(false);
         static string ReadSmallFile(string name)
         {
             using (FileStream fs = new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (StreamReader rdr = new StreamReader(fs, Encoding.UTF8))
+            using (StreamReader rdr = new StreamReader(fs, UTF8))
             {
                 var ret = rdr.ReadToEnd();
                 return ret.Trim(' ', '\n', '\r', '\t');

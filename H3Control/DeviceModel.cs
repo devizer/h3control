@@ -14,6 +14,7 @@ namespace H3Control
         public bool IsLimitSuccess { get; set; }
         public string Host { get; set; }
         public string Ip { get; set; }
+        public int OnlineCoresNumber { get; set; }
         public decimal CpuCur { get; set; }
         public decimal CpuMin { get; set; }
         public decimal CpuMax { get; set; }
@@ -35,6 +36,7 @@ namespace H3Control
             DrunkActionExtentions.TryAndForget(() => osName = CrossInfo.OsDisplayName);
             return new DeviceModel()
             {
+                OnlineCoresNumber = 3,
                 CpuCur = 720,
                 CpuMax = 1728,
                 CpuMin = 480,

@@ -218,6 +218,9 @@
   <ItemGroup>
     <Content Include="CrossInfo\FreeBSD.txt" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="web\H3Content\cores-chooser.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="web\H3Content\h3_commonmark2.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
