@@ -75,7 +75,7 @@
                 for (int core = 0; core < coresTotal; core++)
                 {
                     string file = string.Format(formatName, core);
-                    if (File.Exists(Path.GetDirectoryName(file)))
+                    if (Directory.Exists(Path.GetDirectoryName(file)))
                     {
                         var rawIsOnline = ReadSmallFile(file);
                         int isOnline;
