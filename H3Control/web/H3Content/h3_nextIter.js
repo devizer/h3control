@@ -178,6 +178,7 @@ function nextIter(isNeverEnding) {
         $("#cpuUsageContainer").show();
         BindCpuUsage_Disconnected(div_CpuUsage);
         $("#rating_panel").hide();
+        bind_OnlineCores(0);
     };
 
     req.done(function (data) {
