@@ -35,10 +35,13 @@ namespace H3Control.Controllers
                     for (int core = 0; core < coresTotal; core++)
                     {
                         string file = string.Format(formatName, core);
+                        var prevValue = DeviceDataSource.ReadSmallFile(file);
+                        var newValue = core + 1 >= coresCount ? "1" : "0";
+                        if (prevValue == newValue) continue;
                         using (FileStream fs = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None))
                         using (StreamWriter wr = new StreamWriter(fs, Encoding.ASCII))
                         {
-                            wr.Write(core + 1 >= coresCount ? "1" : "0");
+                            wr.Write(newValue);
                         }
                     }
                     return new ControlStatus() { IsOk = true };
@@ -51,6 +54,7 @@ namespace H3Control.Controllers
                 Thread.Sleep(1);
             }
 
+            NiceTrace.Message("Unable to change online cores number to value " + coresCount + Environment.NewLine + error);
             return new ControlStatus() { IsOk = false, Error = Convert.ToString(error)};
         }
 

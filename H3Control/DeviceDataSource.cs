@@ -134,7 +134,7 @@
         }
 
         static readonly UTF8Encoding UTF8 = new UTF8Encoding(false);
-        static string ReadSmallFile(string name)
+        public static string ReadSmallFile(string name)
         {
             using (FileStream fs = new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (StreamReader rdr = new StreamReader(fs, UTF8))

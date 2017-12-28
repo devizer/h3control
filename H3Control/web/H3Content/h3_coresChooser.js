@@ -5,11 +5,11 @@ function coresChooser_OnReady() {
     $(".single-core-container").on("click", function (eventObject) {
         var target = $(eventObject.target);
         var button = target.is(".single-core-container") ? target : target.parents(".single-core-container");
-        var coreNumber = button.attr("data-id");
-        console.log("CORES CHOOSER: " + coreNumber + " core(s)");
-        bind_OnlineCores(coreNumber);
+        var coresNumber = button.attr("data-id");
+        console.log("CORES CHOOSER: " + coresNumber + " core(s)");
+        bind_OnlineCores(coresNumber);
 
-        var postUri = "api/control/set-cores/" + coreNumber;
+        var postUri = "api/control/set-cores/" + coresNumber;
         console.log("POST change cores: " + postUri);
         var req = jQuery.ajax({
             url: postUri,
