@@ -139,8 +139,9 @@ function bindSuccessDeviceInfo(data) {
         $('#osName').text(data.OsName);
     }
 
-    if (data.DeviceInfo && data.DeviceInfo.OnlineCoresNumber)
-        bind_OnlineCores(data.DeviceInfo.OnlineCoresNumber);
+    console.log("UPDATE: online cores is " + data.OnlineCoresNumber);
+    if (data.OnlineCoresNumber)
+        bind_OnlineCores(data.OnlineCoresNumber);
 }
 
 function nextIter(isNeverEnding) {
