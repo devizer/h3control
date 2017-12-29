@@ -69,7 +69,7 @@ namespace H3Control
 
             if (!nologo)
             {
-                Console.WriteLine(@"H3Control " + H3Environment.VerAsPublic + @"is a console/daemon which
+                Console.WriteLine(@"H3Control " + H3Environment.VerAsPublic + @" is a console/daemon which
    * ""Shows"" temperature, frequency and usage via built-in http server.
    * Allows to control CPU & DDR frequency
    * Allows to control number of online CPU cores
