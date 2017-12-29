@@ -144,7 +144,7 @@ function bindSuccessDeviceInfo(data) {
         bind_OnlineCores(data.OnlineCoresNumber);
 }
 
-function nextIter(isNeverEnding) {
+nextItert = function (isNeverEnding) {
 
     var next = +new Date();
     var timeInfo = "";
@@ -160,6 +160,7 @@ function nextIter(isNeverEnding) {
 
     var anchor = {};
     nextIterAnchor = anchor;
+
     // var idUnique = new Date().getTime();
     var req = jQuery.ajax({
         url: "api/json/device/me?" + $.now(),
