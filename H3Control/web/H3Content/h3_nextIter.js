@@ -3,7 +3,7 @@ var TimeInfo = { PrevStartDate: null, TotalMSec: 0, Counter: 0 };
 var isFirstRound = true;
 var nextIterAnchor = {};
 
-var nextIter = function (isNeverEnding) {
+var nextIter = function(isNeverEnding) {
 
     var next = +new Date();
     var timeInfo = "";
@@ -27,7 +27,7 @@ var nextIter = function (isNeverEnding) {
         dataType: "json"
     });
 
-    var bindFail = function () {
+    var bindFail = function() {
         $('#cpuLimits').html("");
         $('#ddrLimits').html("");
         $('#cpuContainer').jqxGauge('disabled', true);
@@ -44,26 +44,30 @@ var nextIter = function (isNeverEnding) {
         bind_OnlineCores(0);
     };
 
-    req.done(function (data) {
-        if (anchor !== nextIterAnchor) return;
-        if (data.IsSuccess) {
-            if (isNeverEnding)
-                label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
+    req.done(function(data) {
+        if (anchor === nextIterAnchor) {
+            if (data.IsSuccess) {
+                if (isNeverEnding)
+                    label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
 
-            bindSuccessDeviceInfo(data);
-            if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
-
-        } else {
-            if (isNeverEnding) {
-                $("#error").text(TimeInfo.Counter + ': internal error' + timeInfo).show();
-                bindFail();
-                window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+                bindSuccessDeviceInfo(data);
+                // if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
             }
         }
+        else
+        {
+            var isFail = !data.IsSuccess;
+            if (isFail) {
+                $("#error").text(TimeInfo.Counter + ': internal error' + timeInfo).show();
+                bindFail();
+                // window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+            }
+        }
+
+        if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
     });
 
     req.fail(function (jqXHR, textStatus) {
-        if (anchor !== nextIterAnchor) return;
         if (isNeverEnding) {
             $("#error").text(TimeInfo.Counter + ' ' + textStatus + timeInfo).show();
             bindFail();
