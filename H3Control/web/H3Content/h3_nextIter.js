@@ -3,6 +3,76 @@ var TimeInfo = { PrevStartDate: null, TotalMSec: 0, Counter: 0 };
 var isFirstRound = true;
 var nextIterAnchor = {};
 
+nextItert = function (isNeverEnding) {
+
+    var next = +new Date();
+    var timeInfo = "";
+    if (isNeverEnding) {
+        if (TimeInfo.PrevStartDate != null) {
+            var delta = next - TimeInfo.PrevStartDate;
+            TimeInfo.Counter++;
+            TimeInfo.TotalMSec += delta;
+            timeInfo = " (" + delta + " msec, avg is " + Math.round(TimeInfo.TotalMSec / TimeInfo.Counter) + ")";
+        }
+        TimeInfo.PrevStartDate = next;
+    }
+
+    var anchor = {};
+    nextIterAnchor = anchor;
+
+    // var idUnique = new Date().getTime();
+    var req = jQuery.ajax({
+        url: "api/json/device/me?" + $.now(),
+        method: "GET",
+        dataType: "json"
+    });
+
+    var bindFail = function () {
+        $('#cpuLimits').html("");
+        $('#ddrLimits').html("");
+        $('#cpuContainer').jqxGauge('disabled', true);
+        $('#ddrContainer').jqxGauge('disabled', true);
+        $('#gauge').jqxLinearGauge('disabled', true);
+        $("#cpuMaxMenu").jqxMenu('disabled', true);
+        $("#cpuMinMenu").jqxMenu('disabled', true);
+        $("#ddrMenu").jqxMenu('disabled', true);
+        BindEmptyMemoryUsage();
+        $(".UpdateSpeedButton").jqxButton('disabled', true);
+        $("#cpuUsageContainer").show();
+        BindCpuUsage_Disconnected(div_CpuUsage);
+        $("#rating_panel").hide();
+        bind_OnlineCores(0);
+    };
+
+    req.done(function (data) {
+        if (anchor !== nextIterAnchor) return;
+        if (data.IsSuccess) {
+            if (isNeverEnding)
+                label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
+
+            bindSuccessDeviceInfo(data);
+            if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+
+        } else {
+            if (isNeverEnding) {
+                $("#error").text(TimeInfo.Counter + ': internal error' + timeInfo).show();
+                bindFail();
+                window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+            }
+        }
+    });
+
+    req.fail(function (jqXHR, textStatus) {
+        if (anchor !== nextIterAnchor) return;
+        if (isNeverEnding) {
+            $("#error").text(TimeInfo.Counter + ' ' + textStatus + timeInfo).show();
+            bindFail();
+            window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+        }
+    });
+
+}
+
 // doesn't rise nextIter
 function forceRefreshBySomeClick(req) {
     req.done(function (data) {
@@ -144,72 +214,3 @@ function bindSuccessDeviceInfo(data) {
         bind_OnlineCores(data.OnlineCoresNumber);
 }
 
-nextItert = function (isNeverEnding) {
-
-    var next = +new Date();
-    var timeInfo = "";
-    if (isNeverEnding) {
-        if (TimeInfo.PrevStartDate != null) {
-            var delta = next - TimeInfo.PrevStartDate;
-            TimeInfo.Counter++;
-            TimeInfo.TotalMSec += delta;
-            timeInfo = " (" + delta + " msec, avg is " + Math.round(TimeInfo.TotalMSec / TimeInfo.Counter) + ")";
-        }
-        TimeInfo.PrevStartDate = next;
-    }
-
-    var anchor = {};
-    nextIterAnchor = anchor;
-
-    // var idUnique = new Date().getTime();
-    var req = jQuery.ajax({
-        url: "api/json/device/me?" + $.now(),
-        method: "GET",
-        dataType: "json"
-    });
-
-    var bindFail = function () {
-        $('#cpuLimits').html("");
-        $('#ddrLimits').html("");
-        $('#cpuContainer').jqxGauge('disabled', true);
-        $('#ddrContainer').jqxGauge('disabled', true);
-        $('#gauge').jqxLinearGauge('disabled', true);
-        $("#cpuMaxMenu").jqxMenu('disabled', true);
-        $("#cpuMinMenu").jqxMenu('disabled', true);
-        $("#ddrMenu").jqxMenu('disabled', true);
-        BindEmptyMemoryUsage();
-        $(".UpdateSpeedButton").jqxButton('disabled', true);
-        $("#cpuUsageContainer").show();
-        BindCpuUsage_Disconnected(div_CpuUsage);
-        $("#rating_panel").hide();
-        bind_OnlineCores(0);
-    };
-
-    req.done(function (data) {
-        if (anchor !== nextIterAnchor) return;
-        if (data.IsSuccess) {
-            if (isNeverEnding)
-                label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
-
-            bindSuccessDeviceInfo(data);
-            if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
-
-        } else {
-            if (isNeverEnding) {
-                $("#error").text(TimeInfo.Counter + ': internal error' + timeInfo).show();
-                bindFail();
-                window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
-            }
-        }
-    });
-
-    req.fail(function (jqXHR, textStatus) {
-        if (anchor !== nextIterAnchor) return;
-        if (isNeverEnding) {
-            $("#error").text(TimeInfo.Counter + ' ' + textStatus + timeInfo).show();
-            bindFail();
-            window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
-        }
-    });
-
-}
