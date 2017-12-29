@@ -121,7 +121,7 @@ appH3.controller('processesCtrl', function ($scope, $http) {
         $scope.order = zero.order;
         $scope.topN = zero.topN;
         $scope.Processes = zero.Processes;
-        console.warn("So, initial processes order=" + $scope.order + ", topN=" + $scope.topN + ", Processes.length=" + $scope.Processes.length);
+        console.log("[Startup] So, initial processes order=" + $scope.order + ", topN=" + $scope.topN + ", Processes.length=" + $scope.Processes.length);
     }
 
     $scope.Processes = fixProcesses($scope.Processes, $scope.topN);

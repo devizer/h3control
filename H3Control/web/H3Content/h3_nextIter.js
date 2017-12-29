@@ -121,21 +121,6 @@ function bindSuccessDeviceInfo(data) {
         // #newVersionInfo, #oldVersionInfo
         $("#newVersionInfo").applyDisplay(isNew);
         $("#oldVersionInfo").applyDisplay(!isNew);
-
-        /*
-        if (data.VerInfo.IsNew !== undefined) {
-            if (data.VerInfo.IsNew) {
-                $("#whatsnew_there_are_new_version").show();
-                $("#whatsnew_its_latest_version").hide();
-            } else {
-                $("#whatsnew_there_are_new_version").hide();
-                $("#whatsnew_its_latest_version").show();
-            }
-        } else {
-            $("#whatsnew_there_are_new_version").hide();
-            $("#whatsnew_its_latest_version").show();
-        }
-*/
     }
 
 
@@ -168,7 +153,6 @@ function bindSuccessDeviceInfo(data) {
     }
 
     if (data.Mem) {
-
         var freeMem = data.Mem.Free - data.Mem.BuffersAndCache;
         freeMem = freeMem < 0 ? 0 : freeMem;
         var usage2 = [
@@ -181,25 +165,6 @@ function bindSuccessDeviceInfo(data) {
         ];
 
         BindMemoryUsage(usage2);
-
-/*
-        var memUsageSource = [
-            { Kind: 'Cache', Mem: data.Mem.BuffersAndCache },
-            { Kind: 'Used', Mem: data.Mem.Total - data.Mem.Free },
-            { Kind: 'Free', Mem: data.Mem.Free },
-        ];
-
-        $('#memChart').jqxChart("source", memUsageSource);
-
-        var swapUsageSource = [
-            { Kind: '', Mem: 0 },
-            { Kind: 'Swap Used', Mem: data.Mem.SwapTotal - data.Mem.SwapFree },
-            { Kind: 'Swap Free', Mem: data.Mem.SwapFree },
-        ];
-
-        $('#swapChart').jqxChart("source", swapUsageSource);
-*/
-
     }
 
     if (data.HasChangeAccess !== undefined) {
