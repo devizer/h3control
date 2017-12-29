@@ -3,7 +3,7 @@ var TimeInfo = { PrevStartDate: null, TotalMSec: 0, Counter: 0 };
 var isFirstRound = true;
 var nextIterAnchor = {};
 
-nextItert = function (isNeverEnding) {
+var nextItert = function (isNeverEnding) {
 
     var next = +new Date();
     var timeInfo = "";
