@@ -1,6 +1,7 @@
 ﻿var myCounter = 0;
 var TimeInfo = { PrevStartDate: null, TotalMSec: 0, Counter: 0 };
 var isFirstRound = true;
+var nextIterAnchor = {};
 
 // doesn't rise nextIter
 function forceRefreshBySomeClick(req) {
@@ -157,6 +158,8 @@ function nextIter(isNeverEnding) {
         TimeInfo.PrevStartDate = next;
     }
 
+    var anchor = {};
+    nextIterAnchor = anchor;
     // var idUnique = new Date().getTime();
     var req = jQuery.ajax({
         url: "api/json/device/me?" + $.now(),
@@ -182,6 +185,7 @@ function nextIter(isNeverEnding) {
     };
 
     req.done(function (data) {
+        if (anchor !== nextIterAnchor) return;
         if (data.IsSuccess) {
             if (isNeverEnding)
                 label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
@@ -199,6 +203,7 @@ function nextIter(isNeverEnding) {
     });
 
     req.fail(function (jqXHR, textStatus) {
+        if (anchor !== nextIterAnchor) return;
         if (isNeverEnding) {
             $("#error").text(TimeInfo.Counter + ' ' + textStatus + timeInfo).show();
             bindFail();
