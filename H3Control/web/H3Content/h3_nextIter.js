@@ -45,7 +45,10 @@ var nextIter = function(isNeverEnding) {
     };
 
     req.done(function(data) {
-        if (anchor === nextIterAnchor) {
+        var isLatest = anchor === nextIterAnchor;
+        if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+
+        if (isLatest) {
             if (data.IsSuccess) {
                 if (isNeverEnding)
                     label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
@@ -63,8 +66,6 @@ var nextIter = function(isNeverEnding) {
                 // window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
             }
         }
-
-        if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
     });
 
     req.fail(function (jqXHR, textStatus) {
