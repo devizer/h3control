@@ -14,6 +14,7 @@
 
         public static DeviceModel GetLocal()
         {
+            return GetLocalImpl();
             return GetOrPerform(
                 "My Device Info",
                 TimeSpan.FromSeconds(0.2),

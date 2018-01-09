@@ -71,10 +71,12 @@
                     if (File.Exists(fileName))
                     {
                         using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                        using (StreamReader rdr = new StreamReader(fs, UTF8))
+                        using (StreamReader kernelReader = new StreamReader(fs, UTF8))
                         {
+                            var fileContent = kernelReader.ReadToEnd();
+                            var contentReader = new StringReader(fileContent);
                             string line;
-                            while ((line = rdr.ReadLine()) != null)
+                            while ((line = contentReader.ReadLine()) != null)
                             {
                                 const string pattern = "VmSwap:";
                                 if (line.StartsWith(pattern, StringComparison.InvariantCultureIgnoreCase))
