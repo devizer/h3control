@@ -18,7 +18,11 @@ var nextIter = function(isNeverEnding) {
     }
 
     var anchor = {};
+    $("body").data("iterationAnchor", anchor);
     nextIterAnchor = anchor;
+    var getLatestAnchor = function () {
+        return $("body").data("iterationAnchor");
+    }
 
     // var idUnique = new Date().getTime();
     var req = jQuery.ajax({
@@ -45,7 +49,7 @@ var nextIter = function(isNeverEnding) {
     };
 
     req.done(function(data) {
-        var isLatest = anchor === nextIterAnchor;
+        var isLatest = getLatestAnchor() === nextIterAnchor;
         if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
 
         if (isLatest) {

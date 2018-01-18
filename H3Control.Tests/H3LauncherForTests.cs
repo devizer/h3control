@@ -28,7 +28,7 @@ namespace H3Control.Tests
             // resharper
             string exe2 = Path.Combine(Environment.CurrentDirectory, "H3Control.exe");
             string exe = exe1;
-            foreach (var s in new[] { exe1, exe2}.Distinct())
+            foreach (var s in new[] { exe1, exe2 }.Distinct())
             {
                 var directoryName = Path.GetDirectoryName(s);
                 IEnumerable<string> files = Directory
@@ -64,7 +64,7 @@ namespace H3Control.Tests
             var slowProcList = new[] {"ppc", "aarch64"};
             bool isSlowPC = slowProcList.Any(x => CrossInfo.ProcessorName.ToLower().IndexOf(x) >= 0);
             var timeoutScale = isSlowPC ? 15 : 1;
-            if (isSlowPC) Trace.WriteLine("Slow PC: So, wait for server launch is " + WaitForLaunch / 1000 + " sec");
+            if (isSlowPC) Trace.WriteLine("Slow PC: So, wait for server launch is " + timeoutScale * WaitForLaunch / 1000 + " sec");
             bool isOk = PollWithTimeout.Run(WaitForLaunch * timeoutScale, () =>
             {
                 var url = "http://localhost:" + port + "/";
