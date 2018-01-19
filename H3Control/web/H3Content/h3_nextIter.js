@@ -20,8 +20,8 @@ var nextIter = function(isNeverEnding) {
     var anchor = {};
     $("body").data("iterationAnchor", anchor);
     nextIterAnchor = anchor;
-    var getLatestAnchor = function () {
-        return $("body").data("iterationAnchor");
+    var isLatestAnchor = function () {
+        return $("body").data("iterationAnchor") === anchor;
     }
 
     // var idUnique = new Date().getTime();
@@ -49,7 +49,7 @@ var nextIter = function(isNeverEnding) {
     };
 
     req.done(function(data) {
-        var isLatest = getLatestAnchor() === nextIterAnchor;
+        var isLatest = isLatestAnchor();
         if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
 
         if (isLatest) {
@@ -58,7 +58,8 @@ var nextIter = function(isNeverEnding) {
                     label_Error.text(TimeInfo.Counter + ': OK' + timeInfo).show();
 
                 bindSuccessDeviceInfo(data);
-                // if (isNeverEnding) window.setTimeout(nextNeverendingUpdate, h3context.UpdateSpeed);
+            } else {
+                bindFail();
             }
         }
         else
