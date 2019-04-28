@@ -41,10 +41,13 @@
 
             var legacyDdrFrequency = "/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/cur_freq";
             if (File.Exists(legacyDdrFrequency))
+            {
                 int.TryParse(ReadSmallFile(legacyDdrFrequency), out curDdr);
+                curDdr = curDdr / 1000;
+            }
 
             ret.CpuCur = curCpu / 1000;
-            ret.DdrCur = curDdr / 1000;
+            ret.DdrCur = curDdr == 0 ? 666 : curDdr;
             ret.Tempr = tempr;
             try
             {
