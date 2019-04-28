@@ -70,6 +70,7 @@ namespace H3Control
                         && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1");
 
                 var h3Any = (CrossInfo.ProcessorName ?? "").ToLower().IndexOf("sun8i", StringComparison.InvariantCultureIgnoreCase) >= 0;
+                NiceTrace.Message("Allwinner cpu: Legacy-Kind {0} Cpu");
 
                 return
                     (h3Legacy || h3Any)
@@ -77,7 +78,7 @@ namespace H3Control
             }
             catch (Exception ex)
             {
-                NiceTrace.Message("INFO: Device isn't a H3 board. " + ex.Message);
+                NiceTrace.Message("INFO: Device isn't a H3 board. " + Environment.NewLine + ex.Message);
                 return false;
             }
         }, LazyThreadSafetyMode.ExecutionAndPublication);

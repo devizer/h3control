@@ -749,6 +749,7 @@ BuildVersion:	14B25
             TrySplit(line, ':', out key, out value);
             if (key != null)
             {
+                    NiceTrace.Message("CPU Key: [{0}], Value: '{1}'", key, value);
                 key = key.Trim();
                 if ("model name".Equals(key, comp))
                     model_name = value;
