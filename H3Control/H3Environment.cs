@@ -70,7 +70,7 @@ namespace H3Control
                         && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1");
 
                 var h3Any = (CrossInfo.ProcessorName ?? "").ToLower().IndexOf("sun8i", StringComparison.InvariantCultureIgnoreCase) >= 0;
-                NiceTrace.Message("Allwinner cpu: Legacy-Kind {0} Cpu");
+                NiceTrace.Message("Allwinner cpu: Legacy-Kind {0} By-Name: {1}", h3Legacy, h3Any);
 
                 return
                     (h3Legacy || h3Any)
