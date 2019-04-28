@@ -101,6 +101,7 @@ namespace H3Control
 
                     var list = ProcessesController.Select(order, topN, isIe8OrBelow);
 
+                    
                     return Response.AsJson(new { Processes = list });
                     return new { Processes = list };
                 }

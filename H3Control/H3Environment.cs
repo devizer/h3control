@@ -61,18 +61,23 @@ namespace H3Control
             get { return _IsH3.Value; }
         }
 
-        static readonly Lazy<bool> _IsH3 = new Lazy<bool>(() =>
+        private static readonly Lazy<bool> _IsH3 = new Lazy<bool>(() =>
         {
             try
             {
+                // TODO: First two folders are absent on armbian 
+                var h3Legacy = Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq")
+                        && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1");
+
+                var h3Any = (CrossInfo.ProcessorName ?? "").ToLower().IndexOf("sun8i", StringComparison.InvariantCultureIgnoreCase) >= 0;
+
                 return
-                    Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq")
-                    && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1")
+                    (h3Legacy || h3Any)
                     && Directory.Exists("/sys/devices/system/cpu/cpu0/cpufreq");
             }
             catch (Exception ex)
             {
-                NiceTrace.Message("INFO: Device isnt a H3 board. " + ex.Message);
+                NiceTrace.Message("INFO: Device isn't a H3 board. " + ex.Message);
                 return false;
             }
         }, LazyThreadSafetyMode.ExecutionAndPublication);

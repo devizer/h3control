@@ -70,20 +70,8 @@
 
             // Online Cores Count
             {
-                const string formatName = "/sys/devices/system/cpu/cpu{0}/online";
-                const int coresTotal = 4;
                 int onlineCount = 0;
-                for (int core = 0; core < coresTotal; core++)
-                {
-                    string file = string.Format(formatName, core);
-                    if (Directory.Exists(Path.GetDirectoryName(file)))
-                    {
-                        var rawIsOnline = ReadSmallFile(file);
-                        int isOnline;
-                        if (int.TryParse(rawIsOnline, out isOnline))
-                            onlineCount += isOnline > 0 ? 1 : 0;
-                    }
-                }
+                onlineCount = GetOnlineCount(onlineCount);
 
                 ret.OnlineCoresNumber = onlineCount;
             }
@@ -91,6 +79,54 @@
 
             // NiceTrace.Message("Device.Cpu is {0}", JSonExtentions.ToNewtonJSon(ret.Cpu, true));
             return ret;
+        }
+
+        private static int GetOnlineCount(int onlineCount)
+        {
+            const string formatName = "/sys/devices/system/cpu/cpu{0}/online";
+            const int coresTotal = 4;
+            for (int core = 0; core < coresTotal; core++)
+            {
+                string file = string.Format(formatName, core);
+                if (Directory.Exists(Path.GetDirectoryName(file)))
+                {
+                    bool isCoreOnline = false;
+                    if (!File.Exists(file) && core == 0)
+                    {
+                        isCoreOnline = true;
+                    }
+                    else
+                    {
+                        var rawIsOnline = ReadSmallFile(file);
+                        int isOnline;
+                        if (int.TryParse(rawIsOnline, out isOnline))
+                            isCoreOnline = isOnline > 0;
+                    }
+
+                    if (isCoreOnline) onlineCount += 1;
+                }
+            }
+
+            return onlineCount;
+        }
+
+        private static int GetOnlineCount_Legacy(int onlineCount)
+        {
+            const string formatName = "/sys/devices/system/cpu/cpu{0}/online";
+            const int coresTotal = 4;
+            for (int core = 0; core < coresTotal; core++)
+            {
+                string file = string.Format(formatName, core);
+                if (Directory.Exists(Path.GetDirectoryName(file)))
+                {
+                    var rawIsOnline = ReadSmallFile(file);
+                    int isOnline;
+                    if (int.TryParse(rawIsOnline, out isOnline))
+                        onlineCount += isOnline > 0 ? 1 : 0;
+                }
+            }
+
+            return onlineCount;
         }
 
         public static string HostName
