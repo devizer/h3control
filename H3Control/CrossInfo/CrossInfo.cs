@@ -757,7 +757,7 @@ BuildVersion:	14B25
                     cpu_model = value;
                 else if ("Processor".Equals(key, StringComparison.Ordinal))
                     processor = value;
-                else if ("Hardware".Equals(key, StringComparison.Ordinal))
+                else if ("Hardware".Equals(key, StringComparison.InvariantCultureIgnoreCase))
                     hardware = value;
 
                 else if ("cache size".Equals(key, comp))
@@ -767,7 +767,7 @@ BuildVersion:	14B25
 
         model_name = model_name ?? cpu_model;
 
-        if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
+        if (true || string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
             model_name = processor + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
 
         if (string.IsNullOrEmpty(model_name))
