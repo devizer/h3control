@@ -988,8 +988,8 @@ BuildVersion:	14B25
             int pos = line.IndexOf(separator);
             if (pos > 0)
             {
-                key = line.Substring(0, pos);
-                value = pos < line.Length - 1 ? line.Substring(pos + 1, line.Length - pos - 1) : "";
+                key = line.Substring(0, pos).Trim(' ').Trim('\t');
+                value = pos < line.Length - 1 ? line.Substring(pos + 1, line.Length - pos - 1).Trim(' ').Trim('\t') : "";
             }
         }
 
