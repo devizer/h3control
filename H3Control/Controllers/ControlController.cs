@@ -35,6 +35,9 @@ namespace H3Control.Controllers
                     for (int core = 0; core < coresTotal; core++)
                     {
                         string file = string.Format(formatName, core);
+                        bool isFileExists = File.Exists(file);
+                        // New kernel doesn't allow to control core #0
+                        if (!isFileExists && core == 0) continue;
                         var prevValue = DeviceDataSource.ReadSmallFile(file);
                         var newValue = core + 1 <= coresCount ? "1" : "0";
                         if (prevValue == newValue) continue;
