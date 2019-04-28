@@ -54,7 +54,7 @@
                 ret.CpuMax = cpuMax / 1000;
                 ret.CpuMin = cpuMin / 1000;
 
-                int ddrMax=0, ddrMin=0;
+                int ddrMax=408, ddrMin=672;
                 if (H3Environment.IsLegacyDdr)
                 {
                     int.TryParse(ReadSmallFile("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/scaling_max_freq"), out ddrMax);
