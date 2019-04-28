@@ -25,10 +25,24 @@
         public static DeviceModel GetLocalImpl()
         {
             var ret = DeviceModel.Sample();
-            int curCpu, curDdr, tempr;
+            int curCpu, curDdr = 800, tempr = 0;
             int.TryParse(ReadSmallFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"), out curCpu);
-            int.TryParse(ReadSmallFile("/sys/devices/virtual/hwmon/hwmon1/temp1_input"), out tempr);
-            int.TryParse(ReadSmallFile("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/cur_freq"), out curDdr);
+            var legacyTempPath = "/sys/devices/virtual/hwmon/hwmon1/temp1_input";
+            var mainlineTempPath = "/sys/devices/virtual/thermal/thermal_zone0/temp";
+            if (File.Exists(legacyTempPath))
+            {
+                int.TryParse(ReadSmallFile(legacyTempPath), out tempr);
+            }
+            else if (File.Exists(mainlineTempPath))
+            {
+                int.TryParse(ReadSmallFile(mainlineTempPath), out tempr);
+                tempr = tempr / 1000;
+            }
+
+            var legacyDdrFrequency = "/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/cur_freq";
+            if (File.Exists(legacyDdrFrequency))
+                int.TryParse(ReadSmallFile(legacyDdrFrequency), out curDdr);
+
             ret.CpuCur = curCpu / 1000;
             ret.DdrCur = curDdr / 1000;
             ret.Tempr = tempr;
@@ -40,9 +54,13 @@
                 ret.CpuMax = cpuMax / 1000;
                 ret.CpuMin = cpuMin / 1000;
 
-                int ddrMax, ddrMin;
-                int.TryParse(ReadSmallFile("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/scaling_max_freq"), out ddrMax);
-                int.TryParse(ReadSmallFile("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/scaling_min_freq"), out ddrMin);
+                int ddrMax=0, ddrMin=0;
+                if (H3Environment.IsLegacyDdr)
+                {
+                    int.TryParse(ReadSmallFile("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/scaling_max_freq"), out ddrMax);
+                    int.TryParse(ReadSmallFile("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/scaling_min_freq"), out ddrMin);
+                }
+
                 ret.DdrMax = ddrMax / 1000;
                 ret.DdrMin = ddrMin / 1000;
                 ret.IsLimitSuccess = true;

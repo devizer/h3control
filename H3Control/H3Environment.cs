@@ -61,6 +61,11 @@ namespace H3Control
             get { return _IsH3.Value; }
         }
 
+        public static bool IsLegacyDdr
+        {
+            get { return Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq"); }
+        }
+
         private static readonly Lazy<bool> _IsH3 = new Lazy<bool>(() =>
         {
             try
