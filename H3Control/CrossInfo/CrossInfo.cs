@@ -990,6 +990,8 @@ BuildVersion:	14B25
             {
                 key = line.Substring(0, pos).Trim(' ').Trim('\t');
                 value = pos < line.Length - 1 ? line.Substring(pos + 1, line.Length - pos - 1).Trim(' ').Trim('\t') : "";
+                key = key.Trim(' ').Trim('\t');
+                value = value.Trim(' ').Trim('\t');
             }
         }
 
