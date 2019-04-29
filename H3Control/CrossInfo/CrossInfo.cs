@@ -749,7 +749,7 @@ BuildVersion:	14B25
             TrySplit(line, ':', out key, out value);
             if (key != null)
             {
-                    NiceTrace.Message("CPU Key: [{0}], Value: '{1}'", key, value);
+                // NiceTrace.Message("CPU Key: [{0}], Value: '{1}'", key, value);
                 key = key.Trim();
                 if ("model name".Equals(key, comp))
                     model_name = value;
@@ -769,8 +769,8 @@ BuildVersion:	14B25
 
         if (string.IsNullOrEmpty(model_name) && !string.IsNullOrEmpty(processor))
             model_name = processor;
-            
-        model_name = model_name + (string.IsNullOrEmpty(hardware) ? "" : (", " + hardware));
+
+        model_name = model_name + (string.IsNullOrEmpty(hardware) ? "" : (( !string.IsNullOrEmpty(model_name) ? ", " : "") + hardware));
 
         if (string.IsNullOrEmpty(model_name))
             model_name = ExecUName("-m");
