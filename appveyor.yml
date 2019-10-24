@@ -1,0 +1,13 @@
+version: 'h3control Integration Tests #{build}'
+install:
+- cmd: nuget restore
+before_build:
+- cmd: >-
+    set PATH=%CD%\4tests;%PATH%;
+    echo PATH IS [%PATH%]
+    ps ax -o pid,pcpu,rss,vsz,args
+    echo "Its a yaml. OK? "
+build:
+  verbosity: minimal
+on_success:
+- cmd: nuget restore
