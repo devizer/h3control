@@ -1,4 +1,26 @@
 version: 'h3control Integration Tests #{build}'
+
+init:
+- ps: |
+
+    function Say { param( [string] $message )
+        Write-Host "$(Get-Elapsed) " -NoNewline -ForegroundColor Magenta
+        Write-Host "$message" -ForegroundColor Yellow
+    }
+    
+    function Get-Elapsed
+    {
+        if ($Global:startAt -eq $null) { $Global:startAt = [System.Diagnostics.Stopwatch]::StartNew(); }
+        [System.String]::Concat("[", (new-object System.DateTime(0)).AddMilliseconds($Global:startAt.ElapsedMilliseconds).ToString("mm:ss"), "]");
+    }; $_=Get-Elapsed;
+
+    # Display OS and CPU
+    $currentVersion=Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+    $win_10_release_id = $currentVersion.ReleaseId; if (! $win_10_release_id) { $win_10_release_id = $currentVersion.CurrentBuildNumber }
+    $win_name = $(Get-WMIObject win32_operatingsystem -EA SilentlyContinue).Caption
+    Say "$($win_name): Release [$win_10_release_id], powershell [$($PSVersionTable.PSVersion)]"
+    $cpu=Get-WmiObject Win32_Processor; Say "CPU: $($cpu.Name), $([System.Environment]::ProcessorCount) Cores";
+
 install:
 - cmd: nuget restore
 before_build:
