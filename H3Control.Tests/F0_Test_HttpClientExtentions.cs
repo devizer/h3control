@@ -24,6 +24,14 @@ namespace H3Control.Tests
         [Test]
         public void T01_Get_GitHub_Returns_200()
         {
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            }
+            catch
+            {
+            }
+
             using (HttpClient client = new HttpClient())
             {
                 var t = client.GetAsStringAsync("https://github.com");
