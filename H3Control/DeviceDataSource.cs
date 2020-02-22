@@ -29,6 +29,8 @@
             int.TryParse(ReadSmallFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"), out curCpu);
             var legacyTempPath = "/sys/devices/virtual/hwmon/hwmon1/temp1_input";
             var mainlineTempPath = "/sys/devices/virtual/thermal/thermal_zone0/temp";
+            // TODO: Raspbian
+            var raspbianTempPath = "/sys/class/thermal/thermal_zone0/temp";
             if (File.Exists(legacyTempPath))
             {
                 int.TryParse(ReadSmallFile(legacyTempPath), out tempr);
@@ -186,6 +188,7 @@
             else
             {
                 ret = (T) raw;
+
             }
 
             return ret;
