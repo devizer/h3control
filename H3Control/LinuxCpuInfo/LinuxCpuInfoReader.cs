@@ -96,10 +96,14 @@ namespace Universe.LinuxCpuManagement
                     var rawTo = partTrimmed.Substring(p + 1);
                     if (int.TryParse(rawFrom, out var from) && int.TryParse(rawTo, out var to))
                     {
-                        for(int i=from; i<=to; i++) ret.Add(i);
+                        for (int i = from; i <= to; i++) ret.Add(i);
                     }
                     else
-                        throw new ArgumentException($"Can't parse cpu range '{partTrimmed}' from the '{arg}' list");
+                        throw new ArgumentException(string.Format(
+                            "Can't parse cpu range '{0}' from the '{1}' list",
+                            partTrimmed,
+                            arg
+                        ));
                 }
                 else
                 {
@@ -108,7 +112,11 @@ namespace Universe.LinuxCpuManagement
                         ret.Add(cpuIndex);
                     }
                     else
-                        throw new ArgumentException($"Can't parse cpu '{partTrimmed}' from the '{arg}' list");
+                        throw new ArgumentException(string.Format(
+                            "Can't parse cpu '{0}' from the '{1}' list",
+                            partTrimmed,
+                            arg
+                        ));
                 }
 
             }
