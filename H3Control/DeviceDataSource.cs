@@ -125,6 +125,11 @@
                     {
                         isCoreOnline = true;
                     }
+                    // Raspbian does not support online-file
+                    else if (!File.Exists(file))
+                    {
+                        isCoreOnline = true;
+                    }
                     else
                     {
                         var rawIsOnline = ReadSmallFile(file);

@@ -30,9 +30,6 @@ namespace Universe.LinuxCpuManagement
             CurGovernor_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_governor";
 
 
-
-
-
         private static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
 
         public static LinuxCpuInfo Get()
