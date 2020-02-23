@@ -194,6 +194,7 @@
     <Compile Include="JetBrains.Annotations\JetBrains.Annotations.cs" />
     <Compile Include="Links\ExMessage.cs" />
     <Compile Include="Links\QuitHandler.cs" />
+    <Compile Include="LinuxCpuInfo\LinuxCpuInfoReader.cs" />
     <Compile Include="LoadLogger.cs" />
     <Compile Include="Common\MemInfoParser_OnLinux.cs" />
     <Compile Include="Common\MemInfo_OnLinix.cs" />

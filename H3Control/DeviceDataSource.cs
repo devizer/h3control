@@ -109,6 +109,8 @@
             return ret;
         }
 
+        // Doc:
+        // https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-devices-system-cpu
         private static int GetOnlineCount(int onlineCount)
         {
             const string formatName = "/sys/devices/system/cpu/cpu{0}/online";
