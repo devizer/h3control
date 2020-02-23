@@ -87,7 +87,7 @@ namespace H3Control
                 var h3Any = cpu.IndexOf("sun8i", ignoreCase) >= 0;
                 var anyBroadcom = cpu.IndexOf("BCM", ignoreCase) >= 0;
 
-                NiceTrace.Message("Allwinner/Broadcom cpu: Legacy-Kind {0} By-Name: {1}, BCM: {2}", h3Legacy, h3Any, anyBroadcom);
+                NiceTrace.Message("Allwinner/Broadcom cpu: Legacy-Kind {0}. By-Name: {1}. BCM: {2}", h3Legacy, h3Any, anyBroadcom);
 
                 return
                     (h3Legacy || h3Any || anyBroadcom)

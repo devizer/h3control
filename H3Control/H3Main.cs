@@ -84,7 +84,7 @@ namespace H3Control
 
             bool isPidCreated = CreatePidFile(pidFileFullPath);
 
-            NiceTrace.Message("Information. IsH3: " + H3Environment.IsH3 + ", ProcessorName: " + CrossInfo.ProcessorName);
+            NiceTrace.Message("Information. Is H3|Broadcom: " + H3Environment.IsH3 + ", ProcessorName: " + CrossInfo.ProcessorName);
             NewVerListener.Listen();
 
             try
