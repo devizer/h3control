@@ -94,7 +94,8 @@ namespace Universe.LinuxCpuManagement
                 {
                     var rawFrom = partTrimmed.Substring(0, 1);
                     var rawTo = partTrimmed.Substring(p + 1);
-                    if (int.TryParse(rawFrom, out var from) && int.TryParse(rawTo, out var to))
+                    int from, to;
+                    if (int.TryParse(rawFrom, out from) && int.TryParse(rawTo, out to))
                     {
                         for (int i = from; i <= to; i++) ret.Add(i);
                     }
@@ -107,7 +108,8 @@ namespace Universe.LinuxCpuManagement
                 }
                 else
                 {
-                    if (int.TryParse(partTrimmed, out var cpuIndex))
+                    int cpuIndex;
+                    if (int.TryParse(partTrimmed, out cpuIndex))
                     {
                         ret.Add(cpuIndex);
                     }
