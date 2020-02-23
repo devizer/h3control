@@ -19,6 +19,20 @@ namespace Universe.LinuxCpuManagement
             PresentPath = BaseSysPath + "/present",
             Online1Path = BaseSysPath + "/cpu1/online";
 
+        // OK: Raspbian
+        // Missed: GCP, Azure, Debian 7 on VMWare, Debian 10 on QEMU
+        private static readonly string
+            AvailableFrequencies_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_available_frequencies",
+            MaxFreq_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_max_freq",
+            MinFreq_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_min_freq",
+            CurFreq_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_cur_freq",
+            AvailableGovernors_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_available_governors",
+            CurGovernor_PerCpu_Path = BaseSysPath + "/cpu{0}/cpufreq/scaling_governor";
+
+
+
+
+
         private static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
 
         public static LinuxCpuInfo Get()
