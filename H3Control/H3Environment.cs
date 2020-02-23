@@ -71,6 +71,7 @@ namespace H3Control
             return Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq");
         });
 
+        // TODO: Raspbian and any any Linux should also be supported
         private static readonly Lazy<bool> _IsH3 = new Lazy<bool>(() =>
         {
             try
