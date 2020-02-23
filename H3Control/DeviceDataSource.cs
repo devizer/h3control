@@ -40,6 +40,11 @@
                 int.TryParse(ReadSmallFile(mainlineTempPath), out tempr);
                 tempr = tempr / 1000;
             }
+            else if (File.Exists(raspbianTempPath))
+            {
+                int.TryParse(ReadSmallFile(raspbianTempPath), out tempr);
+                tempr = tempr / 1000;
+            }
 
             var legacyDdrFrequency = "/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq/cur_freq";
             if (File.Exists(legacyDdrFrequency))
