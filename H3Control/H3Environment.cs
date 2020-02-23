@@ -81,11 +81,16 @@ namespace H3Control
                     Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq")
                     && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1");
 
-                var h3Any = (CrossInfo.ProcessorName ?? "").ToLower().IndexOf("sun8i", StringComparison.InvariantCultureIgnoreCase) >= 0;
-                NiceTrace.Message("Allwinner cpu: Legacy-Kind {0} By-Name: {1}", h3Legacy, h3Any);
+
+                var cpu = CrossInfo.ProcessorName ?? "";
+                var ignoreCase = StringComparison.InvariantCultureIgnoreCase;
+                var h3Any = cpu.IndexOf("sun8i", ignoreCase) >= 0;
+                var anyBroadcom = cpu.IndexOf("BCM", ignoreCase) >= 0;
+
+                NiceTrace.Message("Allwinner/Broadcom cpu: Legacy-Kind {0} By-Name: {1}, BCM: {2}", h3Legacy, h3Any, anyBroadcom);
 
                 return
-                    (h3Legacy || h3Any)
+                    (h3Legacy || h3Any || anyBroadcom)
                     && Directory.Exists("/sys/devices/system/cpu/cpu0/cpufreq");
             }
             catch (Exception ex)
