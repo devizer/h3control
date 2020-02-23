@@ -76,8 +76,9 @@ namespace H3Control
             try
             {
                 // TODO: First two folders are absent on armbian 
-                var h3Legacy = Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq")
-                        && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1");
+                var h3Legacy =
+                    Directory.Exists("/sys/devices/platform/sunxi-ddrfreq/devfreq/sunxi-ddrfreq")
+                    && Directory.Exists("/sys/devices/virtual/hwmon/hwmon1");
 
                 var h3Any = (CrossInfo.ProcessorName ?? "").ToLower().IndexOf("sun8i", StringComparison.InvariantCultureIgnoreCase) >= 0;
                 NiceTrace.Message("Allwinner cpu: Legacy-Kind {0} By-Name: {1}", h3Legacy, h3Any);
