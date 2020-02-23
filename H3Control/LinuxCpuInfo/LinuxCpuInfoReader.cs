@@ -11,11 +11,14 @@ namespace Universe.LinuxCpuManagement
     {
         private static readonly char[] CpuSeparators = new[] {' ', ',', ';'};
         const string BaseSysPath = "/sys/devices/system/cpu";
-        private static readonly string OnlinePath = BaseSysPath + "/online";
-        private static readonly string OfflinePath = BaseSysPath + "/offline";
-        private static readonly string PossiblePath = BaseSysPath + "/possible";
-        private static readonly string PresentPath = BaseSysPath + "/present";
-        private static readonly string Online1Path = BaseSysPath + "/cpu1/online";
+        // since December 2008
+        private static readonly string
+            OnlinePath = BaseSysPath + "/online",
+            OfflinePath = BaseSysPath + "/offline",
+            PossiblePath = BaseSysPath + "/possible",
+            PresentPath = BaseSysPath + "/present",
+            Online1Path = BaseSysPath + "/cpu1/online";
+
         private static readonly UTF8Encoding FileEncoding = new UTF8Encoding(false);
 
         public static LinuxCpuInfo Get()
