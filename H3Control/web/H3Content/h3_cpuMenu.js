@@ -92,14 +92,17 @@ function BindDdrMenu() {
     var source = [];
     for (var i = 0; i < ddrValues.length; i++) {
         var mhz = ddrValues[i];
+        var isSelected = mhz == ddrSelected;
         var selectedHtml = "<b>&rarr;<span style='width:60px; border: 1px dotted grey; height: 100%'>&nbsp;" + mhz + "&nbsp;</span>&larr;</b>";
-
+        var canManageDdrFreq = h3context.DeviceInfo.CanManageDdrFreq;
+        if (!canManageDdrFreq) isSelected = false;
+        console.log("canManageDdrFreq: " + canManageDdrFreq);
         var normalHtml = '' + mhz;
         source[i] = {
             /*label: mhz,*/ value: mhz,
             id: 'ddr_' + mhz,
-            disabled: false,
-            html: (mhz == ddrSelected ? selectedHtml : normalHtml)
+            disabled: false || (canManageDdrFreq != true),
+            html: (isSelected ? selectedHtml : normalHtml)
         };
     }
 
