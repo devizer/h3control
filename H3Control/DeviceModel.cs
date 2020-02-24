@@ -22,6 +22,7 @@ namespace H3Control
         public decimal DdrCur { get; set; }
         public decimal DdrMin { get; set; }
         public decimal DdrMax { get; set; }
+        public bool CanManageDdrFreq { get; set; }
         public string ErrorInfo { get; set; }
         public CpuUsageModel Cpu { get; set; }
 

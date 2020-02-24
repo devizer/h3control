@@ -26,6 +26,7 @@
         {
             var ret = DeviceModel.Sample();
             int curCpu, curDdr = 672, tempr = 0;
+            bool canManageDdrFreq = false;
             int.TryParse(ReadSmallFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"), out curCpu);
             var legacyTempPath = "/sys/devices/virtual/hwmon/hwmon1/temp1_input";
             var mainlineTempPath = "/sys/devices/virtual/thermal/thermal_zone0/temp";
@@ -50,11 +51,13 @@
             if (File.Exists(legacyDdrFrequency))
             {
                 int.TryParse(ReadSmallFile(legacyDdrFrequency), out curDdr);
+                canManageDdrFreq = true;
                 curDdr = curDdr / 1000;
             }
 
             ret.CpuCur = curCpu / 1000;
             ret.DdrCur = curDdr == 0 ? 666 : curDdr;
+            ret.CanManageDdrFreq = canManageDdrFreq;
             ret.Tempr = tempr;
             try
             {
