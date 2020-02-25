@@ -123,7 +123,11 @@ $(document).ready(function () {
         }
     });
     gauge_DdrFreq.on('valueChanging', function (e) {
-        label_DdrFreq.html("DDR: <b>" + Math.round(e.args.value) + '</b> MHz');
+        var cur_Ddr_Label_Text = "DDR: <b>" + Math.round(e.args.value) + '</b> MHz';
+        if (!h3context.DeviceInfo.CanManageDdrFreq)
+            cur_Ddr_Label_Text = "DDR (MHz)";
+
+        label_DdrFreq.html(cur_Ddr_Label_Text);
     });
     gauge_DdrFreq.jqxGauge('value', 400);
 
