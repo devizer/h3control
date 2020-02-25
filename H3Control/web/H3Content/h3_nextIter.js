@@ -136,7 +136,9 @@ function bindSuccessDeviceInfo(data) {
 
     if (data.IsLimitSuccess) {
         label_CpuRange.html("<small>RANGE: " + data.CpuMin + " ... " + data.CpuMax + "");
-        label_DdrRange.html("<small>RANGE: " + data.DdrMin + " ... " + data.DdrMax + "");
+        var cur_Ddr_Range_Text = "<small>RANGE: " + data.DdrMin + " ... " + data.DdrMax + "";
+        if (!h3context.DeviceInfo.CanManageDdrFreq) cur_Ddr_Range_Text = "<small>no data</small>";
+        label_DdrRange.html(cur_Ddr_Range_Text);
 
         if (isFirstRound) {
             isFirstRound = false;
