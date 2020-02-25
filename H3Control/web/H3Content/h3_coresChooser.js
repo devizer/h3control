@@ -1,5 +1,6 @@
 ﻿;
 
+var _CanNotManageOnlineCores_WarningShowed = false;
 function coresChooser_OnReady() {
 
     $(".single-core-container").on("click", function (eventObject) {
@@ -8,6 +9,13 @@ function coresChooser_OnReady() {
         var coresNumber = button.attr("data-id");
         console.log("CORES CHOOSER: " + coresNumber + " core(s)");
         bind_OnlineCores(coresNumber);
+
+        if (!h3context.DeviceInfo.CanManageOnlineCores) {
+            if (!_CanNotManageOnlineCores_WarningShowed) {
+                _CanNotManageOnlineCores_WarningShowed = true;
+                alert("The kernel of the '" + h3context.DeviceInfo.Host + "' does not allow to manage online cores");
+            }
+        }
 
         var postUri = "api/control/set-cores/" + coresNumber;
         var req = jQuery.ajax({
