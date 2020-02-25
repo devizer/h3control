@@ -1,4 +1,6 @@
-﻿namespace H3Control
+﻿using Universe.LinuxCpuManagement;
+
+namespace H3Control
 {
     using System;
     using System.Collections.Specialized;
@@ -58,6 +60,7 @@
             ret.CpuCur = curCpu / 1000;
             ret.DdrCur = curDdr == 0 ? 666 : curDdr;
             ret.CanManageDdrFreq = canManageDdrFreq;
+            ret.CanManageOnlineCores = LinuxCpuInfoReader.CanManageOnlineCores();
             ret.Tempr = tempr;
             try
             {

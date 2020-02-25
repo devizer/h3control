@@ -12,12 +12,12 @@ namespace Universe.LinuxCpuManagement
         private static readonly char[] CpuSeparators = new[] {' ', ',', ';'};
         const string BaseSysPath = "/sys/devices/system/cpu";
         // since December 2008
-        private static readonly string
+        public static readonly string
             OnlinePath = BaseSysPath + "/online",
             OfflinePath = BaseSysPath + "/offline",
             PossiblePath = BaseSysPath + "/possible",
             PresentPath = BaseSysPath + "/present",
-            Online1Path = BaseSysPath + "/cpu1/online";
+            OnlineCore1Path = BaseSysPath + "/cpu1/online";
 
         // OK: Raspbian
         // Missed: GCP, Azure, Debian 7 on VMWare, Debian 10 on QEMU
@@ -42,13 +42,25 @@ namespace Universe.LinuxCpuManagement
                 // PossibleCores = ParseCpuList(ReadFirstLine(PossiblePath)),
             };
 
-            bool online1Exists = File.Exists(Online1Path);
+            bool online1Exists = File.Exists(OnlineCore1Path);
 
             ret.OnlineCores = ret.PresentCores.Union(ret.OnlineCores).ToList();
             ret.OfflineCores = ret.PresentCores.Union(ret.OfflineCores).ToList();
             ret.CanManageOnlineState = ret.PresentCores.Count > 1 && online1Exists;
 
             return ret;
+        }
+
+        public static bool CanManageOnlineCores()
+        {
+            try
+            {
+                return File.Exists(OnlineCore1Path);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static string ReadFirstLine(string fileName)
